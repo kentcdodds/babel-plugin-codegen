@@ -1,7 +1,7 @@
 <div align="center">
-<h1>babel-plugin-codegen</h1>
+<h1>babel-plugin-codegen 💥</h1>
 
-<strong>Generate code at build-time</strong>
+<p>Generate code at build-time</p>
 </div>
 
 <hr />
