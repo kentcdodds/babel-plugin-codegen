@@ -111,5 +111,27 @@ pluginTester({
     'handles multipe nodes': `
       codegen.require('./fixtures/multiple-nodes')
     `,
+    'includes code comments': `
+      codegen\`
+        module.exports = \\\`
+          // before
+          var x = 'hi'
+          /*
+           * after
+           */
+
+          // call foo
+          console.log(foo())
+
+           /**
+            * jsdoc
+            * @return {string} cool I guess
+            */
+           function foo() {
+             return 'foo'
+           }
+        \\\`
+      \`
+    `,
   },
 })

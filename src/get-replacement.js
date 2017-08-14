@@ -20,6 +20,7 @@ function stringToAST(string) {
   }
   return template(string, {
     sourceType: 'module',
+    preserveComments: true,
     plugins: [
       // add more on request...
       'jsx',

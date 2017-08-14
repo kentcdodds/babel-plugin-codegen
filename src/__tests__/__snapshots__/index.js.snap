@@ -88,6 +88,47 @@ Error: <PROJECT_ROOT>/src/__tests__/index.js: codegen: Must module.exports a str
 
 `;
 
+exports[`5. includes code comments 1`] = `
+
+codegen\`
+  module.exports = \\\`
+    // before
+    var x = 'hi'
+    /*
+     * after
+     */
+
+    // call foo
+    console.log(foo())
+
+     /**
+      * jsdoc
+      * @return {string} cool I guess
+      */
+     function foo() {
+       return 'foo'
+     }
+  \\\`
+\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+// before
+var x = 'hi'; /*
+               * after
+               */ // call foo
+
+console.log(foo()); /**
+                     * jsdoc
+                     * @return {string} cool I guess
+                     */
+
+function foo() {
+  return 'foo';
+}
+
+`;
+
 exports[`6. codegen 1`] = `
 
 // @codegen
