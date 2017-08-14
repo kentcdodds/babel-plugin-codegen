@@ -10,10 +10,9 @@
   "scripts": {
     "start": "nps",
     "test": "nps test",
-    "precommit": "lint-staged && opt --in pre-commit --exec \"npm start validate\"",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "precommit": "lint-staged && opt --in pre-commit --exec \"npm start validate\""
   },
-  "files": ["dist"],
+  "files": ["dist", "macro.js"],
   "keywords": ["babel-macros", "babel-plugin", "babel", "code generation"],
   "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
   "license": "MIT",
@@ -41,8 +40,7 @@
     "nps": "^5.4.0",
     "nps-utils": "^1.2.0",
     "opt-cli": "^1.5.1",
-    "prettier-eslint-cli": "^4.1.1",
-    "semantic-release": "^6.3.6"
+    "prettier-eslint-cli": "^4.1.1"
   },
   "lint-staged": {
     "*.+(js|json)": ["prettier-eslint --write", "git add"]
