@@ -1,5 +1,6 @@
 const p = require('path')
 const getReplacement = require('./get-replacement')
+const replace = require('./replace')
 
 module.exports = codegenPlugin
 
@@ -35,12 +36,7 @@ function codegenPlugin({transformFromAst}) {
             'Unable to determine the value of your codegen string',
           )
         }
-        const replacement = getReplacement({string, filename})
-        if (Array.isArray(replacement)) {
-          path.replaceWithMultiple(replacement)
-        } else {
-          path.replaceWith(replacement)
-        }
+        replace({path, string, filename})
       },
       ImportDeclaration(path, {file: {opts: {filename}}}) {
         const isCodegen = looksLike(path, {
@@ -63,7 +59,8 @@ function codegenPlugin({transformFromAst}) {
           args = codegenComment.replace(/codegen\((.*)\)/, '$1').trim()
         }
 
-        const replacement = getReplacement({
+        replace({
+          path,
           string: `
             try {
               // allow for transpilation of required modules
@@ -78,7 +75,6 @@ function codegenPlugin({transformFromAst}) {
           `,
           filename,
         })
-        path.replaceWith(replacement)
       },
       CallExpression(path, {file: {opts: {filename}}}) {
         const isCodegen = looksLike(path, {
@@ -95,7 +91,14 @@ function codegenPlugin({transformFromAst}) {
         }
         const [source, ...args] = path.get('arguments')
         const string = resolveModuleToString({args, filename, source})
-        path.replaceWith(getReplacement.stringToAST(string))
+        const replacement = getReplacement.stringToAST(string)
+        if (!replacement) {
+          path.remove()
+        } else if (Array.isArray(replacement)) {
+          path.replaceWithMultiple(replacement)
+        } else {
+          path.replaceWith(replacement)
+        }
       },
     },
   }

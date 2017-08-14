@@ -102,5 +102,14 @@ pluginTester({
       const three = 3
       const x = codegen\`module.exports = "\${three}"\`
     `,
+    'removes the node if nothing is returned': `
+      codegen\`module.exports = ''\`
+    `,
+    'removes the node if nothing is returned in require': `
+      codegen.require('./fixtures/nothing-exported')
+    `,
+    'handles multipe nodes': `
+      codegen.require('./fixtures/multiple-nodes')
+    `,
   },
 })

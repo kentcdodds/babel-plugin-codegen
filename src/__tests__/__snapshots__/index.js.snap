@@ -22,6 +22,16 @@ const x = 1;
 
 `;
 
+exports[`2. removes the node if nothing is returned 1`] = `
+
+codegen\`module.exports = ''\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+
+
+`;
+
 exports[`3. codegen 1`] = `
 
 codegen\`module.exports = "var x = 'some directive'"\`
@@ -30,6 +40,16 @@ codegen\`module.exports = "var x = 'some directive'"\`
 
 var x;
 x = 'some directive', void 0;
+
+`;
+
+exports[`3. removes the node if nothing is returned in require 1`] = `
+
+codegen.require('./fixtures/nothing-exported')
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+
 
 `;
 
@@ -44,6 +64,17 @@ const y = codegen\`
 const y = {
   booyah: () => "booyah"
 };
+
+`;
+
+exports[`4. handles multipe nodes 1`] = `
+
+codegen.require('./fixtures/multiple-nodes')
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = "hello world";
+console.log(x);
 
 `;
 

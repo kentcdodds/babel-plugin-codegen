@@ -1,5 +1,5 @@
 // const printAST = require('ast-pretty-print')
-const getReplacement = require('./get-replacement')
+const replace = require('./replace')
 
 // this implements the babel-macros v0.5.2 API
 module.exports = codegenMacros
@@ -53,16 +53,4 @@ function asJSX({attributes, children}, {file: {opts: {filename}}}) {
     string,
     filename,
   })
-}
-
-function replace({path, string, filename}) {
-  const replacement = getReplacement({
-    string,
-    filename,
-  })
-  if (Array.isArray(replacement)) {
-    path.replaceWithMultiple(replacement)
-  } else {
-    path.replaceWith(replacement)
-  }
 }
