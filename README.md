@@ -75,7 +75,7 @@ TODO...
 **Before**:
 
 ```javascript
-codgen`
+codegen`
   const fs = require('fs')
   module.exports = fs.readFileSync(require.resolve('./some-code.js'), 'utf8')
 `
