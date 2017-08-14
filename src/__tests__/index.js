@@ -91,3 +91,16 @@ pluginTester({
     },
   ],
 })
+
+// This is for any of the exta tests. We give these a name.
+pluginTester({
+  plugin,
+  snapshot: true,
+  babelOptions: {filename: __filename},
+  tests: {
+    'handles some dynamic values': `
+      const three = 3
+      const x = codegen\`module.exports = "\${three}"\`
+    `,
+  },
+})

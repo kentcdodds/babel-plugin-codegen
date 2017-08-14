@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`1. as tag 1`] = `
+
+import codegen from '../macro'
+const greeting = 'Hello world!'
+codegen\`module.exports = "module.exports = '\${greeting}';"\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const greeting = 'Hello world!';
+module.exports = 'Hello world!';
+
+`;
+
+exports[`2. as function 1`] = `
+
+const myCodgen = require('../macro')
+myCodgen(\`
+  module.exports = "var x = {booyah() { return 'booyah!'; } };"
+\`)
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x;
+
+x = {
+  booyah() {
+    return 'booyah!';
+  }
+
+}, void 0;
+
+`;
+
+exports[`3. as jsx 1`] = `
+
+const Codegen = require('../macro')
+const ui = (
+  <Codegen>{"module.exports = '<div>Hi</div>'"}</Codegen>
+)
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const ui = <div>Hi</div>;
+
+`;
+
+exports[`4. as jsx with tag 1`] = `
+
+const Codegen = require('../macro')
+const ui = (
+  <Codegen>{\`module.exports = '<div>Hi</div>'\`}</Codegen>
+)
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const ui = <div>Hi</div>;
+
+`;
+
+exports[`5. with multiple 1`] = `
+
+import codegen from '../macro'
+
+codegen\`module.exports = ['a', 'b', 'c'].map(l => 'export const ' + l + ' = ' + JSON.stringify(l)).join(';')\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+export const a = "a";
+export const b = "b";
+export const c = "c";
+
+`;

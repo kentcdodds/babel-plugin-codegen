@@ -15,6 +15,7 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs]
 [![Code of Conduct][coc-badge]][coc]
+[![Babel Macro](https://img.shields.io/badge/babel--macro-%F0%9F%8E%A3-f5da55.svg?style=flat-square)](https://github.com/kentcdodds/babel-macros)
 
 [![Watch on GitHub][github-watch-badge]][github-watch]
 [![Star on GitHub][github-star-badge]][github-star]
@@ -64,10 +65,11 @@ Important notes:
    closest `.babelrc` to the file being run is the one that's used). This means
    you can rely on any babel plugins/transforms that you're used to using
    elsewhere in your codebase.
+4. The code that's generated may or may not be transpiled (babel plugin ordering
+   is tricky business). **You should generate the code that you wish to ship.**
 
 TODO...
 
-<!--
 ### Template Tag
 
 **Before**:
@@ -79,30 +81,26 @@ codgen`
 `
 ```
 
-**After** (assuming `some-code.js` contains the text: `var x = "Hello world!"`):
+**After** (assuming `some-code.js` contains the text: `var x = 'Hello world!'`):
 
 ```javascript
-var x;
-x = 'some directive', void 0;
+var x = 'Hello world!';
 ```
 
-`preval` can also handle _some_ simple dynamic values as well:
+`codegen` can also handle _some_ simple dynamic values as well:
 
 **Before**:
 
 ```javascript
-const name = 'Bob Hope'
-const person = preval`
-  const [first, last] = require('./name-splitter')(${name})
-  module.exports = {first, last}
-`
+const three = 3
+const x = codegen`module.exports = '${three}'`
 ```
 
-**After** (assuming `./name-splitter` is a function that splits a name into first/last):
+**After**:
 
 ```javascript
-const name = 'Bob Hope';
-const person = { "first": "Bob", "last": "Hope" };
+const three = 3
+const x = 3
 ```
 
 ### import comment
@@ -110,82 +108,66 @@ const person = { "first": "Bob", "last": "Hope" };
 **Before**:
 
 ```javascript
-import fileList from /* preval */ './get-list-of-files'
+import /* codegen */ './assign-one.js'
 ```
 
-**After** (depending on what `./get-list-of-files does`, it might be something like):
+**After** (`assign-one.js` is: `module.exports = 'var x = 1'`):
 
 ```javascript
-const fileList = ['file1.md', 'file2.md', 'file3.md', 'file4.md']
+var x = 1;
 ```
 
-You can also provide arguments which themselves are prevaled!
+You can also provide arguments! In this case, the module you import should
+export a function which accepts those arguments and returns a string.
 
 **Before**:
 
 ```javascript
-import fileList from /* preval(3) */ './get-list-of-files'
+import /* codegen(3) */ './assign-identity'
 ```
 
-**After** (assuming `./get-list-of-files` accepts an argument limiting how many files are retrieved:
+**After** (`assign-identity.js` is: `module.exports = input => 'var x = ' + JSON.stringify(input) + ';'`):
 
 ```javascript
-const fileList = ['file1.md', 'file2.md', 'file3.md']
+var x = 3;
 ```
 
-### preval.require
+### codegen.require
 
 **Before**:
 
 ```javascript
-const fileLastModifiedDate = preval.require('./get-last-modified-date')
+const x = codegen.require('./es6-identity', 3)
+```
+
+**After** (`es6-identity.js` is: `export default input => 'var x = ' + JSON.stringify(input) + ';'`):
+
+```javascript
+const x = 3;
+```
+
+### codegen file comment (`// @codegen`)
+
+Using the codegen file comment will update a whole file to be evaluated down to an export.
+
+Whereas the above usages (assignment/import/require) will only codegen the scope of the assignment or file being imported.
+
+**Before**:
+
+```javascript
+// @codegen
+const array = ['apple', 'orange', 'pear']
+module.exports = array
+  .map(fruit => `export const ${fruit} = '${fruit}';`)
+  .join('')
 ```
 
 **After**:
 
 ```javascript
-const fileLastModifiedDate = '2017-07-05'
-```
-
-And you can provide _some_ simple dynamic arguments as well:
-
-**Before**:
-
-```javascript
-const fileLastModifiedDate = preval.require('./get-last-modified-date', '../../some-other-file.js')
-```
-
-**After**:
-
-```javascript
-const fileLastModifiedDate = '2017-07-04'
-```
-
-### preval file comment (`// @preval`)
-
-Using the preval file comment will update a whole file to be evaluated down to an export.
-
-Whereas the above usages (assignment/import/require) will only preval the scope of the assignment or file being imported.
-
-**Before**:
-
-```javascript
-// @preval
-
-const id = require("./path/identity")
-const one = require("./path/one")
-
-const compose = (...fns) => fns.reduce((f, g) => a => f(g(a)))
-const double = a => a * 2
-const square = a => a * a
-
-module.exports = compose(square, id, double)(one)
-```
-
-**After**:
-
-```javascript
-module.exports = 4
+export const apple = 'apple';
+export const orange = 'orange';
+export const pear = 'pear';
 ```
 
 ## Configure with Babel
@@ -196,38 +178,43 @@ module.exports = 4
 
 ```json
 {
-  "plugins": ["preval"]
+  "plugins": ["codegen"]
 }
 ```
 
 ### Via CLI
 
 ```sh
-babel --plugins preval script.js
+babel --plugins codegen script.js
 ```
 
 ### Via Node API
 
 ```javascript
 require('babel-core').transform('code', {
-  plugins: ['preval'],
+  plugins: ['codegen'],
 })
 ```
 
 ## Use with [`babel-macros`][babel-macros]
 
 Once you've [configured `babel-macros`](https://github.com/kentcdodds/babel-macros/blob/master/other/docs/user.md)
-you can import/require the preval macro at `babel-plugin-preval/macro`.
+you can import/require the codegen macro at `babel-plugin-codegen/macro`.
 For example:
 
 ```javascript
-import preval from 'babel-plugin-preval/macro'
+import codegen from 'babel-plugin-codegen/macro'
 
-const one = preval`module.exports = 1 + 2 - 1 - 1`
+codegen`module.exports = ['a', 'b', 'c'].map(l => 'export const ' + l + ' = ' + JSON.stringify(l)).join(';')`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+export const a = "a";
+export const b = "b";
+export const c = "c";
 ```
 
-> You could also use [`preval.macro`][preval.macro] if you'd prefer to type less 😀
--->
+> You could also use [`codegen.macro`][codegen.macro] if you'd prefer to type less 😀
 
 ## Caveats
 
@@ -240,7 +227,8 @@ feel like you could make it work!
 
 ## Inspiration
 
-// TODO
+I built this to solve a problem I was experiencing with [glamorous][glamorous].
+It's heavily based on my work in [babel-plugin-preval][preval].
 
 ## Other Solutions
 
@@ -290,3 +278,4 @@ MIT
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 [glamorous]: https://github.com/paypal/glamorous
 [preval]: https://github.com/kentcdodds/babel-plugin-preval
+[codegen.macro]: https://www.npmjs.com/package/codegen.macro

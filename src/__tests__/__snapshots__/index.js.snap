@@ -1,5 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`1. handles some dynamic values 1`] = `
+
+const three = 3
+const x = codegen\`module.exports = "\${three}"\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const three = 3;
+const x = 3;
+
+`;
+
 exports[`2. codegen 1`] = `
 
 const x = codegen\`module.exports = "1"\`
@@ -29,7 +41,9 @@ const y = codegen\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-const y = { booyah: () => "booyah" };
+const y = {
+  booyah: () => "booyah"
+};
 
 `;
 
@@ -53,7 +67,9 @@ module.exports = array
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-export const apple = "apple";export const orange = "orange";export const pear = "pear";
+export const apple = "apple";
+export const orange = "orange";
+export const pear = "pear";
 
 `;
 
@@ -133,7 +149,9 @@ import /* codegen(({object: "argument"})) */ "./fixtures/assign-identity"
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-var x = { "object": "argument" };
+var x = {
+  "object": "argument"
+};
 
 `;
 
@@ -214,6 +232,7 @@ codegen\`module.exports = ["one", "two"].map((x, i) => \\\`var \\\${x} = "\\\${i
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-var one = "1";var two = "2";
+var one = "1";
+var two = "2";
 
 `;

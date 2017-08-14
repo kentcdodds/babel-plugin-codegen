@@ -94,8 +94,8 @@ function codegenPlugin({transformFromAst}) {
           return
         }
         const [source, ...args] = path.get('arguments')
-        const mod = resolveModuleToString({args, filename, source})
-        path.replaceWith(getReplacement.expressionToAST(mod))
+        const string = resolveModuleToString({args, filename, source})
+        path.replaceWith(getReplacement.stringToAST(string))
       },
     },
   }
