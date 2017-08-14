@@ -279,3 +279,4 @@ MIT
 [glamorous]: https://github.com/paypal/glamorous
 [preval]: https://github.com/kentcdodds/babel-plugin-preval
 [codegen.macro]: https://www.npmjs.com/package/codegen.macro
+[babel-macros]: https://github.com/babel-macros
