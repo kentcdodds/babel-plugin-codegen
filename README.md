@@ -21,6 +21,8 @@
 [![Star on GitHub][github-star-badge]][github-star]
 [![Tweet][twitter-badge]][twitter]
 
+<a href="https://app.codesponsor.io/link/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/babel-plugin-codegen" rel="nofollow"><img src="https://app.codesponsor.io/embed/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/babel-plugin-codegen.svg" style="width: 888px; height: 68px;" alt="Sponsor" /></a>
+
 ## The problem
 
 The applications of this plugin are wide, so it's kinda hard to sum it up, but
