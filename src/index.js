@@ -21,9 +21,9 @@ function codegenPlugin({transformFromAst}) {
 
         const {code: string} = transformFromAst(path.node)
         const replacement = getReplacement({string, filename})
-        path.node.body = Array.isArray(replacement) ?
-          replacement :
-          [replacement]
+        path.node.body = Array.isArray(replacement)
+          ? replacement
+          : [replacement]
       },
       TaggedTemplateExpression(path, {file: {opts: {filename}}}) {
         const isCodegen = path.node.tag.name === 'codegen'
@@ -138,7 +138,10 @@ function resolveModuleToString({args, filename, source}) {
 }
 
 function isCodegenComment(comment) {
-  const normalisedComment = comment.value.trim().split(' ')[0].trim()
+  const normalisedComment = comment.value
+    .trim()
+    .split(' ')[0]
+    .trim()
   return (
     normalisedComment.startsWith('codegen') ||
     normalisedComment.startsWith('@codegen')
@@ -162,7 +165,7 @@ function looksLike(a, b) {
 
 function isPrimitive(val) {
   // eslint-disable-next-line
-  return val == null || /^[sbn]/.test(typeof val);
+  return val == null || /^[sbn]/.test(typeof val)
 }
 
 /*

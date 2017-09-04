@@ -9,8 +9,11 @@
   },
   "scripts": {
     "start": "nps",
-    "test": "nps test",
-    "precommit": "lint-staged && opt --in pre-commit --exec \"npm start validate\""
+    "build": "kcd-scripts build",
+    "lint": "kcd-scripts lint",
+    "test": "kcd-scripts test",
+    "validate": "kcd-scripts validate",
+    "precommit": "kcd-scripts precommit"
   },
   "files": ["dist", "macro.js"],
   "keywords": ["babel-macros", "babel-plugin", "babel", "code generation"],
@@ -33,18 +36,9 @@
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "babel-register": "^6.24.1",
-    "eslint": "^4.2.0",
-    "eslint-config-kentcdodds": "^12.4.1",
-    "husky": "^0.14.3",
-    "jest": "^20.0.4",
-    "lint-staged": "^4.0.1",
+    "kcd-scripts": "0.0.7",
     "nps": "^5.4.0",
-    "nps-utils": "^1.2.0",
-    "opt-cli": "^1.5.1",
-    "prettier-eslint-cli": "^4.1.1"
-  },
-  "lint-staged": {
-    "*.+(js|json)": ["prettier-eslint --write", "git add"]
+    "nps-utils": "^1.2.0"
   },
   "repository": {
     "type": "git",
