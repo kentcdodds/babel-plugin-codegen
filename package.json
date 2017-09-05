@@ -30,7 +30,7 @@
     "ast-pretty-print": "^2.0.0",
     "babel-macros": "^0.5.2",
     "babel-plugin-tester": "^3.3.0",
-    "kcd-scripts": "^0.1.0"
+    "kcd-scripts": "^0.1.3"
   },
   "eslintConfig": {
     "extends": "./node_modules/kcd-scripts/eslint.js"
