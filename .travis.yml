@@ -1,14 +1,12 @@
 sudo: false
 language: node_js
+cache:
+  directories:
+    - node_modules
 notifications:
   email: false
 node_js:
   - '8'
-before_script:
-  - npm ls
-  # - ls node_modules
-  # - ls node_modules/kcd-scripts
-  # - ls node_modules/kcd-scripts/node_modules || echo "no node_modules"
 script:
   - npm run validate
 after_success:
