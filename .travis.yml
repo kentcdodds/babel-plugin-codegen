@@ -7,7 +7,7 @@ node_js:
 before_script:
   - ls node_modules
   - ls node_modules/kcd-scripts
-  - ls node_modules/kcd-scripts/node_modules
+  - ls node_modules/kcd-scripts/node_modules || echo "no node_modules"
 script:
   - npm run validate
 after_success:
