@@ -5,8 +5,9 @@ notifications:
 node_js:
   - '8'
 before_script:
-  - ls node_modules
-  - ls node_modules/kcd-scripts
+  - npm ls
+  # - ls node_modules
+  # - ls node_modules/kcd-scripts
   # - ls node_modules/kcd-scripts/node_modules || echo "no node_modules"
 script:
   - npm run validate
