@@ -32,13 +32,9 @@
     "babel-plugin-tester": "^3.3.0",
     "kcd-scripts": "^0.2.3"
   },
-  "eslintConfig": {
-    "extends": "./node_modules/kcd-scripts/eslint.js"
-  },
+  "eslintConfig": {"extends": "./node_modules/kcd-scripts/eslint.js"},
   "eslintIgnore": ["node_modules", "coverage", "dist"],
-  "babel": {
-    "presets": "kcd-scripts/babel"
-  },
+  "babel": {"presets": "kcd-scripts/babel"},
   "repository": {
     "type": "git",
     "url": "https://github.com/kentcdodds/babel-plugin-codegen.git"
