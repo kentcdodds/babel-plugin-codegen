@@ -10,7 +10,8 @@ node_js:
 before_script:
   - npm ls
 script:
-  - npm run validate
+  - node ./temp-test.js
+  # - npm run validate
 after_success:
   - npx codecov
   - npx -p semantic-release@7 -c "semantic-release pre && npm publish && semantic-release post"
