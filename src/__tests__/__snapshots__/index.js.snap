@@ -1,17 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`1. handles some dynamic values 1`] = `
-
-const three = 3
-const x = codegen\`module.exports = "\${three}"\`
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-const three = 3;
-const x = 3;
-
-`;
-
 exports[`2. codegen 1`] = `
 
 const x = codegen\`module.exports = "1"\`
@@ -19,16 +7,6 @@ const x = codegen\`module.exports = "1"\`
       ↓ ↓ ↓ ↓ ↓ ↓
 
 const x = 1;
-
-`;
-
-exports[`2. removes the node if nothing is returned 1`] = `
-
-codegen\`module.exports = ''\`
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-
 
 `;
 
@@ -40,16 +18,6 @@ codegen\`module.exports = "var x = 'some directive'"\`
 
 var x;
 x = 'some directive', void 0;
-
-`;
-
-exports[`3. removes the node if nothing is returned in require 1`] = `
-
-codegen.require('./fixtures/nothing-exported')
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-
 
 `;
 
@@ -67,17 +35,6 @@ const y = {
 
 `;
 
-exports[`4. handles multipe nodes 1`] = `
-
-codegen.require('./fixtures/multiple-nodes')
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-var x = "hello world";
-console.log(x);
-
-`;
-
 exports[`5. codegen 1`] = `
 
 const y = codegen\`module.exports = {}\`
@@ -85,47 +42,6 @@ const y = codegen\`module.exports = {}\`
       ↓ ↓ ↓ ↓ ↓ ↓
 
 Error: <PROJECT_ROOT>/src/__tests__/index.js: codegen: Must module.exports a string.
-
-`;
-
-exports[`5. includes code comments 1`] = `
-
-codegen\`
-  module.exports = \\\`
-    // before
-    var x = 'hi'
-    /*
-     * after
-     */
-
-    // call foo
-    console.log(foo())
-
-     /**
-      * jsdoc
-      * @return {string} cool I guess
-      */
-     function foo() {
-       return 'foo'
-     }
-  \\\`
-\`
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-// before
-var x = 'hi'; /*
-               * after
-               */ // call foo
-
-console.log(foo()); /**
-                     * jsdoc
-                     * @return {string} cool I guess
-                     */
-
-function foo() {
-  return 'foo';
-}
 
 `;
 
@@ -306,5 +222,89 @@ codegen\`module.exports = ["one", "two"].map((x, i) => \\\`var \\\${x} = "\\\${i
 
 var one = "1";
 var two = "2";
+
+`;
+
+exports[`handles multipe nodes 1`] = `
+
+codegen.require('./fixtures/multiple-nodes')
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = "hello world";
+console.log(x);
+
+`;
+
+exports[`handles some dynamic values 1`] = `
+
+const three = 3
+const x = codegen\`module.exports = "\${three}"\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const three = 3;
+const x = 3;
+
+`;
+
+exports[`includes code comments 1`] = `
+
+codegen\`
+  module.exports = \\\`
+    // before
+    var x = 'hi'
+    /*
+     * after
+     */
+
+    // call foo
+    console.log(foo())
+
+     /**
+      * jsdoc
+      * @return {string} cool I guess
+      */
+     function foo() {
+       return 'foo'
+     }
+  \\\`
+\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+// before
+var x = 'hi'; /*
+               * after
+               */ // call foo
+
+console.log(foo()); /**
+                     * jsdoc
+                     * @return {string} cool I guess
+                     */
+
+function foo() {
+  return 'foo';
+}
+
+`;
+
+exports[`removes the node if nothing is returned 1`] = `
+
+codegen\`module.exports = ''\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+
+
+`;
+
+exports[`removes the node if nothing is returned in require 1`] = `
+
+codegen.require('./fixtures/nothing-exported')
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+
 
 `;
