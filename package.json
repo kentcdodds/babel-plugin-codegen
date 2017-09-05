@@ -3,7 +3,10 @@
   "version": "0.0.0-semantically-released",
   "description": "Generate code at build-time",
   "main": "dist/index.js",
-  "engines": {"node": "> 4", "npm": "> 3"},
+  "engines": {
+    "node": "> 4",
+    "npm": "> 3"
+  },
   "scripts": {
     "add-contributor": "kcd-scripts contributors add",
     "build": "kcd-scripts build",
@@ -27,11 +30,15 @@
     "ast-pretty-print": "^2.0.0",
     "babel-macros": "^0.5.2",
     "babel-plugin-tester": "^3.3.0",
-    "kcd-scripts": "^0.2.2"
+    "kcd-scripts": "^0.2.3"
   },
-  "eslintConfig": {"extends": "./node_modules/kcd-scripts/eslint.js"},
+  "eslintConfig": {
+    "extends": "./node_modules/kcd-scripts/eslint.js"
+  },
   "eslintIgnore": ["node_modules", "coverage", "dist"],
-  "babel": {"presets": "kcd-scripts/babel"},
+  "babel": {
+    "presets": "kcd-scripts/babel"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/kentcdodds/babel-plugin-codegen.git"
