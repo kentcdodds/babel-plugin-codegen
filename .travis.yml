@@ -2,14 +2,12 @@ sudo: false
 language: node_js
 notifications:
   email: false
-node_js:
-  - '8'
-install: npm install --no-cache --no-package-lock
-script:
-  - npm run validate
+node_js: '8'
+before_install: npm cache clean
+install: npm install --no-package-lock
+script: npm run validate
 after_success:
   - npx codecov
   - npx -p semantic-release@7 -c "semantic-release pre && npm publish && semantic-release post"
 branches:
-  only:
-    - master
+  only: master
