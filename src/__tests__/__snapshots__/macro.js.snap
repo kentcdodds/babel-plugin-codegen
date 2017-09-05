@@ -1,19 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`1. as tag 1`] = `
-
-import codegen from '../macro'
-const greeting = 'Hello world!'
-codegen\`module.exports = "module.exports = '\${greeting}';"\`
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-const greeting = 'Hello world!';
-module.exports = 'Hello world!';
-
-`;
-
-exports[`2. as function 1`] = `
+exports[`as function 1`] = `
 
 const myCodgen = require('../macro')
 myCodgen(\`
@@ -33,7 +20,7 @@ x = {
 
 `;
 
-exports[`3. as jsx 1`] = `
+exports[`as jsx 1`] = `
 
 const Codegen = require('../macro')
 const ui = (
@@ -46,7 +33,7 @@ const ui = <div>Hi</div>;
 
 `;
 
-exports[`4. as jsx with tag 1`] = `
+exports[`as jsx with tag 1`] = `
 
 const Codegen = require('../macro')
 const ui = (
@@ -59,7 +46,20 @@ const ui = <div>Hi</div>;
 
 `;
 
-exports[`5. with multiple 1`] = `
+exports[`as tag 1`] = `
+
+import codegen from '../macro'
+const greeting = 'Hello world!'
+codegen\`module.exports = "module.exports = '\${greeting}';"\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const greeting = 'Hello world!';
+module.exports = 'Hello world!';
+
+`;
+
+exports[`with multiple 1`] = `
 
 import codegen from '../macro'
 
