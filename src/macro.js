@@ -1,8 +1,8 @@
 // const printAST = require('ast-pretty-print')
+const {createMacro} = require('babel-macros')
 const replace = require('./replace')
 
-// this implements the babel-macros v0.5.2 API
-module.exports = codegenMacros
+module.exports = createMacro(codegenMacros)
 
 function codegenMacros({references, state}) {
   references.default.forEach(referencePath => {
