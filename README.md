@@ -32,6 +32,8 @@ maintain the exports in my source file. So someone created a post-build script
 to concatenate them to the end of the file. I built this plugin so I could do
 that without having an ad-hoc post-build script.
 
+> Read ["Make maintainable workarounds with codegen 💥"](https://blog.kentcdodds.com/make-maintainable-workarounds-with-codegen-d34163a09c13) for more inspiration
+
 ## This solution
 
 This plugin allows you to generate code at build-time. Any code that runs
