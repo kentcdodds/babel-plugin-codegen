@@ -200,7 +200,7 @@ require('babel-core').transform('code', {
 })
 ```
 
-## Use with [`babel-macros`](https://github.com/kentcdodds/babel-macros)
+## Use with [`babel-macros`][babel-macros]
 
 Once you've [configured `babel-macros`](https://github.com/kentcdodds/babel-macros/blob/master/other/docs/user.md)
 you can import/require the codegen macro at `babel-plugin-codegen/macro`.
@@ -283,4 +283,4 @@ MIT
 [glamorous]: https://github.com/paypal/glamorous
 [preval]: https://github.com/kentcdodds/babel-plugin-preval
 [codegen.macro]: https://www.npmjs.com/package/codegen.macro
-[babel-macros]: https://github.com/babel-macros
+[babel-macros]: https://github.com/kentcdodds/babel-macros
