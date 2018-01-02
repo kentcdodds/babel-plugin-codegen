@@ -126,8 +126,9 @@ function resolveModuleToString({args, filename, source}) {
   if (argValues.length) {
     if (typeof mod !== 'function') {
       throw new Error(
-        `\`codegen.require\`-ed module (${source.node
-          .value}) cannot accept arguments because it does not export a function. You passed the arguments: ${argValues.join(
+        `\`codegen.require\`-ed module (${
+          source.node.value
+        }) cannot accept arguments because it does not export a function. You passed the arguments: ${argValues.join(
           ', ',
         )}`,
       )
@@ -170,6 +171,7 @@ function isPrimitive(val) {
 
 /*
 eslint
-  import/no-unassigned-import:0
-  import/no-dynamic-require:0
+  complexity: ["error", 8],
+  import/no-unassigned-import: "off",
+  import/no-dynamic-require: "off",
 */

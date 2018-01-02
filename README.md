@@ -10,18 +10,16 @@
 [![Code Coverage][coverage-badge]][coverage]
 [![version][version-badge]][package]
 [![downloads][downloads-badge]][npmcharts]
-[![MIT License][license-badge]][LICENSE]
+[![MIT License][license-badge]][license]
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs]
 [![Code of Conduct][coc-badge]][coc]
-[![Babel Macro](https://img.shields.io/badge/babel--macro-%F0%9F%8E%A3-f5da55.svg?style=flat-square)](https://github.com/kentcdodds/babel-macros)
+[![Babel Macro](https://img.shields.io/badge/babel--macro-%F0%9F%8E%A3-f5da55.svg?style=flat-square)](https://github.com/kentcdodds/babel-plugin-macros)
 
 [![Watch on GitHub][github-watch-badge]][github-watch]
 [![Star on GitHub][github-star-badge]][github-star]
 [![Tweet][twitter-badge]][twitter]
-
-<a href="https://app.codesponsor.io/link/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/babel-plugin-codegen" rel="nofollow"><img src="https://app.codesponsor.io/embed/PKGFLnhDiFvsUA5P4kAXfiPs/kentcdodds/babel-plugin-codegen.svg" style="width: 888px; height: 68px;" alt="Sponsor" /></a>
 
 ## The problem
 
@@ -45,6 +43,31 @@ comment directive) and requiring it as a module. Then it takes whatever the
 export was (which should be a string) and converts that string to an AST node
 and swaps your usage node with the new AST node.
 
+## Table of Contents
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+* [Installation](#installation)
+* [Usage](#usage)
+  * [Template Tag](#template-tag)
+  * [import comment](#import-comment)
+  * [codegen.require](#codegenrequire)
+  * [codegen file comment (`// @codegen`)](#codegen-file-comment--codegen)
+* [Configure with Babel](#configure-with-babel)
+  * [Via `.babelrc` (Recommended)](#via-babelrc-recommended)
+  * [Via CLI](#via-cli)
+  * [Via Node API](#via-node-api)
+* [Use with [`babel-plugin-macros`][babel-plugin-macros]](#use-with-babel-plugin-macrosbabel-plugin-macros)
+* [Caveats](#caveats)
+* [Inspiration](#inspiration)
+* [Other Solutions](#other-solutions)
+* [Contributors](#contributors)
+* [LICENSE](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Installation
 
 This module is distributed via [npm][npm] which is bundled with [node][node] and
@@ -62,6 +85,7 @@ actually replacing it with code (giving you a little bit more power in exchange
 for potentially being a little more confusing).
 
 Important notes:
+
 1. All code run by `codegen` is _not_ run in a sandboxed environment
 2. All code _must_ run synchronously.
 3. All code will be transpiled via `babel-core` directly or `babel-register`
@@ -71,8 +95,6 @@ Important notes:
    elsewhere in your codebase.
 4. The code that's generated may or may not be transpiled (babel plugin ordering
    is tricky business). **You should generate the code that you wish to ship.**
-
-TODO...
 
 ### Template Tag
 
@@ -88,7 +110,7 @@ codegen`
 **After** (assuming `some-code.js` contains the text: `var x = 'Hello world!'`):
 
 ```javascript
-var x = 'Hello world!';
+var x = 'Hello world!'
 ```
 
 `codegen` can also handle _some_ simple dynamic values as well:
@@ -118,7 +140,7 @@ import /* codegen */ './assign-one.js'
 **After** (`assign-one.js` is: `module.exports = 'var x = 1'`):
 
 ```javascript
-var x = 1;
+var x = 1
 ```
 
 You can also provide arguments! In this case, the module you import should
@@ -133,7 +155,7 @@ import /* codegen(3) */ './assign-identity'
 **After** (`assign-identity.js` is: `module.exports = input => 'var x = ' + JSON.stringify(input) + ';'`):
 
 ```javascript
-var x = 3;
+var x = 3
 ```
 
 ### codegen.require
@@ -147,7 +169,7 @@ const x = codegen.require('./es6-identity', 3)
 **After** (`es6-identity.js` is: `export default input => 'var x = ' + JSON.stringify(input) + ';'`):
 
 ```javascript
-const x = 3;
+const x = 3
 ```
 
 ### codegen file comment (`// @codegen`)
@@ -169,9 +191,9 @@ module.exports = array
 **After**:
 
 ```javascript
-export const apple = 'apple';
-export const orange = 'orange';
-export const pear = 'pear';
+export const apple = 'apple'
+export const orange = 'orange'
+export const pear = 'pear'
 ```
 
 ## Configure with Babel
@@ -200,9 +222,9 @@ require('babel-core').transform('code', {
 })
 ```
 
-## Use with [`babel-macros`][babel-macros]
+## Use with [`babel-plugin-macros`][babel-plugin-macros]
 
-Once you've [configured `babel-macros`](https://github.com/kentcdodds/babel-macros/blob/master/other/docs/user.md)
+Once you've [configured `babel-plugin-macros`](https://github.com/kentcdodds/babel-plugin-macros/blob/master/other/docs/user.md)
 you can import/require the codegen macro at `babel-plugin-codegen/macro`.
 For example:
 
@@ -244,8 +266,11 @@ here!
 Thanks goes to these people ([emoji key][emojis]):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-| [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub>Kent C. Dodds</sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds) [📖](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds) 🚇 [⚠️](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds) |
+
+<!-- prettier-ignore -->
+| [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub><b>Kent C. Dodds</b></sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds "Code") [📖](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds "Documentation") [🚇](#infra-kentcdodds "Infrastructure (Hosting, Build-Tools, etc)") [⚠️](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds "Tests") |
 | :---: |
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.
@@ -283,4 +308,4 @@ MIT
 [glamorous]: https://github.com/paypal/glamorous
 [preval]: https://github.com/kentcdodds/babel-plugin-preval
 [codegen.macro]: https://www.npmjs.com/package/codegen.macro
-[babel-macros]: https://github.com/kentcdodds/babel-macros
+[babel-plugin-macros]: https://github.com/kentcdodds/babel-plugin-macros

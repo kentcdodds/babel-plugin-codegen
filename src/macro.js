@@ -1,5 +1,5 @@
 // const printAST = require('ast-pretty-print')
-const {createMacro} = require('babel-macros')
+const {createMacro} = require('babel-plugin-macros')
 const replace = require('./replace')
 
 module.exports = createMacro(codegenMacros)
