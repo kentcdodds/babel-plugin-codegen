@@ -59,7 +59,7 @@ and swaps your usage node with the new AST node.
   * [Via `.babelrc` (Recommended)](#via-babelrc-recommended)
   * [Via CLI](#via-cli)
   * [Via Node API](#via-node-api)
-* [Use with [`babel-plugin-macros`][babel-plugin-macros]](#use-with-babel-plugin-macrosbabel-plugin-macros)
+* [Use with [babel-plugin-macros][babel-plugin-macros]](#use-with-babel-plugin-macrosbabel-plugin-macros)
 * [Caveats](#caveats)
 * [Inspiration](#inspiration)
 * [Other Solutions](#other-solutions)
@@ -222,7 +222,7 @@ require('babel-core').transform('code', {
 })
 ```
 
-## Use with [`babel-plugin-macros`][babel-plugin-macros]
+## Use with [babel-plugin-macros][babel-plugin-macros]
 
 Once you've [configured `babel-plugin-macros`](https://github.com/kentcdodds/babel-plugin-macros/blob/master/other/docs/user.md)
 you can import/require the codegen macro at `babel-plugin-codegen/macro`.
