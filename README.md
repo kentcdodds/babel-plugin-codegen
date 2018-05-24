@@ -60,6 +60,7 @@ and swaps your usage node with the new AST node.
   * [Via CLI](#via-cli)
   * [Via Node API](#via-node-api)
 * [Use with `babel-plugin-macros`](#use-with-babel-plugin-macros)
+  * [APIs not supported by the macro](#apis-not-supported-by-the-macro)
 * [Caveats](#caveats)
 * [Inspiration](#inspiration)
 * [Other Solutions](#other-solutions)
@@ -172,6 +173,8 @@ const x = codegen.require('./es6-identity', 3)
 const x = 3
 ```
 
+> You can also use `codegen.import` as an alias for `codegen.require` 🔥
+
 ### codegen file comment (`// @codegen`)
 
 Using the codegen file comment will update a whole file to be evaluated down to an export.
@@ -239,6 +242,11 @@ export const a = "a";
 export const b = "b";
 export const c = "c";
 ```
+
+### APIs not supported by the macro
+
+* [file comment (`// @codegen`)](#codegen-file-comment--codegen)
+* [import comment](#import-comment)
 
 > You could also use [`codegen.macro`][codegen.macro] if you'd prefer to type less 😀
 
