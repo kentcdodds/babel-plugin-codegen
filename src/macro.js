@@ -24,7 +24,14 @@ function codegenMacros({references, state}) {
   })
 }
 
-function asTag(quasiPath, {file: {opts: {filename}}}) {
+function asTag(
+  quasiPath,
+  {
+    file: {
+      opts: {filename},
+    },
+  },
+) {
   const string = quasiPath.parentPath.get('quasi').evaluate().value
   replace({
     path: quasiPath.parentPath,
@@ -33,7 +40,14 @@ function asTag(quasiPath, {file: {opts: {filename}}}) {
   })
 }
 
-function asFunction(argumentsPaths, {file: {opts: {filename}}}) {
+function asFunction(
+  argumentsPaths,
+  {
+    file: {
+      opts: {filename},
+    },
+  },
+) {
   const string = argumentsPaths[0].evaluate().value
   replace({
     path: argumentsPaths[0].parentPath,
@@ -42,8 +56,14 @@ function asFunction(argumentsPaths, {file: {opts: {filename}}}) {
   })
 }
 
-// eslint-disable-next-line no-unused-vars
-function asJSX({attributes, children}, {file: {opts: {filename}}}) {
+function asJSX(
+  {attributes, children}, //eslint-disable-line no-unused-vars
+  {
+    file: {
+      opts: {filename},
+    },
+  },
+) {
   let string = children[0].node.expression.value
   if (children[0].node.expression.type === 'TemplateLiteral') {
     string = children[0].get('expression').evaluate().value

@@ -8,7 +8,14 @@ function codegenPlugin({transformFromAst}) {
   return {
     name: 'codegen',
     visitor: {
-      Program(path, {file: {opts: {filename}}}) {
+      Program(
+        path,
+        {
+          file: {
+            opts: {filename},
+          },
+        },
+      ) {
         const firstNode = path.node.body[0] || {}
         const comments = firstNode.leadingComments || []
         const isCodegen = comments.some(isCodegenComment)
@@ -25,7 +32,14 @@ function codegenPlugin({transformFromAst}) {
           ? replacement
           : [replacement]
       },
-      TaggedTemplateExpression(path, {file: {opts: {filename}}}) {
+      TaggedTemplateExpression(
+        path,
+        {
+          file: {
+            opts: {filename},
+          },
+        },
+      ) {
         const isCodegen = path.node.tag.name === 'codegen'
         if (!isCodegen) {
           return
@@ -38,7 +52,14 @@ function codegenPlugin({transformFromAst}) {
         }
         replace({path, string, filename})
       },
-      ImportDeclaration(path, {file: {opts: {filename}}}) {
+      ImportDeclaration(
+        path,
+        {
+          file: {
+            opts: {filename},
+          },
+        },
+      ) {
         const isCodegen = looksLike(path, {
           node: {
             source: {
@@ -76,7 +97,14 @@ function codegenPlugin({transformFromAst}) {
           filename,
         })
       },
-      CallExpression(path, {file: {opts: {filename}}}) {
+      CallExpression(
+        path,
+        {
+          file: {
+            opts: {filename},
+          },
+        },
+      ) {
         const isCodegen = looksLike(path, {
           node: {
             callee: {
