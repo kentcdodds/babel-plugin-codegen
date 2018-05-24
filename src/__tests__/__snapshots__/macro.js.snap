@@ -59,6 +59,17 @@ module.exports = 'Hello world!';
 
 `;
 
+exports[`import method 1`] = `
+
+import codegen from '../macro';
+var x = codegen.import('./fixtures/return-one');
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = 1;
+
+`;
+
 exports[`with multiple 1`] = `
 
 import codegen from '../macro'
