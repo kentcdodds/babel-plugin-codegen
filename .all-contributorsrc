@@ -18,6 +18,18 @@
         "infra",
         "test"
       ]
+    },
+    {
+      "login": "mlrawlings",
+      "name": "Michael Rawlings",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1958812?v=4",
+      "profile": "https://github.com/mlrawlings",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
     }
-  ]
+  ],
+  "repoType": "github"
 }
