@@ -123,7 +123,6 @@ function asFunction(path, filename) {
   })
 }
 
-// eslint-disable-next-line no-unused-vars
 function asJSX(path, filename) {
   const children = path.get('children')
   let string = children[0].node.expression.value
