@@ -57,11 +57,22 @@ function asIdentifier(path, filename) {
       return asTag(targetPath, filename)
     }
     case 'CallExpression': {
-      return asFunction(targetPath, filename)
+      const isCallee = targetPath.get('callee') === path
+      if (isCallee) {
+        return asFunction(targetPath, filename)
+      } else {
+        return false
+      }
     }
     case 'JSXOpeningElement': {
       const jsxElement = targetPath.parentPath
       return asJSX(jsxElement, filename)
+    }
+    case 'JSXClosingElement': {
+      // ignore the closing element
+      // but don't mark as unhandled (return false)
+      // we already handled the opening element
+      return true
     }
     case 'MemberExpression': {
       const callPath = targetPath.parentPath
@@ -94,7 +105,10 @@ function asImportCall(path, filename) {
 function asTag(path, filename) {
   const string = path.get('quasi').evaluate().value
   if (!string) {
-    throw new Error('Unable to determine the value of your codegen string')
+    throw path.buildCodeFrameError(
+      'Unable to determine the value of your codegen string',
+      Error,
+    )
   }
   replace({path, string, filename})
 }
@@ -125,5 +139,5 @@ function asJSX(path, filename) {
 
 /*
 eslint
-  complexity: ["error", 7]
+  complexity: ["error", 8]
 */

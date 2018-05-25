@@ -50,5 +50,12 @@ pluginTester({
       import codegen from '../macro';
       var x = codegen.require('./fixtures/return-one');
     `,
+    'invalid usage': {
+      code: `
+        import codegen from '../macro';
+        var x = doSomething(codegen);
+      `,
+      error: true,
+    },
   },
 })

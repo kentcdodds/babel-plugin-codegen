@@ -8,8 +8,10 @@ function codegenMacros({references, state}) {
   const filename = state.file.opts.filename
   references.default.forEach(referencePath => {
     if (asIdentifier(referencePath, filename) === false) {
-      // TODO: throw a helpful error message
-      // the macro was not used properly
+      throw referencePath.buildCodeFrameError(
+        'codegen macro must be used as a tagged template literal, function, jsx, or .require call',
+        Error,
+      )
     }
   })
 }

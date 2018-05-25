@@ -70,6 +70,17 @@ module.exports = 'Hello world!';
 
 `;
 
+exports[`invalid usage 1`] = `
+
+import codegen from '../macro';
+var x = doSomething(codegen);
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+Error: <PROJECT_ROOT>/src/__tests__/macro.js: ../macro: codegen macro must be used as a tagged template literal, function, jsx, or .require call
+
+`;
+
 exports[`with multiple 1`] = `
 
 import codegen from '../macro'
