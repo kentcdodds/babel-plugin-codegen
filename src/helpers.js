@@ -4,13 +4,15 @@ const template = require('babel-template')
 // const printAST = require('ast-pretty-print')
 const requireFromString = require('require-from-string')
 
-exports.replace = replace
-exports.looksLike = looksLike
-exports.isCodegenComment = isCodegenComment
-exports.getReplacement = getReplacement
-exports.stringToAST = stringToAST
-exports.resolveModuleToString = resolveModuleToString
-exports.isPropertyCall = isPropertyCall
+module.exports = {
+  replace,
+  looksLike,
+  isCodegenComment,
+  getReplacement,
+  stringToAST,
+  resolveModuleToString,
+  isPropertyCall,
+}
 
 function getReplacement({string: stringToCodegen, filename}) {
   const {code: transformed} = babel.transform(stringToCodegen, {

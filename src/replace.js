@@ -7,13 +7,15 @@ const {
   isPropertyCall,
 } = require('./helpers')
 
-exports.asTag = asTag
-exports.asJSX = asJSX
-exports.asFunction = asFunction
-exports.asProgram = asProgram
-exports.asImportCall = asImportCall
-exports.asImportDeclaration = asImportDeclaration
-exports.asIdentifier = asIdentifier
+module.exports = {
+  asTag,
+  asJSX,
+  asFunction,
+  asProgram,
+  asImportCall,
+  asImportDeclaration,
+  asIdentifier,
+}
 
 function asProgram(transformFromAst, path, filename) {
   const {code: string} = transformFromAst(path.node)
