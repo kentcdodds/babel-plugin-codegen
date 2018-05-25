@@ -50,10 +50,17 @@ pluginTester({
       import codegen from '../macro';
       var x = codegen.require('./fixtures/return-one');
     `,
-    'invalid usage': {
+    'invalid usage: as fn argument': {
       code: `
         import codegen from '../macro';
         var x = doSomething(codegen);
+      `,
+      error: true,
+    },
+    'invalid usage: missing code string': {
+      code: `
+        import codegen from '../macro';
+        var x = codegen;
       `,
       error: true,
     },
