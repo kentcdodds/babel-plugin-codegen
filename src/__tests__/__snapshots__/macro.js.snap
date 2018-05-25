@@ -46,6 +46,17 @@ const ui = <div>Hi</div>;
 
 `;
 
+exports[`as require call 1`] = `
+
+import codegen from '../macro';
+var x = codegen.require('./fixtures/return-one');
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = 1;
+
+`;
+
 exports[`as tag 1`] = `
 
 import codegen from '../macro'
@@ -56,17 +67,6 @@ codegen\`module.exports = "module.exports = '\${greeting}';"\`
 
 const greeting = 'Hello world!';
 module.exports = 'Hello world!';
-
-`;
-
-exports[`import method 1`] = `
-
-import codegen from '../macro';
-var x = codegen.import('./fixtures/return-one');
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-var x = 1;
 
 `;
 

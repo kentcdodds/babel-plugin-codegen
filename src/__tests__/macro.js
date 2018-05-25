@@ -46,9 +46,9 @@ pluginTester({
 
       codegen\`module.exports = ['a', 'b', 'c'].map(l => 'export const ' + l + ' = ' + JSON.stringify(l)).join(';')\`
     `,
-    'import method': `
+    'as require call': `
       import codegen from '../macro';
-      var x = codegen.import('./fixtures/return-one');
+      var x = codegen.require('./fixtures/return-one');
     `,
   },
 })

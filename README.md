@@ -173,8 +173,6 @@ const x = codegen.require('./es6-identity', 3)
 const x = 3
 ```
 
-> You can also use `codegen.import` as an alias for `codegen.require` 🔥
-
 ### codegen file comment (`// @codegen`)
 
 Using the codegen file comment will update a whole file to be evaluated down to an export.

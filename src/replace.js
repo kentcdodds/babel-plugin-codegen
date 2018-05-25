@@ -63,9 +63,8 @@ function asIdentifier(path, filename) {
     }
     case 'MemberExpression': {
       const callPath = targetPath.parentPath
-      const isImportCall = isPropertyCall(callPath, 'import')
       const isRequireCall = isPropertyCall(callPath, 'require')
-      if (isImportCall || isRequireCall) {
+      if (isRequireCall) {
         return asImportCall(callPath, filename)
       } else {
         return false
