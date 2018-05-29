@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`as function 1`] = `
+exports[`macros as function: as function 1`] = `
 
 const myCodgen = require('../macro')
 myCodgen(\`
@@ -20,20 +20,7 @@ x = {
 
 `;
 
-exports[`as jsx 1`] = `
-
-const Codegen = require('../macro')
-const ui = (
-  <Codegen>{"module.exports = '<div>Hi</div>'"}</Codegen>
-)
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-const ui = <div>Hi</div>;
-
-`;
-
-exports[`as jsx with tag 1`] = `
+exports[`macros as jsx with tag: as jsx with tag 1`] = `
 
 const Codegen = require('../macro')
 const ui = (
@@ -46,7 +33,20 @@ const ui = <div>Hi</div>;
 
 `;
 
-exports[`as require call 1`] = `
+exports[`macros as jsx: as jsx 1`] = `
+
+const Codegen = require('../macro')
+const ui = (
+  <Codegen>{"module.exports = '<div>Hi</div>'"}</Codegen>
+)
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const ui = <div>Hi</div>;
+
+`;
+
+exports[`macros as require call: as require call 1`] = `
 
 import codegen from '../macro';
 var x = codegen.require('./fixtures/return-one');
@@ -57,7 +57,7 @@ var x = 1;
 
 `;
 
-exports[`as tag 1`] = `
+exports[`macros as tag: as tag 1`] = `
 
 import codegen from '../macro'
 const greeting = 'Hello world!'
@@ -70,7 +70,7 @@ module.exports = 'Hello world!';
 
 `;
 
-exports[`invalid usage: as fn argument 1`] = `
+exports[`macros invalid usage: as fn argument: invalid usage: as fn argument 1`] = `
 
 import codegen from '../macro';
 var x = doSomething(codegen);
@@ -81,7 +81,7 @@ Error: <PROJECT_ROOT>/src/__tests__/macro.js: ../macro: codegen macro must be us
 
 `;
 
-exports[`invalid usage: missing code string 1`] = `
+exports[`macros invalid usage: missing code string: invalid usage: missing code string 1`] = `
 
 import codegen from '../macro';
 var x = codegen;
@@ -92,7 +92,7 @@ Error: <PROJECT_ROOT>/src/__tests__/macro.js: ../macro: codegen macro must be us
 
 `;
 
-exports[`with multiple 1`] = `
+exports[`macros with multiple: with multiple 1`] = `
 
 import codegen from '../macro'
 

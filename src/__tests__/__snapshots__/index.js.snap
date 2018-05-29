@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`2. codegen 1`] = `
+exports[`codegen 2. codegen: 2. codegen 1`] = `
 
 const x = codegen\`module.exports = "1"\`
 
@@ -10,7 +10,7 @@ const x = 1;
 
 `;
 
-exports[`3. codegen 1`] = `
+exports[`codegen 3. codegen: 3. codegen 1`] = `
 
 codegen\`module.exports = "var x = 'some directive'"\`
 
@@ -21,7 +21,7 @@ x = 'some directive', void 0;
 
 `;
 
-exports[`4. codegen 1`] = `
+exports[`codegen 4. codegen: 4. codegen 1`] = `
 
 const y = codegen\`
   module.exports = '({booyah: () => "booyah"})'
@@ -35,7 +35,7 @@ const y = {
 
 `;
 
-exports[`5. codegen 1`] = `
+exports[`codegen 5. codegen: 5. codegen 1`] = `
 
 const y = codegen\`module.exports = {}\`
 
@@ -45,7 +45,7 @@ Error: <PROJECT_ROOT>/src/__tests__/index.js: codegen: Must module.exports a str
 
 `;
 
-exports[`6. codegen 1`] = `
+exports[`codegen 6. codegen: 6. codegen 1`] = `
 
 // @codegen
 const array = ['apple', 'orange', 'pear']
@@ -61,7 +61,7 @@ export const pear = "pear";
 
 `;
 
-exports[`7. codegen 1`] = `
+exports[`codegen 7. codegen: 7. codegen 1`] = `
 
 const x = codegen\`module.exports = "\${dynamic}"\`
 
@@ -71,7 +71,7 @@ Error: <PROJECT_ROOT>/src/__tests__/index.js: Unable to determine the value of y
 
 `;
 
-exports[`8. codegen 1`] = `
+exports[`codegen 8. codegen: 8. codegen 1`] = `
 
 import /* codegen */ "./fixtures/assign-one.js"
 
@@ -81,7 +81,7 @@ var x = 1;
 
 `;
 
-exports[`9. codegen 1`] = `
+exports[`codegen 9. codegen: 9. codegen 1`] = `
 
 import /* codegen */ /* this is extra stuff */ "./fixtures/assign-one.js"
 
@@ -91,7 +91,7 @@ var x = 1;
 
 `;
 
-exports[`10. codegen 1`] = `
+exports[`codegen 10. codegen: 10. codegen 1`] = `
 
 import /* this is extra stuff */ /* codegen */ "./fixtures/assign-one.js"
 
@@ -101,7 +101,7 @@ var x = 1;
 
 `;
 
-exports[`12. codegen 1`] = `
+exports[`codegen 12. codegen: 12. codegen 1`] = `
 
 import /* codegen(3) */ "./fixtures/assign-identity"
 
@@ -111,7 +111,7 @@ var x = 3;
 
 `;
 
-exports[`13. codegen 1`] = `
+exports[`codegen 13. codegen: 13. codegen 1`] = `
 
 import /* codegen(3) */ "./fixtures/es6-assign-identity"
 
@@ -121,7 +121,7 @@ var x = 3;
 
 `;
 
-exports[`14. codegen 1`] = `
+exports[`codegen 14. codegen: 14. codegen 1`] = `
 
 import /* codegen("string") */ "./fixtures/assign-identity"
 
@@ -131,7 +131,7 @@ var x = "string";
 
 `;
 
-exports[`15. codegen 1`] = `
+exports[`codegen 15. codegen: 15. codegen 1`] = `
 
 import /* codegen(({object: "argument"})) */ "./fixtures/assign-identity"
 
@@ -143,7 +143,7 @@ var x = {
 
 `;
 
-exports[`16. codegen 1`] = `
+exports[`codegen 16. codegen: 16. codegen 1`] = `
 
 import /* codegen(Number(require("./fixtures/return-one"))) */ "./fixtures/assign-identity"
 
@@ -153,7 +153,7 @@ var x = 1;
 
 `;
 
-exports[`17. codegen 1`] = `
+exports[`codegen 17. codegen: 17. codegen 1`] = `
 
 const x = codegen.require("./fixtures/return-one")
 
@@ -163,7 +163,7 @@ const x = 1;
 
 `;
 
-exports[`18. codegen 1`] = `
+exports[`codegen 18. codegen: 18. codegen 1`] = `
 
 const x = codegen.require("./fixtures/identity", 3)
 
@@ -173,7 +173,7 @@ const x = 3;
 
 `;
 
-exports[`19. codegen 1`] = `
+exports[`codegen 19. codegen: 19. codegen 1`] = `
 
 const x = codegen.require("./fixtures/es6-identity", 3)
 
@@ -183,7 +183,7 @@ const x = 3;
 
 `;
 
-exports[`20. codegen 1`] = `
+exports[`codegen 20. codegen: 20. codegen 1`] = `
 
 const x = codegen.require("./fixtures/identity", SOME_UNKNOWN_VARIABLE)
 
@@ -193,7 +193,7 @@ Error: <PROJECT_ROOT>/src/__tests__/index.js: codegen cannot determine the value
 
 `;
 
-exports[`21. codegen 1`] = `
+exports[`codegen 21. codegen: 21. codegen 1`] = `
 
 const x = codegen.require("./fixtures/return-one", "should not be here...")
 
@@ -203,7 +203,7 @@ Error: <PROJECT_ROOT>/src/__tests__/index.js: \`codegen.require\`-ed module (./f
 
 `;
 
-exports[`22. codegen 1`] = `
+exports[`codegen 22. codegen: 22. codegen 1`] = `
 
 // @codegen
 module.exports = "export default " + String(1 + 2 - 1 - 1)
@@ -214,7 +214,7 @@ export default 1;
 
 `;
 
-exports[`23. codegen 1`] = `
+exports[`codegen 23. codegen: 23. codegen 1`] = `
 
 codegen\`module.exports = ["one", "two"].map((x, i) => \\\`var \\\${x} = "\\\${i + 1}";\\\`).join("\\\\n")\`
 
@@ -225,7 +225,7 @@ var two = "2";
 
 `;
 
-exports[`handles multipe nodes 1`] = `
+exports[`codegen handles multipe nodes: handles multipe nodes 1`] = `
 
 codegen.require('./fixtures/multiple-nodes')
 
@@ -236,7 +236,7 @@ console.log(x);
 
 `;
 
-exports[`handles some dynamic values 1`] = `
+exports[`codegen handles some dynamic values: handles some dynamic values 1`] = `
 
 const three = 3
 const x = codegen\`module.exports = "\${three}"\`
@@ -248,7 +248,7 @@ const x = 3;
 
 `;
 
-exports[`includes code comments 1`] = `
+exports[`codegen includes code comments: includes code comments 1`] = `
 
 codegen\`
   module.exports = \\\`
@@ -289,9 +289,9 @@ function foo() {
 
 `;
 
-exports[`removes the node if nothing is returned 1`] = `
+exports[`codegen removes the node if nothing is returned in require: removes the node if nothing is returned in require 1`] = `
 
-codegen\`module.exports = ''\`
+codegen.require('./fixtures/nothing-exported')
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
@@ -299,9 +299,9 @@ codegen\`module.exports = ''\`
 
 `;
 
-exports[`removes the node if nothing is returned in require 1`] = `
+exports[`codegen removes the node if nothing is returned: removes the node if nothing is returned 1`] = `
 
-codegen.require('./fixtures/nothing-exported')
+codegen\`module.exports = ''\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
