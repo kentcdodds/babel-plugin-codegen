@@ -46,6 +46,17 @@ const ui = <div>Hi</div>;
 
 `;
 
+exports[`as require call 1`] = `
+
+import codegen from '../macro';
+var x = codegen.require('./fixtures/return-one');
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = 1;
+
+`;
+
 exports[`as tag 1`] = `
 
 import codegen from '../macro'
@@ -56,6 +67,28 @@ codegen\`module.exports = "module.exports = '\${greeting}';"\`
 
 const greeting = 'Hello world!';
 module.exports = 'Hello world!';
+
+`;
+
+exports[`invalid usage: as fn argument 1`] = `
+
+import codegen from '../macro';
+var x = doSomething(codegen);
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+Error: <PROJECT_ROOT>/src/__tests__/macro.js: ../macro: codegen macro must be used as a tagged template literal, function, jsx, or .require call
+
+`;
+
+exports[`invalid usage: missing code string 1`] = `
+
+import codegen from '../macro';
+var x = codegen;
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+Error: <PROJECT_ROOT>/src/__tests__/macro.js: ../macro: codegen macro must be used as a tagged template literal, function, jsx, or .require call
 
 `;
 

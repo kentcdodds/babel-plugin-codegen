@@ -12,7 +12,7 @@
 [![downloads][downloads-badge]][npmcharts]
 [![MIT License][license-badge]][license]
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs]
 [![Code of Conduct][coc-badge]][coc]
 [![Babel Macro](https://img.shields.io/badge/babel--macro-%F0%9F%8E%A3-f5da55.svg?style=flat-square)](https://github.com/kentcdodds/babel-plugin-macros)
@@ -60,6 +60,7 @@ and swaps your usage node with the new AST node.
   * [Via CLI](#via-cli)
   * [Via Node API](#via-node-api)
 * [Use with `babel-plugin-macros`](#use-with-babel-plugin-macros)
+  * [APIs not supported by the macro](#apis-not-supported-by-the-macro)
 * [Caveats](#caveats)
 * [Inspiration](#inspiration)
 * [Other Solutions](#other-solutions)
@@ -86,15 +87,15 @@ for potentially being a little more confusing).
 
 Important notes:
 
-1. All code run by `codegen` is _not_ run in a sandboxed environment
-2. All code _must_ run synchronously.
-3. All code will be transpiled via `babel-core` directly or `babel-register`
-   and should follow all of the normal rules for `.babelrc` resolution (the
-   closest `.babelrc` to the file being run is the one that's used). This means
-   you can rely on any babel plugins/transforms that you're used to using
-   elsewhere in your codebase.
-4. The code that's generated may or may not be transpiled (babel plugin ordering
-   is tricky business). **You should generate the code that you wish to ship.**
+1.  All code run by `codegen` is _not_ run in a sandboxed environment
+2.  All code _must_ run synchronously.
+3.  All code will be transpiled via `babel-core` directly or `babel-register`
+    and should follow all of the normal rules for `.babelrc` resolution (the
+    closest `.babelrc` to the file being run is the one that's used). This means
+    you can rely on any babel plugins/transforms that you're used to using
+    elsewhere in your codebase.
+4.  The code that's generated may or may not be transpiled (babel plugin ordering
+    is tricky business). **You should generate the code that you wish to ship.**
 
 ### Template Tag
 
@@ -240,6 +241,11 @@ export const b = "b";
 export const c = "c";
 ```
 
+### APIs not supported by the macro
+
+* [file comment (`// @codegen`)](#codegen-file-comment--codegen)
+* [import comment](#import-comment)
+
 > You could also use [`codegen.macro`][codegen.macro] if you'd prefer to type less 😀
 
 ## Caveats
@@ -268,8 +274,8 @@ Thanks goes to these people ([emoji key][emojis]):
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 
 <!-- prettier-ignore -->
-| [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub><b>Kent C. Dodds</b></sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds "Code") [📖](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds "Documentation") [🚇](#infra-kentcdodds "Infrastructure (Hosting, Build-Tools, etc)") [⚠️](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds "Tests") |
-| :---: |
+| [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub><b>Kent C. Dodds</b></sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds "Code") [📖](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds "Documentation") [🚇](#infra-kentcdodds "Infrastructure (Hosting, Build-Tools, etc)") [⚠️](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds "Tests") | [<img src="https://avatars1.githubusercontent.com/u/1958812?v=4" width="100px;"/><br /><sub><b>Michael Rawlings</b></sub>](https://github.com/mlrawlings)<br />[💻](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=mlrawlings "Code") [📖](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=mlrawlings "Documentation") [⚠️](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=mlrawlings "Tests") |
+| :---: | :---: |
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 

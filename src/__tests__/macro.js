@@ -46,5 +46,23 @@ pluginTester({
 
       codegen\`module.exports = ['a', 'b', 'c'].map(l => 'export const ' + l + ' = ' + JSON.stringify(l)).join(';')\`
     `,
+    'as require call': `
+      import codegen from '../macro';
+      var x = codegen.require('./fixtures/return-one');
+    `,
+    'invalid usage: as fn argument': {
+      code: `
+        import codegen from '../macro';
+        var x = doSomething(codegen);
+      `,
+      error: true,
+    },
+    'invalid usage: missing code string': {
+      code: `
+        import codegen from '../macro';
+        var x = codegen;
+      `,
+      error: true,
+    },
   },
 })
