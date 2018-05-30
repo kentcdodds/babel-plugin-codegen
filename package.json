@@ -16,7 +16,10 @@
     "validate": "kcd-scripts validate",
     "precommit": "kcd-scripts precommit"
   },
-  "files": ["dist", "macro.js"],
+  "files": [
+    "dist",
+    "macro.js"
+  ],
   "keywords": [
     "babel-plugin-macros",
     "babel-plugin",
@@ -40,7 +43,11 @@
   "eslintConfig": {
     "extends": "./node_modules/kcd-scripts/eslint.js"
   },
-  "eslintIgnore": ["node_modules", "coverage", "dist"],
+  "eslintIgnore": [
+    "node_modules",
+    "coverage",
+    "dist"
+  ],
   "babel": {
     "presets": "kcd-scripts/babel"
   },
