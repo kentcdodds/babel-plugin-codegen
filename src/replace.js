@@ -1,10 +1,10 @@
 const {
   getReplacement,
   replace,
-  resolveModuleToString,
-  stringToAST,
+  resolveModuleContents,
   isCodegenComment,
   isPropertyCall,
+  transformAndRequire,
 } = require('./helpers')
 
 module.exports = {
@@ -27,26 +27,24 @@ function asImportDeclaration(path, filename) {
   const codegenComment = path.node.source.leadingComments
     .find(isCodegenComment)
     .value.trim()
+  const {code, resolvedPath} = resolveModuleContents({
+    filename,
+    module: path.node.source.value,
+  })
   let args
   if (codegenComment !== 'codegen') {
-    args = codegenComment.replace(/codegen\((.*)\)/, '$1').trim()
+    args = transformAndRequire(
+      `module.exports = [${codegenComment
+        .replace(/codegen\((.*)\)/, '$1')
+        .trim()}]`,
+      filename,
+    )
   }
-
   replace({
     path,
-    string: `
-      try {
-        // allow for transpilation of required modules
-        require('babel-register')
-      } catch (e) {
-        // ignore error
-      }
-      var mod = require('${path.node.source.value}');
-      mod = mod && mod.__esModule ? mod.default : mod
-      ${args ? `mod = mod(${args})` : ''}
-      module.exports = mod
-    `,
-    filename,
+    string: code,
+    filename: resolvedPath,
+    args,
   })
 }
 
@@ -91,15 +89,20 @@ function asIdentifier(path, filename) {
 
 function asImportCall(path, filename) {
   const [source, ...args] = path.get('arguments')
-  const string = resolveModuleToString({args, filename, source})
-  const replacement = stringToAST(string)
-  if (!replacement) {
-    path.remove()
-  } else if (Array.isArray(replacement)) {
-    path.replaceWithMultiple(replacement)
-  } else {
-    path.replaceWith(replacement)
-  }
+  const {code, resolvedPath} = resolveModuleContents({
+    filename,
+    module: source.node.value,
+  })
+  const argValues = args.map(a => {
+    const result = a.evaluate()
+    if (!result.confident) {
+      throw new Error(
+        'codegen cannot determine the value of an argument in codegen.require',
+      )
+    }
+    return result.value
+  })
+  replace({path, string: code, filename: resolvedPath, args: argValues})
 }
 
 function asTag(path, filename) {

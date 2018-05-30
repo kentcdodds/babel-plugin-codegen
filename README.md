@@ -49,23 +49,23 @@ and swaps your usage node with the new AST node.
 
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-* [Installation](#installation)
-* [Usage](#usage)
-  * [Template Tag](#template-tag)
-  * [import comment](#import-comment)
-  * [codegen.require](#codegenrequire)
-  * [codegen file comment (`// @codegen`)](#codegen-file-comment--codegen)
-* [Configure with Babel](#configure-with-babel)
-  * [Via `.babelrc` (Recommended)](#via-babelrc-recommended)
-  * [Via CLI](#via-cli)
-  * [Via Node API](#via-node-api)
-* [Use with `babel-plugin-macros`](#use-with-babel-plugin-macros)
-  * [APIs not supported by the macro](#apis-not-supported-by-the-macro)
-* [Caveats](#caveats)
-* [Inspiration](#inspiration)
-* [Other Solutions](#other-solutions)
-* [Contributors](#contributors)
-* [LICENSE](#license)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Template Tag](#template-tag)
+  - [import comment](#import-comment)
+  - [codegen.require](#codegenrequire)
+  - [codegen file comment (`// @codegen`)](#codegen-file-comment--codegen)
+- [Configure with Babel](#configure-with-babel)
+  - [Via `.babelrc` (Recommended)](#via-babelrc-recommended)
+  - [Via CLI](#via-cli)
+  - [Via Node API](#via-node-api)
+- [Use with `babel-plugin-macros`](#use-with-babel-plugin-macros)
+  - [APIs not supported by the macro](#apis-not-supported-by-the-macro)
+- [Caveats](#caveats)
+- [Inspiration](#inspiration)
+- [Other Solutions](#other-solutions)
+- [Contributors](#contributors)
+- [LICENSE](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -89,7 +89,7 @@ Important notes:
 
 1.  All code run by `codegen` is _not_ run in a sandboxed environment
 2.  All code _must_ run synchronously.
-3.  All code will be transpiled via `babel-core` directly or `babel-register`
+3.  All code will be transpiled via `babel-core` directly
     and should follow all of the normal rules for `.babelrc` resolution (the
     closest `.babelrc` to the file being run is the one that's used). This means
     you can rely on any babel plugins/transforms that you're used to using
@@ -243,8 +243,8 @@ export const c = "c";
 
 ### APIs not supported by the macro
 
-* [file comment (`// @codegen`)](#codegen-file-comment--codegen)
-* [import comment](#import-comment)
+- [file comment (`// @codegen`)](#codegen-file-comment--codegen)
+- [import comment](#import-comment)
 
 > You could also use [`codegen.macro`][codegen.macro] if you'd prefer to type less 😀
 
