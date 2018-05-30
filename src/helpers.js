@@ -1,6 +1,6 @@
 const p = require('path')
-const babel = require('babel-core')
-const template = require('babel-template')
+const babel = require('@babel/core')
+const template = require('@babel/template').default
 // const printAST = require('ast-pretty-print')
 const requireFromString = require('require-from-string')
 
@@ -29,9 +29,12 @@ function stringToAST(string) {
   return template(string, {
     sourceType: 'module',
     preserveComments: true,
+    placeholderPattern: false,
     plugins: [
-      // add more on request...
+      // add more on request..
       'jsx',
+      'dynamicImport',
+      'objectRestSpread',
     ],
   })()
 }
@@ -63,7 +66,7 @@ function resolveModuleToString({args, filename, source}) {
   const absolutePath = p.join(p.dirname(filename), source.node.value)
   try {
     // allow for transpilation of required modules
-    require('babel-register')
+    require('@babel/register')
   } catch (e) {
     // ignore error
   }

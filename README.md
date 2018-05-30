@@ -89,7 +89,7 @@ Important notes:
 
 1.  All code run by `codegen` is _not_ run in a sandboxed environment
 2.  All code _must_ run synchronously.
-3.  All code will be transpiled via `babel-core` directly or `babel-register`
+3.  All code will be transpiled via `@babel/core` directly or `@babel/register`
     and should follow all of the normal rules for `.babelrc` resolution (the
     closest `.babelrc` to the file being run is the one that's used). This means
     you can rely on any babel plugins/transforms that you're used to using

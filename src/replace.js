@@ -37,7 +37,7 @@ function asImportDeclaration(path, filename) {
     string: `
       try {
         // allow for transpilation of required modules
-        require('babel-register')
+        require('@babel/register')
       } catch (e) {
         // ignore error
       }
