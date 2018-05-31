@@ -62,14 +62,14 @@ function getReplacement({code, filename, args = []}, babel) {
 
 function stringToAST(string, babel) {
   if (typeof string !== 'string') {
-    throw new Error(`codegen: Must module.exports a string.`)
+    throw new Error('codegen: Must module.exports a string.')
   }
   return babel.template(string, {
     sourceType: 'module',
     preserveComments: true,
     placeholderPattern: false,
     plugins: [
-      // add more on request..
+      // add more on request...
       'jsx',
       'dynamicImport',
       'objectRestSpread',
