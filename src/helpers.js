@@ -1,37 +1,68 @@
 const p = require('path')
+const fs = require('fs')
 const requireFromString = require('require-from-string')
 
 module.exports = {
+  transformAndRequire,
   getReplacement,
   stringToAST,
-  applyReplacementToPath,
   replace,
-  resolveModuleToString,
+  resolveModuleContents,
   isCodegenComment,
   isPropertyCall,
   looksLike,
 }
 
-function getReplacement({string: stringToCodegen, filename}, babel) {
+function transformAndRequire({code, filename}, babel) {
   /**
-   * 1. Transform passed in code to generated code
+   * Transform passed in code to generated code
    */
-  const {code: transformedCode} = babel.transform(stringToCodegen, {filename})
+  const {code: transformedCode} = babel.transform(code, {
+    filename,
+  })
 
   /**
-   * 2. Execute the transformed code, as if it were required
+   * Execute the transformed code, as if it were required
    */
-  const codegenedString = requireFromString(transformedCode, filename)
+  const module = requireFromString(transformedCode, filename)
 
   /**
-   * 3. Convert what the code exported (hopefully a string) into AST form
+   * Allow for es modules (default export)
    */
-  return stringToAST(codegenedString, babel)
+  return module && module.__esModule ? module.default : module
+}
+
+function getReplacement({code, filename, args = []}, babel) {
+  /**
+   * Execute the code string to get the exported module
+   */
+  let module = transformAndRequire({code, filename}, babel)
+
+  /**
+   * If a function is epxorted, call it with args
+   */
+  if (typeof module === 'function') {
+    module = module(...args)
+  } else if (args.length) {
+    throw new Error(
+      `codegen module (${p.relative(
+        process.cwd(),
+        filename,
+      )}) cannot accept arguments because it does not export a function. You passed the arguments: ${args.join(
+        ', ',
+      )}`,
+    )
+  }
+
+  /**
+   * Convert whatever we got now (hopefully a string) into AST form
+   */
+  return stringToAST(module, babel)
 }
 
 function stringToAST(string, babel) {
   if (typeof string !== 'string') {
-    throw new Error('codegen: Must module.exports a string.')
+    throw new Error(`codegen: Must module.exports a string.`)
   }
   return babel.template(string, {
     sourceType: 'module',
@@ -56,43 +87,15 @@ function applyReplacementToPath(replacement, path) {
   }
 }
 
-function replace({path, string, filename}, babel) {
-  const replacement = getReplacement({string, filename}, babel)
+function replace({path, code, filename, args}, babel) {
+  const replacement = getReplacement({code, filename, args}, babel)
   applyReplacementToPath(replacement, path)
 }
 
-function resolveModuleToString({args, filename, source}) {
-  const argValues = args.map(a => {
-    const result = a.evaluate()
-    if (!result.confident) {
-      throw new Error(
-        'codegen cannot determine the value of an argument in codegen.require',
-      )
-    }
-    return result.value
-  })
-  const absolutePath = p.join(p.dirname(filename), source.node.value)
-  try {
-    // allow for transpilation of required modules
-    require('@babel/register')
-  } catch (e) {
-    // ignore error
-  }
-  let mod = require(absolutePath)
-  mod = mod && mod.__esModule ? mod.default : mod
-  if (argValues.length) {
-    if (typeof mod !== 'function') {
-      throw new Error(
-        `\`codegen.require\`-ed module (${
-          source.node.value
-        }) cannot accept arguments because it does not export a function. You passed the arguments: ${argValues.join(
-          ', ',
-        )}`,
-      )
-    }
-    mod = mod(...argValues)
-  }
-  return mod
+function resolveModuleContents({filename, module}) {
+  const resolvedPath = p.resolve(p.dirname(filename), module)
+  const code = fs.readFileSync(require.resolve(resolvedPath))
+  return {code, resolvedPath}
 }
 
 function isCodegenComment(comment) {

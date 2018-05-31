@@ -1,19 +1,18 @@
 const {
   getReplacement,
   replace,
-  resolveModuleToString,
-  stringToAST,
+  resolveModuleContents,
   isCodegenComment,
   isPropertyCall,
-  applyReplacementToPath,
+  transformAndRequire,
 } = require('./helpers')
 
 module.exports = getReplacers
 
 function getReplacers(babel) {
   function asProgram(path, filename) {
-    const {code: string} = babel.transformFromAst(path.node)
-    const replacement = getReplacement({string, filename}, babel)
+    const {code} = babel.transformFromAst(path.node)
+    const replacement = getReplacement({code, filename}, babel)
     path.node.body = Array.isArray(replacement) ? replacement : [replacement]
   }
 
@@ -21,26 +20,28 @@ function getReplacers(babel) {
     const codegenComment = path.node.source.leadingComments
       .find(isCodegenComment)
       .value.trim()
+    const {code, resolvedPath} = resolveModuleContents({
+      filename,
+      module: path.node.source.value,
+    })
     let args
     if (codegenComment !== 'codegen') {
-      args = codegenComment.replace(/codegen\((.*)\)/, '$1').trim()
+      args = transformAndRequire(
+        {
+          code: `module.exports = [${codegenComment
+            .replace(/codegen\((.*)\)/, '$1')
+            .trim()}]`,
+          filename,
+        },
+        babel,
+      )
     }
     replace(
       {
         path,
-        string: `
-          try {
-            // allow for transpilation of required modules
-            require('@babel/register')
-          } catch (e) {
-            // ignore error
-          }
-          var mod = require('${path.node.source.value}');
-          mod = mod && mod.__esModule ? mod.default : mod
-          ${args ? `mod = mod(${args})` : ''}
-          module.exports = mod
-      `,
-        filename,
+        code,
+        filename: resolvedPath,
+        args,
       },
       babel,
     )
@@ -87,29 +88,40 @@ function getReplacers(babel) {
 
   function asImportCall(path, filename) {
     const [source, ...args] = path.get('arguments')
-    const string = resolveModuleToString({args, filename, source})
-    const replacement = stringToAST(string, babel)
-    applyReplacementToPath(replacement, path)
+    const {code, resolvedPath} = resolveModuleContents({
+      filename,
+      module: source.node.value,
+    })
+    const argValues = args.map(a => {
+      const result = a.evaluate()
+      if (!result.confident) {
+        throw new Error(
+          'codegen cannot determine the value of an argument in codegen.require',
+        )
+      }
+      return result.value
+    })
+    replace({path, code, filename: resolvedPath, args: argValues}, babel)
   }
 
   function asTag(path, filename) {
-    const string = path.get('quasi').evaluate().value
-    if (!string) {
+    const code = path.get('quasi').evaluate().value
+    if (!code) {
       throw path.buildCodeFrameError(
         'Unable to determine the value of your codegen string',
         Error,
       )
     }
-    replace({path, string, filename}, babel)
+    replace({path, code, filename}, babel)
   }
 
   function asFunction(path, filename) {
     const argumentsPaths = path.get('arguments')
-    const string = argumentsPaths[0].evaluate().value
+    const code = argumentsPaths[0].evaluate().value
     replace(
       {
         path: argumentsPaths[0].parentPath,
-        string,
+        code,
         filename,
       },
       babel,
@@ -118,14 +130,14 @@ function getReplacers(babel) {
 
   function asJSX(path, filename) {
     const children = path.get('children')
-    let string = children[0].node.expression.value
+    let code = children[0].node.expression.value
     if (children[0].node.expression.type === 'TemplateLiteral') {
-      string = children[0].get('expression').evaluate().value
+      code = children[0].get('expression').evaluate().value
     }
     replace(
       {
         path: children[0].parentPath,
-        string,
+        code,
         filename,
       },
       babel,

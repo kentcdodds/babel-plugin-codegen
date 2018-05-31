@@ -199,7 +199,7 @@ const x = codegen.require("./fixtures/return-one", "should not be here...")
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-Error: <PROJECT_ROOT>/src/__tests__/index.js: \`codegen.require\`-ed module (./fixtures/return-one) cannot accept arguments because it does not export a function. You passed the arguments: should not be here...
+Error: <PROJECT_ROOT>/src/__tests__/index.js: codegen module (src/__tests__/fixtures/return-one) cannot accept arguments because it does not export a function. You passed the arguments: should not be here...
 
 `;
 
