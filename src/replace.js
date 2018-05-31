@@ -10,13 +10,13 @@ const {
 module.exports = getReplacers
 
 function getReplacers(babel) {
-  function asProgram(path, filename) {
+  function asProgram(path, filename, parserOpts) {
     const {code} = babel.transformFromAst(path.node)
-    const replacement = getReplacement({code, filename}, babel)
+    const replacement = getReplacement({code, filename, parserOpts}, babel)
     path.node.body = Array.isArray(replacement) ? replacement : [replacement]
   }
 
-  function asImportDeclaration(path, filename) {
+  function asImportDeclaration(path, filename, parserOpts) {
     const codegenComment = path.node.source.leadingComments
       .find(isCodegenComment)
       .value.trim()
@@ -42,12 +42,13 @@ function getReplacers(babel) {
         code,
         filename: resolvedPath,
         args,
+        parserOpts,
       },
       babel,
     )
   }
 
-  function asIdentifier(path, filename) {
+  function asIdentifier(path, filename, parserOpts) {
     const targetPath = path.parentPath
     switch (targetPath.type) {
       case 'TaggedTemplateExpression': {
@@ -56,14 +57,14 @@ function getReplacers(babel) {
       case 'CallExpression': {
         const isCallee = targetPath.get('callee') === path
         if (isCallee) {
-          return asFunction(targetPath, filename)
+          return asFunction(targetPath, filename, parserOpts)
         } else {
           return false
         }
       }
       case 'JSXOpeningElement': {
         const jsxElement = targetPath.parentPath
-        return asJSX(jsxElement, filename)
+        return asJSX(jsxElement, filename, parserOpts)
       }
       case 'JSXClosingElement': {
         // ignore the closing element
@@ -75,7 +76,7 @@ function getReplacers(babel) {
         const callPath = targetPath.parentPath
         const isRequireCall = isPropertyCall(callPath, 'require')
         if (isRequireCall) {
-          return asImportCall(callPath, filename)
+          return asImportCall(callPath, filename, parserOpts)
         } else {
           return false
         }
@@ -86,7 +87,7 @@ function getReplacers(babel) {
     }
   }
 
-  function asImportCall(path, filename) {
+  function asImportCall(path, filename, parserOpts) {
     const [source, ...args] = path.get('arguments')
     const {code, resolvedPath} = resolveModuleContents({
       filename,
@@ -101,10 +102,13 @@ function getReplacers(babel) {
       }
       return result.value
     })
-    replace({path, code, filename: resolvedPath, args: argValues}, babel)
+    replace(
+      {path, code, filename: resolvedPath, args: argValues, parserOpts},
+      babel,
+    )
   }
 
-  function asTag(path, filename) {
+  function asTag(path, filename, parserOpts) {
     const code = path.get('quasi').evaluate().value
     if (!code) {
       throw path.buildCodeFrameError(
@@ -112,7 +116,7 @@ function getReplacers(babel) {
         Error,
       )
     }
-    replace({path, code, filename}, babel)
+    replace({path, code, filename, parserOpts}, babel)
   }
 
   function asFunction(path, filename) {
@@ -128,7 +132,7 @@ function getReplacers(babel) {
     )
   }
 
-  function asJSX(path, filename) {
+  function asJSX(path, filename, parserOpts) {
     const children = path.get('children')
     let code = children[0].node.expression.value
     if (children[0].node.expression.type === 'TemplateLiteral') {
@@ -139,6 +143,7 @@ function getReplacers(babel) {
         path: children[0].parentPath,
         code,
         filename,
+        parserOpts,
       },
       babel,
     )

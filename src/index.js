@@ -12,7 +12,7 @@ function codegenPlugin(babel) {
         path,
         {
           file: {
-            opts: {filename},
+            opts: {filename, parserOpts},
           },
         },
       ) {
@@ -22,27 +22,27 @@ function codegenPlugin(babel) {
 
         if (isCodegen) {
           comments.find(isCodegenComment).value = ' this file was codegened'
-          asProgram(path, filename)
+          asProgram(path, filename, parserOpts)
         }
       },
       Identifier(
         path,
         {
           file: {
-            opts: {filename},
+            opts: {filename, parserOpts},
           },
         },
       ) {
         const isCodegen = path.node.name === 'codegen'
         if (isCodegen) {
-          asIdentifier(path, filename)
+          asIdentifier(path, filename, parserOpts)
         }
       },
       ImportDeclaration(
         path,
         {
           file: {
-            opts: {filename},
+            opts: {filename, parserOpts},
           },
         },
       ) {
@@ -56,7 +56,7 @@ function codegenPlugin(babel) {
           },
         })
         if (isCodegen) {
-          asImportDeclaration(path, filename)
+          asImportDeclaration(path, filename, parserOpts)
         }
       },
     },

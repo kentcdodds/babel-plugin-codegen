@@ -5,7 +5,6 @@ const requireFromString = require('require-from-string')
 module.exports = {
   transformAndRequire,
   getReplacement,
-  stringToAST,
   replace,
   resolveModuleContents,
   isCodegenComment,
@@ -32,7 +31,7 @@ function transformAndRequire({code, filename}, babel) {
   return module && module.__esModule ? module.default : module
 }
 
-function getReplacement({code, filename, args = []}, babel) {
+function getReplacement({code, filename, args = [], parserOpts}, babel) {
   /**
    * Execute the code string to get the exported module
    */
@@ -57,23 +56,26 @@ function getReplacement({code, filename, args = []}, babel) {
   /**
    * Convert whatever we got now (hopefully a string) into AST form
    */
-  return stringToAST(module, babel)
+  return codeToAST({code: module, parserOpts}, babel)
 }
 
-function stringToAST(string, babel) {
-  if (typeof string !== 'string') {
+function codeToAST({code, parserOpts = {}}, babel) {
+  if (typeof code !== 'string') {
     throw new Error('codegen: Must module.exports a string.')
   }
-  return babel.template(string, {
+  const parserPlugins = (parserOpts && parserOpts.plugins) || []
+  return babel.template(code, {
     sourceType: 'module',
-    preserveComments: true,
-    placeholderPattern: false,
     plugins: [
-      // add more on request...
+      // at least enable a minimum set of plugins
       'jsx',
       'dynamicImport',
       'objectRestSpread',
+      ...parserPlugins,
     ],
+    ...parserOpts,
+    preserveComments: true,
+    placeholderPattern: false,
   })()
 }
 
@@ -87,8 +89,8 @@ function applyReplacementToPath(replacement, path) {
   }
 }
 
-function replace({path, code, filename, args}, babel) {
-  const replacement = getReplacement({code, filename, args}, babel)
+function replace({path, code, filename, args, parserOpts}, babel) {
+  const replacement = getReplacement({code, filename, args, parserOpts}, babel)
   applyReplacementToPath(replacement, path)
 }
 
