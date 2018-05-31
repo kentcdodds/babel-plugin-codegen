@@ -225,6 +225,17 @@ var two = "2";
 
 `;
 
+exports[`codegen 27. codegen: 27. codegen 1`] = `
+
+codegen\`module.exports = "var ALLCAPS = 'ALLCAPS'"\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var ALLCAPS;
+ALLCAPS = 'ALLCAPS', void 0;
+
+`;
+
 exports[`codegen handles multipe nodes: handles multipe nodes 1`] = `
 
 codegen.require('./fixtures/multiple-nodes')

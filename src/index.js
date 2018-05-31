@@ -1,9 +1,10 @@
-const {asProgram, asIdentifier, asImportDeclaration} = require('./replace')
+const getReplacers = require('./replace')
 const {isCodegenComment, looksLike} = require('./helpers')
 
 module.exports = codegenPlugin
 
-function codegenPlugin({transformFromAst}) {
+function codegenPlugin(babel) {
+  const {asProgram, asIdentifier, asImportDeclaration} = getReplacers(babel)
   return {
     name: 'codegen',
     visitor: {
@@ -21,7 +22,7 @@ function codegenPlugin({transformFromAst}) {
 
         if (isCodegen) {
           comments.find(isCodegenComment).value = ' this file was codegened'
-          asProgram(transformFromAst, path, filename)
+          asProgram(path, filename)
         }
       },
       Identifier(

@@ -1,32 +1,39 @@
 const p = require('path')
-const babel = require('@babel/core')
-const template = require('@babel/template').default
-// const printAST = require('ast-pretty-print')
 const requireFromString = require('require-from-string')
 
 module.exports = {
-  replace,
-  looksLike,
-  isCodegenComment,
   getReplacement,
   stringToAST,
+  applyReplacementToPath,
+  replace,
   resolveModuleToString,
+  isCodegenComment,
   isPropertyCall,
+  looksLike,
 }
 
-function getReplacement({string: stringToCodegen, filename}) {
-  const {code: transformed} = babel.transform(stringToCodegen, {
-    filename,
-  })
-  const val = requireFromString(transformed, filename)
-  return stringToAST(val)
+function getReplacement({string: stringToCodegen, filename}, babel) {
+  /**
+   * 1. Transform passed in code to generated code
+   */
+  const {code: transformedCode} = babel.transform(stringToCodegen, {filename})
+
+  /**
+   * 2. Execute the transformed code, as if it were required
+   */
+  const codegenedString = requireFromString(transformedCode, filename)
+
+  /**
+   * 3. Convert what the code exported (hopefully a string) into AST form
+   */
+  return stringToAST(codegenedString, babel)
 }
 
-function stringToAST(string) {
+function stringToAST(string, babel) {
   if (typeof string !== 'string') {
     throw new Error('codegen: Must module.exports a string.')
   }
-  return template(string, {
+  return babel.template(string, {
     sourceType: 'module',
     preserveComments: true,
     placeholderPattern: false,
@@ -39,11 +46,7 @@ function stringToAST(string) {
   })()
 }
 
-function replace({path, string, filename}) {
-  const replacement = getReplacement({
-    string,
-    filename,
-  })
+function applyReplacementToPath(replacement, path) {
   if (!replacement) {
     path.remove()
   } else if (Array.isArray(replacement)) {
@@ -51,6 +54,11 @@ function replace({path, string, filename}) {
   } else {
     path.replaceWith(replacement)
   }
+}
+
+function replace({path, string, filename}, babel) {
+  const replacement = getReplacement({string, filename}, babel)
+  applyReplacementToPath(replacement, path)
 }
 
 function resolveModuleToString({args, filename, source}) {

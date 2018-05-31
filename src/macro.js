@@ -1,10 +1,11 @@
 // const printAST = require('ast-pretty-print')
 const {createMacro} = require('babel-plugin-macros')
-const {asIdentifier} = require('./replace')
+const getReplacers = require('./replace')
 
 module.exports = createMacro(codegenMacros)
 
-function codegenMacros({references, state}) {
+function codegenMacros({references, state, babel}) {
+  const {asIdentifier} = getReplacers(babel)
   const filename = state.file.opts.filename
   references.default.forEach(referencePath => {
     if (asIdentifier(referencePath, filename) === false) {

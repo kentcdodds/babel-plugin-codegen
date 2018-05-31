@@ -89,6 +89,7 @@ pluginTester({
         // @codegen
         /* comment */`,
     },
+    'codegen`module.exports = "var ALLCAPS = \'ALLCAPS\'"`',
   ],
 })
 

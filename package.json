@@ -31,7 +31,6 @@
   "dependencies": {
     "@babel/core": "^7.0.0-beta.49",
     "@babel/register": "^7.0.0-beta.49",
-    "@babel/template": "^7.0.0-beta.49",
     "babel-plugin-macros": "^2.2.0",
     "require-from-string": "^2.0.2"
   },
