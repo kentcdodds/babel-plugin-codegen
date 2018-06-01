@@ -134,5 +134,33 @@ pluginTester({
         \\\`
       \`
     `,
+    'accepts babels parser options for generated code': {
+      babelOptions: {
+        filename: __filename,
+        parserOpts: {plugins: ['flow', 'doExpressions']},
+      },
+      code: `
+        // @codegen
+        module.exports = "var fNum: number = do { if(true) {100} else {200} };"
+      `,
+    },
+    'jsx works without passed parserOpts': {
+      code: `
+        // @codegen
+        module.exports = "var jsxElement = <A b={1} />;"
+      `,
+    },
+    'objectRestSpread works without passed parserOpts': {
+      code: `
+        // @codegen
+        module.exports = "var spreadedObj = { b, ...c };"
+      `,
+    },
+    'dynamicImport works without passed parserOpts': {
+      code: `
+        // @codegen
+        module.exports = "import('./guy').then(() => 'yeah!');"
+      `,
+    },
   },
 })
