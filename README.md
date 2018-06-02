@@ -89,14 +89,12 @@ Important notes:
 
 1.  All code run by `codegen` is _not_ run in a sandboxed environment
 2.  All code _must_ run synchronously.
-3.  All code will be transpiled via the same instance of babel, which this
-    plugin is called with. Therefore it should follow all of the normal rules
-    for `.babelrc` resolution (the closest `.babelrc` to the file being run is
-    the one that's used). This means you can rely on any babel
-    plugins/transforms that you're used to using elsewhere in your codebase.
-4.  The code that's generated may or may not be transpiled (babel plugin
-    ordering is tricky business). **You should generate the code that you wish
-    to ship.**
+3.  All code will be transpiled via the same instance of babel this plugin is
+    called with, thus inheriting all presets and plugins. This means you can
+    rely on any babel plugins/transforms that you're used to using elsewhere in
+    your codebase.
+4.  The code that's generated might be transpiled. Please check the output to
+    make sure. (babel plugin ordering is tricky business 😇)
 
 ### Template Tag
 
