@@ -11,9 +11,7 @@ function codegenPlugin(babel) {
       Program(
         path,
         {
-          file: {
-            opts: {filename, parserOpts},
-          },
+          file: {opts: fileOpts},
         },
       ) {
         const firstNode = path.node.body[0] || {}
@@ -22,28 +20,24 @@ function codegenPlugin(babel) {
 
         if (isCodegen) {
           comments.find(isCodegenComment).value = ' this file was codegened'
-          asProgram(path, filename, parserOpts)
+          asProgram(path, fileOpts)
         }
       },
       Identifier(
         path,
         {
-          file: {
-            opts: {filename, parserOpts},
-          },
+          file: {opts: fileOpts},
         },
       ) {
         const isCodegen = path.node.name === 'codegen'
         if (isCodegen) {
-          asIdentifier(path, filename, parserOpts)
+          asIdentifier(path, fileOpts)
         }
       },
       ImportDeclaration(
         path,
         {
-          file: {
-            opts: {filename, parserOpts},
-          },
+          file: {opts: fileOpts},
         },
       ) {
         const isCodegen = looksLike(path, {
@@ -56,7 +50,7 @@ function codegenPlugin(babel) {
           },
         })
         if (isCodegen) {
-          asImportDeclaration(path, filename, parserOpts)
+          asImportDeclaration(path, fileOpts)
         }
       },
     },

@@ -12,18 +12,23 @@ module.exports = {
   looksLike,
 }
 
-function transformAndRequire({code, filename}, babel) {
+function transformAndRequire(
+  {code, fileOpts, fileOpts: {filename, plugins, presets}},
+  babel,
+) {
   /**
    * Transform passed in code to generated code
    */
   const {code: transformedCode} = babel.transform(code, {
     filename,
+    plugins,
+    presets,
   })
 
   /**
    * Execute the transformed code, as if it were required
    */
-  const module = requireFromString(transformedCode, filename)
+  const module = requireFromString(transformedCode, fileOpts.filename)
 
   /**
    * Allow for es modules (default export)
@@ -31,11 +36,11 @@ function transformAndRequire({code, filename}, babel) {
   return module && module.__esModule ? module.default : module
 }
 
-function getReplacement({code, filename, args = [], parserOpts}, babel) {
+function getReplacement({code, fileOpts, args = []}, babel) {
   /**
    * Execute the code string to get the exported module
    */
-  let module = transformAndRequire({code, filename}, babel)
+  let module = transformAndRequire({code, fileOpts}, babel)
 
   /**
    * If a function is epxorted, call it with args
@@ -46,7 +51,7 @@ function getReplacement({code, filename, args = [], parserOpts}, babel) {
     throw new Error(
       `codegen module (${p.relative(
         process.cwd(),
-        filename,
+        fileOpts.filename,
       )}) cannot accept arguments because it does not export a function. You passed the arguments: ${args.join(
         ', ',
       )}`,
@@ -56,7 +61,7 @@ function getReplacement({code, filename, args = [], parserOpts}, babel) {
   /**
    * Convert whatever we got now (hopefully a string) into AST form
    */
-  return codeToAST({code: module, parserOpts}, babel)
+  return codeToAST({code: module, parserOpts: fileOpts.parserOpts}, babel)
 }
 
 function codeToAST({code, parserOpts = {}}, babel) {
@@ -65,6 +70,9 @@ function codeToAST({code, parserOpts = {}}, babel) {
   }
   const parserPlugins = (parserOpts && parserOpts.plugins) || []
   return babel.template(code, {
+    preserveComments: true,
+    placeholderPattern: false,
+    ...parserOpts,
     sourceType: 'module',
     plugins: [
       // at least enable a minimum set of plugins
@@ -73,9 +81,6 @@ function codeToAST({code, parserOpts = {}}, babel) {
       'objectRestSpread',
       ...parserPlugins,
     ],
-    ...parserOpts,
-    preserveComments: true,
-    placeholderPattern: false,
   })()
 }
 
@@ -89,8 +94,8 @@ function applyReplacementToPath(replacement, path) {
   }
 }
 
-function replace({path, code, filename, args, parserOpts}, babel) {
-  const replacement = getReplacement({code, filename, args, parserOpts}, babel)
+function replace({path, code, fileOpts, args}, babel) {
+  const replacement = getReplacement({code, args, fileOpts}, babel)
   applyReplacementToPath(replacement, path)
 }
 
