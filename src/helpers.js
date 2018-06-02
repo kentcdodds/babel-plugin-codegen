@@ -68,19 +68,11 @@ function codeToAST({code, parserOpts = {}}, babel) {
   if (typeof code !== 'string') {
     throw new Error('codegen: Must module.exports a string.')
   }
-  const parserPlugins = (parserOpts && parserOpts.plugins) || []
   return babel.template(code, {
     preserveComments: true,
     placeholderPattern: false,
     ...parserOpts,
     sourceType: 'module',
-    plugins: [
-      // at least enable a minimum set of plugins
-      'jsx',
-      'dynamicImport',
-      'objectRestSpread',
-      ...parserPlugins,
-    ],
   })()
 }
 

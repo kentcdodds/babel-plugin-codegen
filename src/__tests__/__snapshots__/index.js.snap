@@ -253,17 +253,6 @@ var fNum: number = do {
 
 `;
 
-exports[`codegen dynamicImport works without passed parserOpts: dynamicImport works without passed parserOpts 1`] = `
-
-// @codegen
-module.exports = "import('./guy').then(() => 'yeah!');"
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-import('./guy').then(() => 'yeah!');
-
-`;
-
 exports[`codegen handles multipe nodes: handles multipe nodes 1`] = `
 
 codegen.require('./fixtures/multiple-nodes')
@@ -325,31 +314,6 @@ console.log(foo()); /**
 function foo() {
   return 'foo';
 }
-
-`;
-
-exports[`codegen jsx works without passed parserOpts: jsx works without passed parserOpts 1`] = `
-
-// @codegen
-module.exports = "var jsxElement = <A b={1} />;"
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-var jsxElement = <A b={1} />;
-
-`;
-
-exports[`codegen objectRestSpread works without passed parserOpts: objectRestSpread works without passed parserOpts 1`] = `
-
-// @codegen
-module.exports = "var spreadedObj = { b, ...c };"
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-var spreadedObj = {
-  b,
-  ...c
-};
 
 `;
 
