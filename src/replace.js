@@ -1,139 +1,176 @@
 const {
   getReplacement,
   replace,
-  resolveModuleToString,
-  stringToAST,
+  resolveModuleContents,
   isCodegenComment,
   isPropertyCall,
+  transformAndRequire,
 } = require('./helpers')
 
-module.exports = {
-  asTag,
-  asJSX,
-  asFunction,
-  asProgram,
-  asImportCall,
-  asImportDeclaration,
-  asIdentifier,
-}
+module.exports = getReplacers
 
-function asProgram(transformFromAst, path, filename) {
-  const {code: string} = transformFromAst(path.node)
-  const replacement = getReplacement({string, filename})
-  path.node.body = Array.isArray(replacement) ? replacement : [replacement]
-}
-
-function asImportDeclaration(path, filename) {
-  const codegenComment = path.node.source.leadingComments
-    .find(isCodegenComment)
-    .value.trim()
-  let args
-  if (codegenComment !== 'codegen') {
-    args = codegenComment.replace(/codegen\((.*)\)/, '$1').trim()
+function getReplacers(babel) {
+  function asProgram(path, fileOpts) {
+    const {code} = babel.transformFromAst(path.node, {
+      filename: fileOpts.filename,
+      plugins: fileOpts.plugins,
+      presets: fileOpts.presets,
+    })
+    const replacement = getReplacement({code, fileOpts}, babel)
+    path.node.body = Array.isArray(replacement) ? replacement : [replacement]
   }
 
-  replace({
-    path,
-    string: `
-      try {
-        // allow for transpilation of required modules
-        require('babel-register')
-      } catch (e) {
-        // ignore error
-      }
-      var mod = require('${path.node.source.value}');
-      mod = mod && mod.__esModule ? mod.default : mod
-      ${args ? `mod = mod(${args})` : ''}
-      module.exports = mod
-    `,
-    filename,
-  })
-}
-
-function asIdentifier(path, filename) {
-  const targetPath = path.parentPath
-  switch (targetPath.type) {
-    case 'TaggedTemplateExpression': {
-      return asTag(targetPath, filename)
+  function asImportDeclaration(path, fileOpts) {
+    const codegenComment = path.node.source.leadingComments
+      .find(isCodegenComment)
+      .value.trim()
+    const {code, resolvedPath} = resolveModuleContents({
+      filename: fileOpts.filename,
+      module: path.node.source.value,
+    })
+    let args
+    if (codegenComment !== 'codegen') {
+      args = transformAndRequire(
+        {
+          code: `module.exports = [${codegenComment
+            .replace(/codegen\((.*)\)/, '$1')
+            .trim()}]`,
+          fileOpts,
+        },
+        babel,
+      )
     }
-    case 'CallExpression': {
-      const isCallee = targetPath.get('callee') === path
-      if (isCallee) {
-        return asFunction(targetPath, filename)
-      } else {
-        return false
-      }
-    }
-    case 'JSXOpeningElement': {
-      const jsxElement = targetPath.parentPath
-      return asJSX(jsxElement, filename)
-    }
-    case 'JSXClosingElement': {
-      // ignore the closing element
-      // but don't mark as unhandled (return false)
-      // we already handled the opening element
-      return true
-    }
-    case 'MemberExpression': {
-      const callPath = targetPath.parentPath
-      const isRequireCall = isPropertyCall(callPath, 'require')
-      if (isRequireCall) {
-        return asImportCall(callPath, filename)
-      } else {
-        return false
-      }
-    }
-    default: {
-      return false
-    }
-  }
-}
-
-function asImportCall(path, filename) {
-  const [source, ...args] = path.get('arguments')
-  const string = resolveModuleToString({args, filename, source})
-  const replacement = stringToAST(string)
-  if (!replacement) {
-    path.remove()
-  } else if (Array.isArray(replacement)) {
-    path.replaceWithMultiple(replacement)
-  } else {
-    path.replaceWith(replacement)
-  }
-}
-
-function asTag(path, filename) {
-  const string = path.get('quasi').evaluate().value
-  if (!string) {
-    throw path.buildCodeFrameError(
-      'Unable to determine the value of your codegen string',
-      Error,
+    replace(
+      {
+        path,
+        code,
+        fileOpts: {
+          ...fileOpts,
+          filename: resolvedPath,
+        },
+        args,
+      },
+      babel,
     )
   }
-  replace({path, string, filename})
-}
 
-function asFunction(path, filename) {
-  const argumentsPaths = path.get('arguments')
-  const string = argumentsPaths[0].evaluate().value
-  replace({
-    path: argumentsPaths[0].parentPath,
-    string,
-    filename,
-  })
-}
-
-function asJSX(path, filename) {
-  const children = path.get('children')
-  let string = children[0].node.expression.value
-  if (children[0].node.expression.type === 'TemplateLiteral') {
-    string = children[0].get('expression').evaluate().value
+  function asIdentifier(path, fileOpts) {
+    const targetPath = path.parentPath
+    switch (targetPath.type) {
+      case 'TaggedTemplateExpression': {
+        return asTag(targetPath, fileOpts)
+      }
+      case 'CallExpression': {
+        const isCallee = targetPath.get('callee') === path
+        if (isCallee) {
+          return asFunction(targetPath, fileOpts)
+        } else {
+          return false
+        }
+      }
+      case 'JSXOpeningElement': {
+        const jsxElement = targetPath.parentPath
+        return asJSX(jsxElement, fileOpts)
+      }
+      case 'JSXClosingElement': {
+        // ignore the closing element
+        // but don't mark as unhandled (return false)
+        // we already handled the opening element
+        return true
+      }
+      case 'MemberExpression': {
+        const callPath = targetPath.parentPath
+        const isRequireCall = isPropertyCall(callPath, 'require')
+        if (isRequireCall) {
+          return asImportCall(callPath, fileOpts)
+        } else {
+          return false
+        }
+      }
+      default: {
+        return false
+      }
+    }
   }
-  replace({
-    path: children[0].parentPath,
-    string,
-    filename,
-  })
+
+  function asImportCall(path, fileOpts) {
+    const [source, ...args] = path.get('arguments')
+    const {code, resolvedPath} = resolveModuleContents({
+      filename: fileOpts.filename,
+      module: source.node.value,
+    })
+    const argValues = args.map(a => {
+      const result = a.evaluate()
+      if (!result.confident) {
+        throw new Error(
+          'codegen cannot determine the value of an argument in codegen.require',
+        )
+      }
+      return result.value
+    })
+    replace(
+      {
+        path,
+        code,
+        fileOpts: {
+          ...fileOpts,
+          filename: resolvedPath,
+        },
+        args: argValues,
+      },
+      babel,
+    )
+  }
+
+  function asTag(path, fileOpts) {
+    const code = path.get('quasi').evaluate().value
+    if (!code) {
+      throw path.buildCodeFrameError(
+        'Unable to determine the value of your codegen string',
+        Error,
+      )
+    }
+    replace({path, code, fileOpts}, babel)
+  }
+
+  function asFunction(path, fileOpts) {
+    const argumentsPaths = path.get('arguments')
+    const code = argumentsPaths[0].evaluate().value
+    replace(
+      {
+        path: argumentsPaths[0].parentPath,
+        code,
+        fileOpts,
+      },
+      babel,
+    )
+  }
+
+  function asJSX(path, fileOpts) {
+    const children = path.get('children')
+    let code = children[0].node.expression.value
+    if (children[0].node.expression.type === 'TemplateLiteral') {
+      code = children[0].get('expression').evaluate().value
+    }
+    replace(
+      {
+        path: children[0].parentPath,
+        code,
+        fileOpts,
+      },
+      babel,
+    )
+  }
+
+  return {
+    asTag,
+    asJSX,
+    asFunction,
+    asProgram,
+    asImportCall,
+    asImportDeclaration,
+    asIdentifier,
+  }
 }
 
 /*

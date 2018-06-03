@@ -1,46 +1,78 @@
 const p = require('path')
-const babel = require('babel-core')
-const template = require('babel-template')
-// const printAST = require('ast-pretty-print')
+const fs = require('fs')
 const requireFromString = require('require-from-string')
 
 module.exports = {
-  replace,
-  looksLike,
-  isCodegenComment,
+  transformAndRequire,
   getReplacement,
-  stringToAST,
-  resolveModuleToString,
+  replace,
+  resolveModuleContents,
+  isCodegenComment,
   isPropertyCall,
+  looksLike,
 }
 
-function getReplacement({string: stringToCodegen, filename}) {
-  const {code: transformed} = babel.transform(stringToCodegen, {
+function transformAndRequire(
+  {code, fileOpts, fileOpts: {filename, plugins, presets}},
+  babel,
+) {
+  /**
+   * Transform passed in code to generated code
+   */
+  const {code: transformedCode} = babel.transform(code, {
     filename,
+    plugins,
+    presets,
   })
-  const val = requireFromString(transformed, filename)
-  return stringToAST(val)
+
+  /**
+   * Execute the transformed code, as if it were required
+   */
+  const module = requireFromString(transformedCode, fileOpts.filename)
+
+  /**
+   * Allow for es modules (default export)
+   */
+  return module && module.__esModule ? module.default : module
 }
 
-function stringToAST(string) {
-  if (typeof string !== 'string') {
+function getReplacement({code, fileOpts, args = []}, babel) {
+  /**
+   * Execute the code string to get the exported module
+   */
+  let module = transformAndRequire({code, fileOpts}, babel)
+
+  /**
+   * If a function is epxorted, call it with args
+   */
+  if (typeof module === 'function') {
+    module = module(...args)
+  } else if (args.length) {
+    throw new Error(
+      `codegen module (${p.relative(
+        process.cwd(),
+        fileOpts.filename,
+      )}) cannot accept arguments because it does not export a function. You passed the arguments: ${args.join(
+        ', ',
+      )}`,
+    )
+  }
+
+  /**
+   * Convert whatever we got now (hopefully a string) into AST form
+   */
+  if (typeof module !== 'string') {
     throw new Error('codegen: Must module.exports a string.')
   }
-  return template(string, {
-    sourceType: 'module',
+  return babel.template(module, {
     preserveComments: true,
-    plugins: [
-      // add more on request...
-      'jsx',
-    ],
+    placeholderPattern: false,
+    ...fileOpts.parserOpts,
+    sourceType: 'module',
   })()
 }
 
-function replace({path, string, filename}) {
-  const replacement = getReplacement({
-    string,
-    filename,
-  })
+function applyReplacementToPath(replacement, path) {
   if (!replacement) {
     path.remove()
   } else if (Array.isArray(replacement)) {
@@ -50,38 +82,15 @@ function replace({path, string, filename}) {
   }
 }
 
-function resolveModuleToString({args, filename, source}) {
-  const argValues = args.map(a => {
-    const result = a.evaluate()
-    if (!result.confident) {
-      throw new Error(
-        'codegen cannot determine the value of an argument in codegen.require',
-      )
-    }
-    return result.value
-  })
-  const absolutePath = p.join(p.dirname(filename), source.node.value)
-  try {
-    // allow for transpilation of required modules
-    require('babel-register')
-  } catch (e) {
-    // ignore error
-  }
-  let mod = require(absolutePath)
-  mod = mod && mod.__esModule ? mod.default : mod
-  if (argValues.length) {
-    if (typeof mod !== 'function') {
-      throw new Error(
-        `\`codegen.require\`-ed module (${
-          source.node.value
-        }) cannot accept arguments because it does not export a function. You passed the arguments: ${argValues.join(
-          ', ',
-        )}`,
-      )
-    }
-    mod = mod(...argValues)
-  }
-  return mod
+function replace({path, code, fileOpts, args}, babel) {
+  const replacement = getReplacement({code, args, fileOpts}, babel)
+  applyReplacementToPath(replacement, path)
+}
+
+function resolveModuleContents({filename, module}) {
+  const resolvedPath = p.resolve(p.dirname(filename), module)
+  const code = fs.readFileSync(require.resolve(resolvedPath))
+  return {code, resolvedPath}
 }
 
 function isCodegenComment(comment) {

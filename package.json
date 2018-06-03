@@ -29,10 +29,7 @@
   "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
   "license": "MIT",
   "dependencies": {
-    "babel-core": "^6.26.3",
     "babel-plugin-macros": "^2.2.1",
-    "babel-register": "^6.26.0",
-    "babel-template": "^6.26.0",
     "require-from-string": "^2.0.2"
   },
   "devDependencies": {

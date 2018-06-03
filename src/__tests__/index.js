@@ -89,6 +89,7 @@ pluginTester({
         // @codegen
         /* comment */`,
     },
+    'codegen`module.exports = "var ALLCAPS = \'ALLCAPS\'"`',
   ],
 })
 
@@ -133,5 +134,15 @@ pluginTester({
         \\\`
       \`
     `,
+    'accepts babels parser options for generated code': {
+      babelOptions: {
+        filename: __filename,
+        parserOpts: {plugins: ['flow', 'doExpressions']},
+      },
+      code: `
+        // @codegen
+        module.exports = "var fNum: number = do { if(true) {100} else {200} };"
+      `,
+    },
   },
 })

@@ -8,13 +8,11 @@
 
 [![Build Status][build-badge]][build]
 [![Code Coverage][coverage-badge]][coverage]
-[![version][version-badge]][package]
-[![downloads][downloads-badge]][npmcharts]
+[![version][version-badge]][package] [![downloads][downloads-badge]][npmcharts]
 [![MIT License][license-badge]][license]
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
-[![PRs Welcome][prs-badge]][prs]
-[![Code of Conduct][coc-badge]][coc]
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors)
+[![PRs Welcome][prs-badge]][prs] [![Code of Conduct][coc-badge]][coc]
 [![Babel Macro](https://img.shields.io/badge/babel--macro-%F0%9F%8E%A3-f5da55.svg?style=flat-square)](https://github.com/kentcdodds/babel-plugin-macros)
 
 [![Watch on GitHub][github-watch-badge]][github-watch]
@@ -30,7 +28,9 @@ maintain the exports in my source file. So someone created a post-build script
 to concatenate them to the end of the file. I built this plugin so I could do
 that without having an ad-hoc post-build script.
 
-> Read ["Make maintainable workarounds with codegen 💥"](https://blog.kentcdodds.com/make-maintainable-workarounds-with-codegen-d34163a09c13) for more inspiration
+> Read
+> ["Make maintainable workarounds with codegen 💥"](https://blog.kentcdodds.com/make-maintainable-workarounds-with-codegen-d34163a09c13)
+> for more inspiration
 
 ## This solution
 
@@ -49,23 +49,23 @@ and swaps your usage node with the new AST node.
 
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-* [Installation](#installation)
-* [Usage](#usage)
-  * [Template Tag](#template-tag)
-  * [import comment](#import-comment)
-  * [codegen.require](#codegenrequire)
-  * [codegen file comment (`// @codegen`)](#codegen-file-comment--codegen)
-* [Configure with Babel](#configure-with-babel)
-  * [Via `.babelrc` (Recommended)](#via-babelrc-recommended)
-  * [Via CLI](#via-cli)
-  * [Via Node API](#via-node-api)
-* [Use with `babel-plugin-macros`](#use-with-babel-plugin-macros)
-  * [APIs not supported by the macro](#apis-not-supported-by-the-macro)
-* [Caveats](#caveats)
-* [Inspiration](#inspiration)
-* [Other Solutions](#other-solutions)
-* [Contributors](#contributors)
-* [LICENSE](#license)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Template Tag](#template-tag)
+  - [import comment](#import-comment)
+  - [codegen.require](#codegenrequire)
+  - [codegen file comment (`// @codegen`)](#codegen-file-comment--codegen)
+- [Configure with Babel](#configure-with-babel)
+  - [Via `.babelrc` (Recommended)](#via-babelrc-recommended)
+  - [Via CLI](#via-cli)
+  - [Via Node API](#via-node-api)
+- [Use with `babel-plugin-macros`](#use-with-babel-plugin-macros)
+  - [APIs not supported by the macro](#apis-not-supported-by-the-macro)
+- [Caveats](#caveats)
+- [Inspiration](#inspiration)
+- [Other Solutions](#other-solutions)
+- [Contributors](#contributors)
+- [LICENSE](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -89,13 +89,12 @@ Important notes:
 
 1.  All code run by `codegen` is _not_ run in a sandboxed environment
 2.  All code _must_ run synchronously.
-3.  All code will be transpiled via `babel-core` directly or `babel-register`
-    and should follow all of the normal rules for `.babelrc` resolution (the
-    closest `.babelrc` to the file being run is the one that's used). This means
-    you can rely on any babel plugins/transforms that you're used to using
-    elsewhere in your codebase.
-4.  The code that's generated may or may not be transpiled (babel plugin ordering
-    is tricky business). **You should generate the code that you wish to ship.**
+3.  All code will be transpiled via the same instance of babel this plugin is
+    called with, thus inheriting all presets and plugins. This means you can
+    rely on any babel plugins/transforms that you're used to using elsewhere in
+    your codebase.
+4.  The code that's generated might be transpiled. Please check the output to
+    make sure. (babel plugin ordering is tricky business 😇)
 
 ### Template Tag
 
@@ -153,7 +152,8 @@ export a function which accepts those arguments and returns a string.
 import /* codegen(3) */ './assign-identity'
 ```
 
-**After** (`assign-identity.js` is: `module.exports = input => 'var x = ' + JSON.stringify(input) + ';'`):
+**After** (`assign-identity.js` is:
+`module.exports = input => 'var x = ' + JSON.stringify(input) + ';'`):
 
 ```javascript
 var x = 3
@@ -167,7 +167,8 @@ var x = 3
 const x = codegen.require('./es6-identity', 3)
 ```
 
-**After** (`es6-identity.js` is: `export default input => 'var x = ' + JSON.stringify(input) + ';'`):
+**After** (`es6-identity.js` is:
+`export default input => 'var x = ' + JSON.stringify(input) + ';'`):
 
 ```javascript
 const x = 3
@@ -175,9 +176,11 @@ const x = 3
 
 ### codegen file comment (`// @codegen`)
 
-Using the codegen file comment will update a whole file to be evaluated down to an export.
+Using the codegen file comment will update a whole file to be evaluated down to
+an export.
 
-Whereas the above usages (assignment/import/require) will only codegen the scope of the assignment or file being imported.
+Whereas the above usages (assignment/import/require) will only codegen the scope
+of the assignment or file being imported.
 
 **Before**:
 
@@ -225,9 +228,10 @@ require('babel-core').transform('code', {
 
 ## Use with `babel-plugin-macros`
 
-Once you've [configured `babel-plugin-macros`](https://github.com/kentcdodds/babel-plugin-macros/blob/master/other/docs/user.md)
-you can import/require the codegen macro at `babel-plugin-codegen/macro`.
-For example:
+Once you've
+[configured `babel-plugin-macros`](https://github.com/kentcdodds/babel-plugin-macros/blob/master/other/docs/user.md)
+you can import/require the codegen macro at `babel-plugin-codegen/macro`. For
+example:
 
 ```javascript
 import codegen from 'babel-plugin-codegen/macro'
@@ -243,10 +247,11 @@ export const c = "c";
 
 ### APIs not supported by the macro
 
-* [file comment (`// @codegen`)](#codegen-file-comment--codegen)
-* [import comment](#import-comment)
+- [file comment (`// @codegen`)](#codegen-file-comment--codegen)
+- [import comment](#import-comment)
 
-> You could also use [`codegen.macro`][codegen.macro] if you'd prefer to type less 😀
+> You could also use [`codegen.macro`][codegen.macro] if you'd prefer to type
+> less 😀
 
 ## Caveats
 
@@ -274,8 +279,8 @@ Thanks goes to these people ([emoji key][emojis]):
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 
 <!-- prettier-ignore -->
-| [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub><b>Kent C. Dodds</b></sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds "Code") [📖](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds "Documentation") [🚇](#infra-kentcdodds "Infrastructure (Hosting, Build-Tools, etc)") [⚠️](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds "Tests") | [<img src="https://avatars1.githubusercontent.com/u/1958812?v=4" width="100px;"/><br /><sub><b>Michael Rawlings</b></sub>](https://github.com/mlrawlings)<br />[💻](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=mlrawlings "Code") [📖](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=mlrawlings "Documentation") [⚠️](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=mlrawlings "Tests") |
-| :---: | :---: |
+| [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub><b>Kent C. Dodds</b></sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds "Code") [📖](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds "Documentation") [🚇](#infra-kentcdodds "Infrastructure (Hosting, Build-Tools, etc)") [⚠️](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds "Tests") | [<img src="https://avatars1.githubusercontent.com/u/1958812?v=4" width="100px;"/><br /><sub><b>Michael Rawlings</b></sub>](https://github.com/mlrawlings)<br />[💻](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=mlrawlings "Code") [📖](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=mlrawlings "Documentation") [⚠️](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=mlrawlings "Tests") | [<img src="https://avatars3.githubusercontent.com/u/5230863?v=4" width="100px;"/><br /><sub><b>Jan Willem Henckel</b></sub>](https://jan.cologne)<br />[💻](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=djfarly "Code") [📖](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=djfarly "Documentation") [⚠️](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=djfarly "Tests") |
+| :---: | :---: | :---: |
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 

@@ -199,7 +199,7 @@ const x = codegen.require("./fixtures/return-one", "should not be here...")
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-Error: <PROJECT_ROOT>/src/__tests__/index.js: \`codegen.require\`-ed module (./fixtures/return-one) cannot accept arguments because it does not export a function. You passed the arguments: should not be here...
+Error: <PROJECT_ROOT>/src/__tests__/index.js: codegen module (src/__tests__/fixtures/return-one) cannot accept arguments because it does not export a function. You passed the arguments: should not be here...
 
 `;
 
@@ -222,6 +222,34 @@ codegen\`module.exports = ["one", "two"].map((x, i) => \\\`var \\\${x} = "\\\${i
 
 var one = "1";
 var two = "2";
+
+`;
+
+exports[`codegen 27. codegen: 27. codegen 1`] = `
+
+codegen\`module.exports = "var ALLCAPS = 'ALLCAPS'"\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var ALLCAPS;
+ALLCAPS = 'ALLCAPS', void 0;
+
+`;
+
+exports[`codegen accepts babels parser options for generated code: accepts babels parser options for generated code 1`] = `
+
+// @codegen
+module.exports = "var fNum: number = do { if(true) {100} else {200} };"
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var fNum: number = do {
+  if (true) {
+    100;
+  } else {
+    200;
+  }
+};
 
 `;
 

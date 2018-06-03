@@ -29,6 +29,17 @@
         "doc",
         "test"
       ]
+    },
+    {
+      "login": "djfarly",
+      "name": "Jan Willem Henckel",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/5230863?v=4",
+      "profile": "https://jan.cologne",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
     }
   ],
   "repoType": "github"
