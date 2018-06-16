@@ -264,7 +264,7 @@ feel like you could make it work!
 
 ## Examples
 
-- [Using babel macros with React Native: A practical use case of babel macros for solving an i18n problem using babel-plugin-codegen](https://bit.ly/babel-codegen)
+- [Using babel macros with React Native](https://bit.ly/babel-codegen): A practical use case for solving an i18n problem using [`codegen.macro`](https://www.npmjs.com/package/codegen.macro)
 
 ## Inspiration
 
