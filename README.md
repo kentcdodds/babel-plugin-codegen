@@ -96,6 +96,10 @@ Important notes:
 4.  The code that's generated might be transpiled. Please check the output to
     make sure. (babel plugin ordering is tricky business 😇)
 
+> You may like to watch
+> [this YouTube video](https://www.youtube.com/watch?v=1queadQ0048&list=PLV5CVI1eNcJgCrPH_e6d57KRUTiDZgs0u)
+> to get an idea of what codegen is and how it can be used.
+
 ### Template Tag
 
 **Before**:
