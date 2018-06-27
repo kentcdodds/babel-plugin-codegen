@@ -1,6 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`codegen 2. codegen: 2. codegen 1`] = `
+exports[`codegen accepts babels parser options for generated code: accepts babels parser options for generated code 1`] = `
+
+// @codegen
+module.exports = "var fNum: number = do { if(true) {100} else {200} };"
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var fNum: number = do {
+  if (true) {
+    100;
+  } else {
+    200;
+  }
+};
+
+`;
+
+exports[`codegen basic value: basic value 1`] = `
 
 const x = codegen\`module.exports = "1"\`
 
@@ -10,42 +27,17 @@ const x = 1;
 
 `;
 
-exports[`codegen 3. codegen: 3. codegen 1`] = `
+exports[`codegen can consume transpiled esmodules (uses default): can consume transpiled esmodules (uses default) 1`] = `
 
-codegen\`module.exports = "var x = 'some directive'"\`
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-var x;
-x = 'some directive', void 0;
-
-`;
-
-exports[`codegen 4. codegen: 4. codegen 1`] = `
-
-const y = codegen\`
-  module.exports = '({booyah: () => "booyah"})'
-\`
+import x from /* codegen(3) */ "./fixtures/es6-identity"
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-const y = {
-  booyah: () => "booyah"
-};
+3;
 
 `;
 
-exports[`codegen 5. codegen: 5. codegen 1`] = `
-
-const y = codegen\`module.exports = {}\`
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-Error: <PROJECT_ROOT>/src/__tests__/index.js: codegen: Must module.exports a string.
-
-`;
-
-exports[`codegen 6. codegen: 6. codegen 1`] = `
+exports[`codegen codegen comment: codegen comment 1`] = `
 
 // @codegen
 const array = ['apple', 'orange', 'pear']
@@ -61,7 +53,7 @@ export const pear = "pear";
 
 `;
 
-exports[`codegen 7. codegen: 7. codegen 1`] = `
+exports[`codegen dynamic value that is wrong: dynamic value that is wrong 1`] = `
 
 const x = codegen\`module.exports = "\${dynamic}"\`
 
@@ -71,161 +63,7 @@ Error: <PROJECT_ROOT>/src/__tests__/index.js: Unable to determine the value of y
 
 `;
 
-exports[`codegen 8. codegen: 8. codegen 1`] = `
-
-import /* codegen */ "./fixtures/assign-one.js"
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-var x = 1;
-
-`;
-
-exports[`codegen 9. codegen: 9. codegen 1`] = `
-
-import /* codegen */ /* this is extra stuff */ "./fixtures/assign-one.js"
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-var x = 1;
-
-`;
-
-exports[`codegen 10. codegen: 10. codegen 1`] = `
-
-import /* this is extra stuff */ /* codegen */ "./fixtures/assign-one.js"
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-var x = 1;
-
-`;
-
-exports[`codegen 12. codegen: 12. codegen 1`] = `
-
-import /* codegen(3) */ "./fixtures/assign-identity"
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-var x = 3;
-
-`;
-
-exports[`codegen 13. codegen: 13. codegen 1`] = `
-
-import /* codegen(3) */ "./fixtures/es6-assign-identity"
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-var x = 3;
-
-`;
-
-exports[`codegen 14. codegen: 14. codegen 1`] = `
-
-import /* codegen("string") */ "./fixtures/assign-identity"
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-var x = "string";
-
-`;
-
-exports[`codegen 15. codegen: 15. codegen 1`] = `
-
-import /* codegen(({object: "argument"})) */ "./fixtures/assign-identity"
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-var x = {
-  "object": "argument"
-};
-
-`;
-
-exports[`codegen 16. codegen: 16. codegen 1`] = `
-
-import /* codegen(Number(require("./fixtures/return-one"))) */ "./fixtures/assign-identity"
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-var x = 1;
-
-`;
-
-exports[`codegen 17. codegen: 17. codegen 1`] = `
-
-const x = codegen.require("./fixtures/return-one")
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-const x = 1;
-
-`;
-
-exports[`codegen 18. codegen: 18. codegen 1`] = `
-
-const x = codegen.require("./fixtures/identity", 3)
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-const x = 3;
-
-`;
-
-exports[`codegen 19. codegen: 19. codegen 1`] = `
-
-const x = codegen.require("./fixtures/es6-identity", 3)
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-const x = 3;
-
-`;
-
-exports[`codegen 20. codegen: 20. codegen 1`] = `
-
-const x = codegen.require("./fixtures/identity", SOME_UNKNOWN_VARIABLE)
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-Error: <PROJECT_ROOT>/src/__tests__/index.js: codegen cannot determine the value of an argument in codegen.require
-
-`;
-
-exports[`codegen 21. codegen: 21. codegen 1`] = `
-
-const x = codegen.require("./fixtures/return-one", "should not be here...")
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-Error: <PROJECT_ROOT>/src/__tests__/index.js: codegen module (src/__tests__/fixtures/return-one) cannot accept arguments because it does not export a function. You passed the arguments: should not be here...
-
-`;
-
-exports[`codegen 22. codegen: 22. codegen 1`] = `
-
-// @codegen
-module.exports = "export default " + String(1 + 2 - 1 - 1)
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-export default 1;
-
-`;
-
-exports[`codegen 23. codegen: 23. codegen 1`] = `
-
-codegen\`module.exports = ["one", "two"].map((x, i) => \\\`var \\\${x} = "\\\${i + 1}";\\\`).join("\\\\n")\`
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-var one = "1";
-var two = "2";
-
-`;
-
-exports[`codegen 27. codegen: 27. codegen 1`] = `
+exports[`codegen extra test 2: extra test 2 1`] = `
 
 codegen\`module.exports = "var ALLCAPS = 'ALLCAPS'"\`
 
@@ -236,20 +74,14 @@ ALLCAPS = 'ALLCAPS', void 0;
 
 `;
 
-exports[`codegen accepts babels parser options for generated code: accepts babels parser options for generated code 1`] = `
+exports[`codegen extra test: extra test 1`] = `
 
-// @codegen
-module.exports = "var fNum: number = do { if(true) {100} else {200} };"
+codegen\`module.exports = ["one", "two"].map((x, i) => \\\`var \\\${x} = "\\\${i + 1}";\\\`).join("\\\\n")\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-var fNum: number = do {
-  if (true) {
-    100;
-  } else {
-    200;
-  }
-};
+var one = "1";
+var two = "2";
 
 `;
 
@@ -273,6 +105,78 @@ const x = codegen\`module.exports = "\${three}"\`
 
 const three = 3;
 const x = 3;
+
+`;
+
+exports[`codegen import comment with extra comments after: import comment with extra comments after 1`] = `
+
+import /* codegen */ /* this is extra stuff */ "./fixtures/assign-one.js"
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = 1;
+
+`;
+
+exports[`codegen import comment with extra comments before: import comment with extra comments before 1`] = `
+
+import /* this is extra stuff */ /* codegen */ "./fixtures/assign-one.js"
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = 1;
+
+`;
+
+exports[`codegen import comment with number argument: import comment with number argument 1`] = `
+
+import /* codegen(3) */ "./fixtures/assign-identity"
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = 3;
+
+`;
+
+exports[`codegen import comment with object argument: import comment with object argument 1`] = `
+
+import /* codegen(({object: "argument"})) */ "./fixtures/assign-identity"
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = {
+  "object": "argument"
+};
+
+`;
+
+exports[`codegen import comment with required argument: import comment with required argument 1`] = `
+
+import /* codegen(Number(require("./fixtures/return-one"))) */ "./fixtures/assign-identity"
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = 1;
+
+`;
+
+exports[`codegen import comment with string argument: import comment with string argument 1`] = `
+
+import /* codegen("string") */ "./fixtures/assign-identity"
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = "string";
+
+`;
+
+exports[`codegen import comment: import comment 1`] = `
+
+import /* codegen */ "./fixtures/assign-one.js"
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = 1;
 
 `;
 
@@ -317,6 +221,30 @@ function foo() {
 
 `;
 
+exports[`codegen must export a string: must export a string 1`] = `
+
+const y = codegen\`module.exports = {}\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+Error: <PROJECT_ROOT>/src/__tests__/index.js: codegen: Must module.exports a string.
+
+`;
+
+exports[`codegen object with arrow function: object with arrow function 1`] = `
+
+const y = codegen\`
+  module.exports = '({booyah: () => "booyah"})'
+\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const y = {
+  booyah: () => "booyah"
+};
+
+`;
+
 exports[`codegen removes the node if nothing is returned in require: removes the node if nothing is returned in require 1`] = `
 
 codegen.require('./fixtures/nothing-exported')
@@ -334,5 +262,56 @@ codegen\`module.exports = ''\`
       ↓ ↓ ↓ ↓ ↓ ↓
 
 
+
+`;
+
+exports[`codegen require with argument for non-function module: require with argument for non-function module 1`] = `
+
+const x = codegen.require("./fixtures/return-one", "should not be here...")
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+Error: <PROJECT_ROOT>/src/__tests__/index.js: codegen module (src/__tests__/fixtures/return-one) cannot accept arguments because it does not export a function. You passed the arguments: should not be here...
+
+`;
+
+exports[`codegen require with argument: require with argument 1`] = `
+
+const x = codegen.require("./fixtures/identity", 3)
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const x = 3;
+
+`;
+
+exports[`codegen require with unknown argument value: require with unknown argument value 1`] = `
+
+const x = codegen.require("./fixtures/identity", SOME_UNKNOWN_VARIABLE)
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+Error: <PROJECT_ROOT>/src/__tests__/index.js: codegen cannot determine the value of an argument in codegen.require
+
+`;
+
+exports[`codegen simple require: simple require 1`] = `
+
+const x = codegen.require("./fixtures/return-one")
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const x = 1;
+
+`;
+
+exports[`codegen simple variable assignment: simple variable assignment 1`] = `
+
+codegen\`module.exports = "var x = 'some directive'"\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x;
+x = 'some directive', void 0;
 
 `;

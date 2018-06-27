@@ -4,7 +4,7 @@ const {
   resolveModuleContents,
   isCodegenComment,
   isPropertyCall,
-  transformAndRequire,
+  requireFromString,
 } = require('./helpers')
 
 module.exports = getReplacers
@@ -30,14 +30,11 @@ function getReplacers(babel) {
     })
     let args
     if (codegenComment !== 'codegen') {
-      args = transformAndRequire(
-        {
-          code: `module.exports = [${codegenComment
-            .replace(/codegen\((.*)\)/, '$1')
-            .trim()}]`,
-          fileOpts,
-        },
-        babel,
+      args = requireFromString(
+        `module.exports = [${codegenComment
+          .replace(/codegen\((.*)\)/, '$1')
+          .trim()}]`,
+        fileOpts.filename,
       )
     }
     replace(

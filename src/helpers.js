@@ -1,9 +1,9 @@
 const p = require('path')
 const fs = require('fs')
-const requireFromString = require('require-from-string')
+const requireFromCodeString = require('require-from-string')
 
 module.exports = {
-  transformAndRequire,
+  requireFromString,
   getReplacement,
   replace,
   resolveModuleContents,
@@ -12,39 +12,17 @@ module.exports = {
   looksLike,
 }
 
-function transformAndRequire(
-  {code, fileOpts, fileOpts: {filename, plugins, presets}},
-  babel,
-) {
-  /**
-   * Transform passed in code to generated code
-   */
-  const {code: transformedCode} = babel.transform(code, {
-    filename,
-    plugins,
-    presets,
-  })
-
-  /**
-   * Execute the transformed code, as if it were required
-   */
-  const module = requireFromString(transformedCode, fileOpts.filename)
-
-  /**
-   * Allow for es modules (default export)
-   */
+function requireFromString(code, filename) {
+  // Execute the transformed code, as if it were required
+  const module = requireFromCodeString(String(code), filename)
+  // Allow for es modules (default export)
   return module && module.__esModule ? module.default : module
 }
 
 function getReplacement({code, fileOpts, args = []}, babel) {
-  /**
-   * Execute the code string to get the exported module
-   */
-  let module = transformAndRequire({code, fileOpts}, babel)
+  let module = requireFromString(code, fileOpts.filename)
 
-  /**
-   * If a function is epxorted, call it with args
-   */
+  // If a function is epxorted, call it with args
   if (typeof module === 'function') {
     module = module(...args)
   } else if (args.length) {
@@ -58,9 +36,7 @@ function getReplacement({code, fileOpts, args = []}, babel) {
     )
   }
 
-  /**
-   * Convert whatever we got now (hopefully a string) into AST form
-   */
+  // Convert whatever we got now (hopefully a string) into AST form
   if (typeof module !== 'string') {
     throw new Error('codegen: Must module.exports a string.')
   }

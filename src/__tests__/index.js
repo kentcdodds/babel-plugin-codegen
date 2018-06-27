@@ -17,80 +17,86 @@ pluginTester({
   plugin,
   snapshot: true,
   babelOptions: {filename: __filename},
-  tests: [
-    {
+  tests: {
+    'does not touch non-codegen code': {
       snapshot: false,
       code: 'const x = notCodegen`module.exports = "nothing"`;',
     },
-    'const x = codegen`module.exports = "1"`',
-    'codegen`module.exports = "var x = \'some directive\'"`',
-    `
+    'basic value': 'const x = codegen`module.exports = "1"`',
+    'simple variable assignment':
+      'codegen`module.exports = "var x = \'some directive\'"`',
+    'object with arrow function': `
       const y = codegen\`
         module.exports = '({booyah: () => "booyah"})'
       \`
     `,
-    {
+    'must export a string': {
       code: 'const y = codegen`module.exports = {}`',
       error: true,
     },
-    `
+    'codegen comment': `
       // @codegen
       const array = ['apple', 'orange', 'pear']
       module.exports = array
         .map(fruit => \`export const \${fruit} = "\${fruit}";\`)
         .join('')
     `,
-    {
+    'dynamic value that is wrong': {
       code: `const x = codegen\`module.exports = "\${dynamic}"\``,
       error: true,
     },
-    'import /* codegen */ "./fixtures/assign-one.js"',
-    'import /* codegen */ /* this is extra stuff */ "./fixtures/assign-one.js"',
-    'import /* this is extra stuff */ /* codegen */ "./fixtures/assign-one.js"',
-    {
+    'import comment': 'import /* codegen */ "./fixtures/assign-one.js"',
+    'import comment with extra comments after':
+      'import /* codegen */ /* this is extra stuff */ "./fixtures/assign-one.js"',
+    'import comment with extra comments before':
+      'import /* this is extra stuff */ /* codegen */ "./fixtures/assign-one.js"',
+    'does not touch import comments that are irrelevant': {
       code: 'import /* this is extra stuff */"./fixtures/assign-one.js";',
       snapshot: false,
     },
-    'import /* codegen(3) */ "./fixtures/assign-identity"',
-    'import /* codegen(3) */ "./fixtures/es6-assign-identity"',
-    'import /* codegen("string") */ "./fixtures/assign-identity"',
-    'import /* codegen(({object: "argument"})) */ "./fixtures/assign-identity"',
-    'import /* codegen(Number(require("./fixtures/return-one"))) */ "./fixtures/assign-identity"',
-    'const x = codegen.require("./fixtures/return-one")',
-    'const x = codegen.require("./fixtures/identity", 3)',
-    'const x = codegen.require("./fixtures/es6-identity", 3)',
-    {
+    'import comment with number argument':
+      'import /* codegen(3) */ "./fixtures/assign-identity"',
+    'import comment with string argument':
+      'import /* codegen("string") */ "./fixtures/assign-identity"',
+    'import comment with object argument':
+      'import /* codegen(({object: "argument"})) */ "./fixtures/assign-identity"',
+    'import comment with required argument':
+      'import /* codegen(Number(require("./fixtures/return-one"))) */ "./fixtures/assign-identity"',
+    'simple require': 'const x = codegen.require("./fixtures/return-one")',
+    'require with argument':
+      'const x = codegen.require("./fixtures/identity", 3)',
+    'require with unknown argument value': {
       code:
         'const x = codegen.require("./fixtures/identity", SOME_UNKNOWN_VARIABLE)',
       error: true,
     },
-    {
+    'require with argument for non-function module': {
       code:
         'const x = codegen.require("./fixtures/return-one", "should not be here...")',
       error: true,
     },
-    `
-      // @codegen
-      module.exports = "export default " + String(1 + 2 - 1 - 1)
-    `,
-    // eslint-disable-next-line
-    'codegen`module.exports = ["one", "two"].map((x, i) => \\`var \\${x} = "\\${i + 1}";\\`).join("\\\\n")`',
-    {
+    'does not touch codegen identifiers that are irrelevant': {
       code: 'const x = not.codegen();',
       snapshot: false,
     },
-    {
+    'does not touch codegen comment without extra code': {
       snapshot: false,
       code: '// @codegen',
     },
-    {
+    'does not touch codegen comment with comments but no code': {
       snapshot: false,
       code: `
         // @codegen
-        /* comment */`,
+        /* comment */
+      `,
     },
-    'codegen`module.exports = "var ALLCAPS = \'ALLCAPS\'"`',
-  ],
+    'can consume transpiled esmodules (uses default)': `import x from /* codegen(3) */ "./fixtures/es6-identity"`,
+    // I can't remember why we have these tests...
+    'extra test':
+      // eslint-disable-next-line
+      'codegen`module.exports = ["one", "two"].map((x, i) => \\`var \\${x} = "\\${i + 1}";\\`).join("\\\\n")`',
+    'extra test 2': 'codegen`module.exports = "var ALLCAPS = \'ALLCAPS\'"`',
+  },
 })
 
 // This is for any of the exta tests. We give these a name.
