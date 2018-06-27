@@ -6,18 +6,18 @@
 
 <hr />
 
+<!-- prettier-ignore-start -->
 [![Build Status][build-badge]][build]
 [![Code Coverage][coverage-badge]][coverage]
-[![version][version-badge]][package] [![downloads][downloads-badge]][npmcharts]
+[![version][version-badge]][package]
+[![downloads][downloads-badge]][npmtrends]
 [![MIT License][license-badge]][license]
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
-[![PRs Welcome][prs-badge]][prs] [![Code of Conduct][coc-badge]][coc]
+[![PRs Welcome][prs-badge]][prs]
+[![Code of Conduct][coc-badge]][coc]
 [![Babel Macro](https://img.shields.io/badge/babel--macro-%F0%9F%8E%A3-f5da55.svg?style=flat-square)](https://github.com/kentcdodds/babel-plugin-macros)
-
-[![Watch on GitHub][github-watch-badge]][github-watch]
-[![Star on GitHub][github-star-badge]][github-star]
-[![Tweet][twitter-badge]][twitter]
+<!-- prettier-ignore-end -->
 
 ## The problem
 
@@ -89,12 +89,6 @@ Important notes:
 
 1.  All code run by `codegen` is _not_ run in a sandboxed environment
 2.  All code _must_ run synchronously.
-3.  All code will be transpiled via the same instance of babel this plugin is
-    called with, thus inheriting all presets and plugins. This means you can
-    rely on any babel plugins/transforms that you're used to using elsewhere in
-    your codebase.
-4.  The code that's generated might be transpiled. Please check the output to
-    make sure. (babel plugin ordering is tricky business 😇)
 
 > You may like to watch
 > [this YouTube video](https://www.youtube.com/watch?v=1queadQ0048&list=PLV5CVI1eNcJgCrPH_e6d57KRUTiDZgs0u)
@@ -268,7 +262,9 @@ feel like you could make it work!
 
 ## Examples
 
-- [Using babel macros with React Native](https://bit.ly/babel-codegen): A practical use case for solving an i18n problem using [`codegen.macro`](https://www.npmjs.com/package/codegen.macro)
+- [Using babel macros with React Native](https://bit.ly/babel-codegen): A
+  practical use case for solving an i18n problem using
+  [`codegen.macro`](https://www.npmjs.com/package/codegen.macro)
 
 ## Inspiration
 
@@ -298,6 +294,8 @@ Contributions of any kind welcome!
 
 MIT
 
+<!-- prettier-ignore-start -->
+
 [npm]: https://www.npmjs.com/
 [node]: https://nodejs.org
 [build-badge]: https://img.shields.io/travis/kentcdodds/babel-plugin-codegen.svg?style=flat-square
@@ -307,7 +305,7 @@ MIT
 [version-badge]: https://img.shields.io/npm/v/babel-plugin-codegen.svg?style=flat-square
 [package]: https://www.npmjs.com/package/babel-plugin-codegen
 [downloads-badge]: https://img.shields.io/npm/dm/babel-plugin-codegen.svg?style=flat-square
-[npmcharts]: http://npmcharts.com/compare/babel-plugin-codegen
+[npmtrends]: http://www.npmtrends.com/babel-plugin-codegen
 [license-badge]: https://img.shields.io/npm/l/babel-plugin-codegen.svg?style=flat-square
 [license]: https://github.com/kentcdodds/babel-plugin-codegen/blob/master/LICENSE
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
@@ -315,15 +313,11 @@ MIT
 [donate-badge]: https://img.shields.io/badge/$-support-green.svg?style=flat-square
 [coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
 [coc]: https://github.com/kentcdodds/babel-plugin-codegen/blob/master/other/CODE_OF_CONDUCT.md
-[github-watch-badge]: https://img.shields.io/github/watchers/kentcdodds/babel-plugin-codegen.svg?style=social
-[github-watch]: https://github.com/kentcdodds/babel-plugin-codegen/watchers
-[github-star-badge]: https://img.shields.io/github/stars/kentcdodds/babel-plugin-codegen.svg?style=social
-[github-star]: https://github.com/kentcdodds/babel-plugin-codegen/stargazers
-[twitter]: https://twitter.com/intent/tweet?text=Check%20out%20babel-plugin-codegen!%20https://github.com/kentcdodds/babel-plugin-codegen%20%F0%9F%91%8D
-[twitter-badge]: https://img.shields.io/twitter/url/https/github.com/kentcdodds/babel-plugin-codegen.svg?style=social
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
 [all-contributors]: https://github.com/kentcdodds/all-contributors
 [glamorous]: https://github.com/paypal/glamorous
 [preval]: https://github.com/kentcdodds/babel-plugin-preval
 [codegen.macro]: https://www.npmjs.com/package/codegen.macro
 [babel-plugin-macros]: https://github.com/kentcdodds/babel-plugin-macros
+
+<!-- prettier-ignore-end -->
