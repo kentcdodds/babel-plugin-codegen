@@ -23,7 +23,7 @@
 
 The applications of this plugin are wide, so it's kinda hard to sum it up, but
 basically my use case was I needed to add a bunch of named exports to
-[`glamorous`][glamorous] (one for every DOM node type) and I didn't want to
+[`emotion`][emotion] (one for every DOM node type) and I didn't want to
 maintain the exports in my source file. So someone created a post-build script
 to concatenate them to the end of the file. I built this plugin so I could do
 that without having an ad-hoc post-build script.
@@ -268,7 +268,7 @@ feel like you could make it work!
 
 ## Inspiration
 
-I built this to solve a problem I was experiencing with [glamorous][glamorous].
+I built this to solve a problem I was experiencing with [emotion][emotion].
 It's heavily based on my work in [babel-plugin-preval][preval].
 
 ## Other Solutions
@@ -315,7 +315,7 @@ MIT
 [coc]: https://github.com/kentcdodds/babel-plugin-codegen/blob/master/other/CODE_OF_CONDUCT.md
 [emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
 [all-contributors]: https://github.com/kentcdodds/all-contributors
-[glamorous]: https://github.com/paypal/glamorous
+[emotion]: https://emotion.sh/docs/introduction
 [preval]: https://github.com/kentcdodds/babel-plugin-preval
 [codegen.macro]: https://www.npmjs.com/package/codegen.macro
 [babel-plugin-macros]: https://github.com/kentcdodds/babel-plugin-macros
