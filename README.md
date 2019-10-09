@@ -19,7 +19,7 @@
 [![downloads][downloads-badge]][npmtrends]
 [![MIT License][license-badge]][license]
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
 [![PRs Welcome][prs-badge]][prs]
 [![Code of Conduct][coc-badge]][coc]
 [![Babel Macro](https://img.shields.io/badge/babel--macro-%F0%9F%8E%A3-f5da55.svg?style=flat-square)](https://github.com/kentcdodds/babel-plugin-macros)
@@ -288,8 +288,15 @@ Thanks goes to these people ([emoji key][emojis]):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
-| [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub><b>Kent C. Dodds</b></sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds "Code") [📖](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds "Documentation") [🚇](#infra-kentcdodds "Infrastructure (Hosting, Build-Tools, etc)") [⚠️](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds "Tests") | [<img src="https://avatars1.githubusercontent.com/u/1958812?v=4" width="100px;"/><br /><sub><b>Michael Rawlings</b></sub>](https://github.com/mlrawlings)<br />[💻](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=mlrawlings "Code") [📖](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=mlrawlings "Documentation") [⚠️](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=mlrawlings "Tests") | [<img src="https://avatars3.githubusercontent.com/u/5230863?v=4" width="100px;"/><br /><sub><b>Jan Willem Henckel</b></sub>](https://jan.cologne)<br />[💻](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=djfarly "Code") [📖](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=djfarly "Documentation") [⚠️](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=djfarly "Tests") | [<img src="https://avatars3.githubusercontent.com/u/1824298?v=4" width="100px;"/><br /><sub><b>Karan Thakkar</b></sub>](https://twitter.com/geekykaran)<br />[📖](https://github.com/kentcdodds/babel-plugin-codegen/commits?author=karanjthakkar "Documentation") |
-| :---: | :---: | :---: | :---: |
+<table>
+  <tr>
+    <td align="center"><a href="https://kentcdodds.com"><img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;" alt="Kent C. Dodds"/><br /><sub><b>Kent C. Dodds</b></sub></a><br /><a href="https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds" title="Code">💻</a> <a href="https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds" title="Documentation">📖</a> <a href="#infra-kentcdodds" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://github.com/mlrawlings"><img src="https://avatars1.githubusercontent.com/u/1958812?v=4" width="100px;" alt="Michael Rawlings"/><br /><sub><b>Michael Rawlings</b></sub></a><br /><a href="https://github.com/kentcdodds/babel-plugin-codegen/commits?author=mlrawlings" title="Code">💻</a> <a href="https://github.com/kentcdodds/babel-plugin-codegen/commits?author=mlrawlings" title="Documentation">📖</a> <a href="https://github.com/kentcdodds/babel-plugin-codegen/commits?author=mlrawlings" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://jan.cologne"><img src="https://avatars3.githubusercontent.com/u/5230863?v=4" width="100px;" alt="Jan Willem Henckel"/><br /><sub><b>Jan Willem Henckel</b></sub></a><br /><a href="https://github.com/kentcdodds/babel-plugin-codegen/commits?author=djfarly" title="Code">💻</a> <a href="https://github.com/kentcdodds/babel-plugin-codegen/commits?author=djfarly" title="Documentation">📖</a> <a href="https://github.com/kentcdodds/babel-plugin-codegen/commits?author=djfarly" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://twitter.com/geekykaran"><img src="https://avatars3.githubusercontent.com/u/1824298?v=4" width="100px;" alt="Karan Thakkar"/><br /><sub><b>Karan Thakkar</b></sub></a><br /><a href="https://github.com/kentcdodds/babel-plugin-codegen/commits?author=karanjthakkar" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://stackshare.io/jdorfman/decisions"><img src="https://avatars1.githubusercontent.com/u/398230?v=4" width="100px;" alt="Justin Dorfman"/><br /><sub><b>Justin Dorfman</b></sub></a><br /><a href="#fundingFinding-jdorfman" title="Funding Finding">🔍</a></td>
+  </tr>
+</table>
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
