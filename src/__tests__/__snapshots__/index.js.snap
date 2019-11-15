@@ -9,11 +9,12 @@ module.exports = "var fNum: number = do { if(true) {100} else {200} };"
 
 var fNum: number = do {
   if (true) {
-    100;
+    100
   } else {
-    200;
+    200
   }
-};
+}
+
 
 `;
 
@@ -23,7 +24,8 @@ const x = codegen\`module.exports = "1"\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-const x = 1;
+const x = 1
+
 
 `;
 
@@ -33,7 +35,8 @@ import x from /* codegen(3) */ "./fixtures/es6-identity"
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-3;
+3
+
 
 `;
 
@@ -47,9 +50,10 @@ module.exports = array
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-export const apple = "apple";
-export const orange = "orange";
-export const pear = "pear";
+export const apple = 'apple'
+export const orange = 'orange'
+export const pear = 'pear'
+
 
 `;
 
@@ -60,6 +64,8 @@ const x = codegen\`module.exports = "\${dynamic}"\`
       ↓ ↓ ↓ ↓ ↓ ↓
 
 Error: <PROJECT_ROOT>/src/__tests__/index.js: Unable to determine the value of your codegen string
+[0m[31m[1m>[22m[39m[90m 1 | [39m[36mconst[39m x [33m=[39m codegen[32m\`module.exports = "\${dynamic}"\`[39m[0m
+[0m [90m   | [39m          [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
 
 `;
 
@@ -69,8 +75,9 @@ codegen\`module.exports = "var ALLCAPS = 'ALLCAPS'"\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-var ALLCAPS;
-ALLCAPS = 'ALLCAPS', void 0;
+var ALLCAPS
+;(ALLCAPS = 'ALLCAPS'), void 0
+
 
 `;
 
@@ -80,8 +87,9 @@ codegen\`module.exports = ["one", "two"].map((x, i) => \\\`var \\\${x} = "\\\${i
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-var one = "1";
-var two = "2";
+var one = '1'
+var two = '2'
+
 
 `;
 
@@ -91,8 +99,9 @@ codegen.require('./fixtures/multiple-nodes')
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-var x = "hello world";
-console.log(x);
+var x = 'hello world'
+console.log(x)
+
 
 `;
 
@@ -103,8 +112,9 @@ const x = codegen\`module.exports = "\${three}"\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-const three = 3;
-const x = 3;
+const three = 3
+const x = 3
+
 
 `;
 
@@ -114,7 +124,8 @@ import /* codegen */ /* this is extra stuff */ "./fixtures/assign-one.js"
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-var x = 1;
+var x = 1
+
 
 `;
 
@@ -124,7 +135,8 @@ import /* this is extra stuff */ /* codegen */ "./fixtures/assign-one.js"
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-var x = 1;
+var x = 1
+
 
 `;
 
@@ -134,7 +146,8 @@ import /* codegen(3) */ "./fixtures/assign-identity"
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-var x = 3;
+var x = 3
+
 
 `;
 
@@ -145,8 +158,9 @@ import /* codegen(({object: "argument"})) */ "./fixtures/assign-identity"
       ↓ ↓ ↓ ↓ ↓ ↓
 
 var x = {
-  "object": "argument"
-};
+  object: 'argument',
+}
+
 
 `;
 
@@ -156,7 +170,8 @@ import /* codegen(Number(require("./fixtures/return-one"))) */ "./fixtures/assig
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-var x = 1;
+var x = 1
+
 
 `;
 
@@ -166,7 +181,8 @@ import /* codegen("string") */ "./fixtures/assign-identity"
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-var x = "string";
+var x = 'string'
+
 
 `;
 
@@ -176,7 +192,8 @@ import /* codegen */ "./fixtures/assign-one.js"
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-var x = 1;
+var x = 1
+
 
 `;
 
@@ -206,18 +223,22 @@ codegen\`
       ↓ ↓ ↓ ↓ ↓ ↓
 
 // before
-var x = 'hi'; /*
-               * after
-               */ // call foo
+var x = 'hi'
+/*
+ * after
+ */
+// call foo
 
-console.log(foo()); /**
-                     * jsdoc
-                     * @return {string} cool I guess
-                     */
+console.log(foo())
+/**
+ * jsdoc
+ * @return {string} cool I guess
+ */
 
 function foo() {
-  return 'foo';
+  return 'foo'
 }
+
 
 `;
 
@@ -240,8 +261,9 @@ const y = codegen\`
       ↓ ↓ ↓ ↓ ↓ ↓
 
 const y = {
-  booyah: () => "booyah"
-};
+  booyah: () => 'booyah',
+}
+
 
 `;
 
@@ -281,7 +303,8 @@ const x = codegen.require("./fixtures/identity", 3)
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-const x = 3;
+const x = 3
+
 
 `;
 
@@ -301,7 +324,8 @@ const x = codegen.require("./fixtures/return-one")
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-const x = 1;
+const x = 1
+
 
 `;
 
@@ -311,7 +335,8 @@ codegen\`module.exports = "var x = 'some directive'"\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-var x;
-x = 'some directive', void 0;
+var x
+;(x = 'some directive'), void 0
+
 
 `;

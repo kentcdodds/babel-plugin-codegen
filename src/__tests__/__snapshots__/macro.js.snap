@@ -9,14 +9,14 @@ myCodgen(\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-var x;
-
-x = {
+var x
+;(x = {
   booyah() {
-    return 'booyah!';
-  }
+    return 'booyah!'
+  },
+}),
+  void 0
 
-}, void 0;
 
 `;
 
@@ -29,7 +29,8 @@ const ui = (
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-const ui = <div>Hi</div>;
+const ui = <div>Hi</div>
+
 
 `;
 
@@ -42,7 +43,8 @@ const ui = (
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-const ui = <div>Hi</div>;
+const ui = <div>Hi</div>
+
 
 `;
 
@@ -53,7 +55,8 @@ var x = codegen.require('./fixtures/return-one');
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-var x = 1;
+var x = 1
+
 
 `;
 
@@ -65,8 +68,9 @@ codegen\`module.exports = "module.exports = '\${greeting}';"\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-const greeting = 'Hello world!';
-module.exports = 'Hello world!';
+const greeting = 'Hello world!'
+module.exports = 'Hello world!'
+
 
 `;
 
@@ -78,6 +82,9 @@ var x = doSomething(codegen);
       ↓ ↓ ↓ ↓ ↓ ↓
 
 Error: <PROJECT_ROOT>/src/__tests__/macro.js: ../macro: codegen macro must be used as a tagged template literal, function, jsx, or .require call
+[0m [90m 1 | [39m[36mimport[39m codegen from [32m'../macro'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 2 | [39m[36mvar[39m x [33m=[39m doSomething(codegen)[33m;[39m[0m
+[0m [90m   | [39m                    [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
 
 `;
 
@@ -89,6 +96,9 @@ var x = codegen;
       ↓ ↓ ↓ ↓ ↓ ↓
 
 Error: <PROJECT_ROOT>/src/__tests__/macro.js: ../macro: codegen macro must be used as a tagged template literal, function, jsx, or .require call
+[0m [90m 1 | [39m[36mimport[39m codegen from [32m'../macro'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 2 | [39m[36mvar[39m x [33m=[39m codegen[33m;[39m[0m
+[0m [90m   | [39m        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
 
 `;
 
@@ -100,8 +110,9 @@ codegen\`module.exports = ['a', 'b', 'c'].map(l => 'export const ' + l + ' = ' +
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-export const a = "a";
-export const b = "b";
-export const c = "c";
+export const a = 'a'
+export const b = 'b'
+export const c = 'c'
+
 
 `;

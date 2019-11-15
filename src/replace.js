@@ -172,5 +172,6 @@ function getReplacers(babel) {
 
 /*
 eslint
-  complexity: ["error", 8]
+  complexity: ["error", 8],
+  max-lines-per-function: ["error", 250],
 */

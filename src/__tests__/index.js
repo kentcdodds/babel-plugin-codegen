@@ -20,7 +20,7 @@ pluginTester({
   tests: {
     'does not touch non-codegen code': {
       snapshot: false,
-      code: 'const x = notCodegen`module.exports = "nothing"`;',
+      code: `const x = notCodegen\`module.exports = 'nothing'\``,
     },
     'basic value': 'const x = codegen`module.exports = "1"`',
     'simple variable assignment':
@@ -51,7 +51,12 @@ pluginTester({
     'import comment with extra comments before':
       'import /* this is extra stuff */ /* codegen */ "./fixtures/assign-one.js"',
     'does not touch import comments that are irrelevant': {
-      code: 'import /* this is extra stuff */"./fixtures/assign-one.js";',
+      code: `import /* this is extra stuff */'./fixtures/assign-one.js'`,
+      // babel does weird things to comments like these
+      output: `
+        import /* this is extra stuff */
+        './fixtures/assign-one.js'
+      `,
       snapshot: false,
     },
     'import comment with number argument':
@@ -76,7 +81,7 @@ pluginTester({
       error: true,
     },
     'does not touch codegen identifiers that are irrelevant': {
-      code: 'const x = not.codegen();',
+      code: 'const x = not.codegen()',
       snapshot: false,
     },
     'does not touch codegen comment without extra code': {
@@ -87,6 +92,7 @@ pluginTester({
       snapshot: false,
       code: `
         // @codegen
+
         /* comment */
       `,
     },
