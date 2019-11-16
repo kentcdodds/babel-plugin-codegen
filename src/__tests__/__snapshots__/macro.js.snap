@@ -82,9 +82,9 @@ var x = doSomething(codegen);
       ↓ ↓ ↓ ↓ ↓ ↓
 
 Error: <PROJECT_ROOT>/src/__tests__/macro.js: ../macro: codegen macro must be used as a tagged template literal, function, jsx, or .require call
-[0m [90m 1 | [39m[36mimport[39m codegen from [32m'../macro'[39m[33m;[39m[0m
-[0m[31m[1m>[22m[39m[90m 2 | [39m[36mvar[39m x [33m=[39m doSomething(codegen)[33m;[39m[0m
-[0m [90m   | [39m                    [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+  1 | import codegen from '../macro';
+> 2 | var x = doSomething(codegen);
+    |                     ^^^^^^^
 
 `;
 
@@ -96,9 +96,9 @@ var x = codegen;
       ↓ ↓ ↓ ↓ ↓ ↓
 
 Error: <PROJECT_ROOT>/src/__tests__/macro.js: ../macro: codegen macro must be used as a tagged template literal, function, jsx, or .require call
-[0m [90m 1 | [39m[36mimport[39m codegen from [32m'../macro'[39m[33m;[39m[0m
-[0m[31m[1m>[22m[39m[90m 2 | [39m[36mvar[39m x [33m=[39m codegen[33m;[39m[0m
-[0m [90m   | [39m        [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[0m
+  1 | import codegen from '../macro';
+> 2 | var x = codegen;
+    |         ^^^^^^^
 
 `;
 

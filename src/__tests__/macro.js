@@ -1,12 +1,15 @@
 import path from 'path'
 import pluginTester from 'babel-plugin-tester'
+import stripAnsi from 'strip-ansi'
 import plugin from 'babel-plugin-macros'
 
 const projectRoot = path.join(__dirname, '../../')
 
 expect.addSnapshotSerializer({
   print(val) {
-    return val.split(projectRoot).join('<PROJECT_ROOT>/')
+    return stripAnsi(val)
+      .split(projectRoot)
+      .join('<PROJECT_ROOT>/')
   },
   test(val) {
     return typeof val === 'string'
