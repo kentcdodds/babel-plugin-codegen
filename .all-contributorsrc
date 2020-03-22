@@ -1,11 +1,15 @@
 {
   "projectName": "babel-plugin-codegen",
   "projectOwner": "kentcdodds",
+  "imageSize": 100,
+  "commit": false,
+  "contributorsPerLine": 7,
+  "repoHost": "https://github.com",
+  "repoType": "github",
+  "skipCi": false,
   "files": [
     "README.md"
   ],
-  "imageSize": 100,
-  "commit": false,
   "contributors": [
     {
       "login": "kentcdodds",
@@ -59,8 +63,5 @@
         "fundingFinding"
       ]
     }
-  ],
-  "repoType": "github",
-  "repoHost": "https://github.com",
-  "contributorsPerLine": 7
+  ]
 }
