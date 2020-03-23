@@ -4,7 +4,7 @@
 <p>Generate code at build-time</p>
 </div>
 
-<hr />
+---
 
 <!-- prettier-ignore-start -->
 [![Build Status][build-badge]][build]
@@ -13,10 +13,12 @@
 [![downloads][downloads-badge]][npmtrends]
 [![MIT License][license-badge]][license]
 
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![PRs Welcome][prs-badge]][prs]
 [![Code of Conduct][coc-badge]][coc]
-[![Babel Macro](https://img.shields.io/badge/babel--macro-%F0%9F%8E%A3-f5da55.svg?style=flat-square)](https://github.com/kentcdodds/babel-plugin-macros)
+[![Babel Macro][macros-badge]][babel-plugin-macros]
 <!-- prettier-ignore-end -->
 
 ## The problem
@@ -64,7 +66,10 @@ and swaps your usage node with the new AST node.
 - [Examples](#examples)
 - [Inspiration](#inspiration)
 - [Other Solutions](#other-solutions)
-- [Contributors](#contributors)
+- [Issues](#issues)
+  - [🐛 Bugs](#-bugs)
+  - [💡 Feature Requests](#-feature-requests)
+- [Contributors ✨](#contributors-)
 - [LICENSE](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -276,12 +281,31 @@ It's heavily based on my work in [babel-plugin-preval][preval].
 I'm not aware of any, if you are please [make a pull request][prs] and add it
 here!
 
-## Contributors
+## Issues
+
+_Looking to contribute? Look for the [Good First Issue][good-first-issue]
+label._
+
+### 🐛 Bugs
+
+Please file an issue for bugs, missing documentation, or unexpected behavior.
+
+[**See Bugs**][bugs]
+
+### 💡 Feature Requests
+
+Please file an issue to suggest new features. Vote on feature requests by adding
+a 👍. This helps maintainers prioritize what to work on.
+
+[**See Feature Requests**][requests]
+
+## Contributors ✨
 
 Thanks goes to these people ([emoji key][emojis]):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
 <table>
   <tr>
     <td align="center"><a href="https://kentcdodds.com"><img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;" alt="Kent C. Dodds"/><br /><sub><b>Kent C. Dodds</b></sub></a><br /><a href="https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds" title="Code">💻</a> <a href="https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds" title="Documentation">📖</a> <a href="#infra-kentcdodds" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/kentcdodds/babel-plugin-codegen/commits?author=kentcdodds" title="Tests">⚠️</a></td>
@@ -291,7 +315,8 @@ Thanks goes to these people ([emoji key][emojis]):
     <td align="center"><a href="https://stackshare.io/jdorfman/decisions"><img src="https://avatars1.githubusercontent.com/u/398230?v=4" width="100px;" alt="Justin Dorfman"/><br /><sub><b>Justin Dorfman</b></sub></a><br /><a href="#fundingFinding-jdorfman" title="Funding Finding">🔍</a></td>
   </tr>
 </table>
-
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.
@@ -302,8 +327,7 @@ Contributions of any kind welcome!
 MIT
 
 <!-- prettier-ignore-start -->
-
-[npm]: https://www.npmjs.com/
+[npm]: https://www.npmjs.com
 [node]: https://nodejs.org
 [build-badge]: https://img.shields.io/travis/kentcdodds/babel-plugin-codegen.svg?style=flat-square
 [build]: https://travis-ci.org/kentcdodds/babel-plugin-codegen
@@ -317,14 +341,15 @@ MIT
 [license]: https://github.com/kentcdodds/babel-plugin-codegen/blob/master/LICENSE
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
 [prs]: http://makeapullrequest.com
-[donate-badge]: https://img.shields.io/badge/$-support-green.svg?style=flat-square
 [coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
 [coc]: https://github.com/kentcdodds/babel-plugin-codegen/blob/master/other/CODE_OF_CONDUCT.md
-[emojis]: https://github.com/kentcdodds/all-contributors#emoji-key
-[all-contributors]: https://github.com/kentcdodds/all-contributors
+[macros-badge]: https://img.shields.io/badge/babel--macro-%F0%9F%8E%A3-f5da55.svg?style=flat-square
+[babel-plugin-macros]: https://github.com/kentcdodds/babel-plugin-macros
+[emojis]: https://github.com/all-contributors/all-contributors#emoji-key
+[all-contributors]: https://github.com/all-contributors/all-contributors
+
 [glamorous]: https://github.com/paypal/glamorous
 [preval]: https://github.com/kentcdodds/babel-plugin-preval
 [codegen.macro]: https://www.npmjs.com/package/codegen.macro
 [babel-plugin-macros]: https://github.com/kentcdodds/babel-plugin-macros
-
 <!-- prettier-ignore-end -->

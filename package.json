@@ -4,20 +4,16 @@
   "description": "Generate code at build-time",
   "main": "dist/index.js",
   "engines": {
-    "node": ">=8",
+    "node": ">=10",
     "npm": ">=6"
   },
   "scripts": {
     "build": "kcd-scripts build",
     "lint": "kcd-scripts lint",
+    "setup": "npm install && npm run validate -s",
     "test": "kcd-scripts test",
-    "test:update": "kcd-scripts test --updateSnapshot",
+    "test:update": "npm test -- --updateSnapshot --coverage",
     "validate": "kcd-scripts validate"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "kcd-scripts pre-commit"
-    }
   },
   "files": [
     "dist",
@@ -29,17 +25,17 @@
     "babel",
     "code generation"
   ],
-  "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
+  "author": "Kent C. Dodds <me@kentcdodds.com> (https://kentcdodds.com)",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.7.2",
-    "babel-plugin-macros": "^2.6.2",
+    "@babel/runtime": "^7.9.2",
+    "babel-plugin-macros": "^2.8.0",
     "require-from-string": "^2.0.2"
   },
   "devDependencies": {
     "ast-pretty-print": "^2.0.1",
-    "babel-plugin-tester": "^8.0.0",
-    "kcd-scripts": "^1.11.0",
+    "babel-plugin-tester": "^8.0.1",
+    "kcd-scripts": "^5.6.0",
     "strip-ansi": "^6.0.0"
   },
   "eslintConfig": {
@@ -50,14 +46,9 @@
     "coverage",
     "dist"
   ],
-  "babel": {
-    "presets": [
-      "kcd-scripts/babel"
-    ]
-  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kentcdodds/babel-plugin-codegen.git"
+    "url": "https://github.com/kentcdodds/babel-plugin-codegen"
   },
   "bugs": {
     "url": "https://github.com/kentcdodds/babel-plugin-codegen/issues"

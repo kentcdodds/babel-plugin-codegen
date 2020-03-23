@@ -8,12 +8,7 @@ function codegenPlugin(babel) {
   return {
     name: 'codegen',
     visitor: {
-      Program(
-        path,
-        {
-          file: {opts: fileOpts},
-        },
-      ) {
+      Program(path, {file: {opts: fileOpts}}) {
         const firstNode = path.node.body[0] || {}
         const comments = firstNode.leadingComments || []
         const isCodegen = comments.some(isCodegenComment)
@@ -23,23 +18,13 @@ function codegenPlugin(babel) {
           asProgram(path, fileOpts)
         }
       },
-      Identifier(
-        path,
-        {
-          file: {opts: fileOpts},
-        },
-      ) {
+      Identifier(path, {file: {opts: fileOpts}}) {
         const isCodegen = path.node.name === 'codegen'
         if (isCodegen) {
           asIdentifier(path, fileOpts)
         }
       },
-      ImportDeclaration(
-        path,
-        {
-          file: {opts: fileOpts},
-        },
-      ) {
+      ImportDeclaration(path, {file: {opts: fileOpts}}) {
         const isCodegen = looksLike(path, {
           node: {
             source: {
