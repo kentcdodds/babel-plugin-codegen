@@ -116,6 +116,12 @@ codegen`
 var x = 'Hello world!'
 ```
 
+Here you can see the difference between this plugin and [babel-plugin-preval](https://github.com/kentcdodds/babel-plugin-preval), which would output the content of `some-code.js` as a string instead:
+
+```javascript
+"var x = 'Hello world!'"
+```
+
 `codegen` can also handle _some_ simple dynamic values as well:
 
 **Before**:
