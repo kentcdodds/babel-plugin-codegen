@@ -80,6 +80,16 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "NMinhNguyen",
+      "name": "Minh Nguyen",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2852660?v=4",
+      "profile": "https://twitter.com/minh_ngvyen",
+      "contributions": [
+        "code",
+        "test"
+      ]
     }
   ]
 }
