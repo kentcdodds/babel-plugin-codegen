@@ -9,13 +9,11 @@ myCodgen(\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-var x
-;(x = {
+var x = {
   booyah() {
     return 'booyah!'
   },
-}),
-  void 0
+}
 
 
 `;
@@ -99,6 +97,32 @@ Error: <PROJECT_ROOT>/src/__tests__/macro.js: ../macro: codegen macro must be us
   1 | import codegen from '../macro';
 > 2 | var x = codegen;
     |         ^^^^^^^
+
+`;
+
+exports[`macros with a single export declaration: with a single export declaration 1`] = `
+
+import codegen from '../macro'
+
+codegen\`module.exports = "export const a = 'a'"\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+export const a = 'a'
+
+
+`;
+
+exports[`macros with a single import declaration: with a single import declaration 1`] = `
+
+import codegen from '../macro'
+
+codegen\`module.exports = "import a from 'a'"\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import a from 'a'
+
 
 `;
 

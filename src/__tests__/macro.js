@@ -49,6 +49,16 @@ pluginTester({
 
       codegen\`module.exports = ['a', 'b', 'c'].map(l => 'export const ' + l + ' = ' + JSON.stringify(l)).join(';')\`
     `,
+    'with a single export declaration': `
+      import codegen from '../macro'
+
+      codegen\`module.exports = "export const a = 'a'"\`
+    `,
+    'with a single import declaration': `
+      import codegen from '../macro'
+
+      codegen\`module.exports = "import a from 'a'"\`
+    `,
     'as require call': `
       import codegen from '../macro';
       var x = codegen.require('./fixtures/return-one');
