@@ -49,12 +49,15 @@ function getReplacement({code, fileOpts, args = []}, babel) {
 }
 
 function applyReplacementToPath(replacement, path) {
-  if (!replacement) {
-    path.remove()
-  } else if (Array.isArray(replacement)) {
-    path.replaceWithMultiple(replacement)
+  if (replacement) {
+    // If it's not an array, wrap into an array
+    // to support single import/export declarations:
+    // https://github.com/kentcdodds/babel-plugin-codegen/issues/30
+    path.replaceWithMultiple(
+      Array.isArray(replacement) ? replacement : [replacement],
+    )
   } else {
-    path.replaceWith(replacement)
+    path.remove()
   }
 }
 

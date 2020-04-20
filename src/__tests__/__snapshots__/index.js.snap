@@ -75,8 +75,7 @@ codegen\`module.exports = "var ALLCAPS = 'ALLCAPS'"\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-var ALLCAPS
-;(ALLCAPS = 'ALLCAPS'), void 0
+var ALLCAPS = 'ALLCAPS'
 
 
 `;
@@ -335,8 +334,7 @@ codegen\`module.exports = "var x = 'some directive'"\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-var x
-;(x = 'some directive'), void 0
+var x = 'some directive'
 
 
 `;
