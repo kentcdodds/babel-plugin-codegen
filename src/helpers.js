@@ -73,10 +73,7 @@ function resolveModuleContents({filename, module}) {
 }
 
 function isCodegenComment(comment) {
-  const normalisedComment = comment.value
-    .trim()
-    .split(' ')[0]
-    .trim()
+  const normalisedComment = comment.value.trim().split(' ')[0].trim()
   return (
     normalisedComment.startsWith('codegen') ||
     normalisedComment.startsWith('@codegen')

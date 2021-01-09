@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`macros as function: as function 1`] = `
+exports[`codegen/macro as function: as function 1`] = `
 
 const myCodgen = require('../macro')
 myCodgen(\`
@@ -18,7 +18,7 @@ var x = {
 
 `;
 
-exports[`macros as jsx with tag: as jsx with tag 1`] = `
+exports[`codegen/macro as jsx with tag: as jsx with tag 1`] = `
 
 const Codegen = require('../macro')
 const ui = (
@@ -32,7 +32,7 @@ const ui = <div>Hi</div>
 
 `;
 
-exports[`macros as jsx: as jsx 1`] = `
+exports[`codegen/macro as jsx: as jsx 1`] = `
 
 const Codegen = require('../macro')
 const ui = (
@@ -46,7 +46,7 @@ const ui = <div>Hi</div>
 
 `;
 
-exports[`macros as require call: as require call 1`] = `
+exports[`codegen/macro as require call: as require call 1`] = `
 
 import codegen from '../macro';
 var x = codegen.require('./fixtures/return-one');
@@ -58,7 +58,7 @@ var x = 1
 
 `;
 
-exports[`macros as tag: as tag 1`] = `
+exports[`codegen/macro as tag: as tag 1`] = `
 
 import codegen from '../macro'
 const greeting = 'Hello world!'
@@ -72,7 +72,7 @@ module.exports = 'Hello world!'
 
 `;
 
-exports[`macros invalid usage: as fn argument: invalid usage: as fn argument 1`] = `
+exports[`codegen/macro invalid usage: as fn argument: invalid usage: as fn argument 1`] = `
 
 import codegen from '../macro';
 var x = doSomething(codegen);
@@ -86,7 +86,7 @@ Error: <PROJECT_ROOT>/src/__tests__/macro.js: ../macro: codegen macro must be us
 
 `;
 
-exports[`macros invalid usage: missing code string: invalid usage: missing code string 1`] = `
+exports[`codegen/macro invalid usage: missing code string: invalid usage: missing code string 1`] = `
 
 import codegen from '../macro';
 var x = codegen;
@@ -100,7 +100,7 @@ Error: <PROJECT_ROOT>/src/__tests__/macro.js: ../macro: codegen macro must be us
 
 `;
 
-exports[`macros with a single export declaration: with a single export declaration 1`] = `
+exports[`codegen/macro with a single export declaration: with a single export declaration 1`] = `
 
 import codegen from '../macro'
 
@@ -113,7 +113,7 @@ export const a = 'a'
 
 `;
 
-exports[`macros with a single import declaration: with a single import declaration 1`] = `
+exports[`codegen/macro with a single import declaration: with a single import declaration 1`] = `
 
 import codegen from '../macro'
 
@@ -126,7 +126,7 @@ import a from 'a'
 
 `;
 
-exports[`macros with multiple: with multiple 1`] = `
+exports[`codegen/macro with multiple: with multiple 1`] = `
 
 import codegen from '../macro'
 

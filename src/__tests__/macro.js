@@ -7,9 +7,7 @@ const projectRoot = path.join(__dirname, '../../')
 
 expect.addSnapshotSerializer({
   print(val) {
-    return stripAnsi(val)
-      .split(projectRoot)
-      .join('<PROJECT_ROOT>/')
+    return stripAnsi(val).split(projectRoot).join('<PROJECT_ROOT>/')
   },
   test(val) {
     return typeof val === 'string'
@@ -18,6 +16,7 @@ expect.addSnapshotSerializer({
 
 pluginTester({
   plugin,
+  pluginName: 'codegen/macro',
   snapshot: true,
   babelOptions: {filename: __filename, parserOpts: {plugins: ['jsx']}},
   tests: {

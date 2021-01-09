@@ -8,7 +8,7 @@ Also, please make sure you're familiar with and follow the instructions in the
 contributing guidelines (found in the CONTRIBUTING.md file).
 
 If you're new to contributing to open source projects, you might find this free
-video course helpful: http://kcd.im/pull-request
+video course helpful: https://kcd.im/pull-request
 
 Please fill out the information below to expedite the review and (hopefully)
 merge of your pull request!
@@ -31,14 +31,11 @@ merge of your pull request!
 **Checklist**:
 
 <!-- add "N/A" to the end of each line that's irrelevant to your changes -->
-
 <!-- to check an item, place an "x" in the box like so: "- [x] Documentation" -->
 
 - [ ] Documentation
 - [ ] Tests
 - [ ] Ready to be merged
       <!-- In your opinion, is this ready to be merged as soon as it's reviewed? -->
-- [ ] Added myself to contributors table
-      <!-- this is optional, see the contributing guidelines for instructions -->
 
 <!-- feel free to add additional comments -->

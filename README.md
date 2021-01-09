@@ -12,10 +12,7 @@
 [![version][version-badge]][package]
 [![downloads][downloads-badge]][npmtrends]
 [![MIT License][license-badge]][license]
-
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+[![All Contributors][all-contributors-badge]](#contributors-)
 [![PRs Welcome][prs-badge]][prs]
 [![Code of Conduct][coc-badge]][coc]
 [![Babel Macro][macros-badge]][babel-plugin-macros]
@@ -116,10 +113,13 @@ codegen`
 var x = 'Hello world!'
 ```
 
-Here you can see the difference between this plugin and [babel-plugin-preval](https://github.com/kentcdodds/babel-plugin-preval), which would output the content of `some-code.js` as a string instead:
+Here you can see the difference between this plugin and
+[babel-plugin-preval](https://github.com/kentcdodds/babel-plugin-preval), which
+would output the content of `some-code.js` as a string instead:
 
 ```javascript
 "var x = 'Hello world!'"
+
 ```
 
 `codegen` can also handle _some_ simple dynamic values as well:
@@ -329,6 +329,7 @@ Thanks goes to these people ([emoji key][emojis]):
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors][all-contributors] specification.
@@ -341,25 +342,25 @@ MIT
 <!-- prettier-ignore-start -->
 [npm]: https://www.npmjs.com
 [node]: https://nodejs.org
-[build-badge]: https://img.shields.io/travis/kentcdodds/babel-plugin-codegen.svg?style=flat-square
-[build]: https://travis-ci.org/kentcdodds/babel-plugin-codegen
+[build-badge]: https://img.shields.io/github/workflow/status/kentcdodds/babel-plugin-codegen/validate?logo=github&style=flat-square
+[build]: https://github.com/kentcdodds/babel-plugin-codegen/actions?query=workflow%3Avalidate
 [coverage-badge]: https://img.shields.io/codecov/c/github/kentcdodds/babel-plugin-codegen.svg?style=flat-square
 [coverage]: https://codecov.io/github/kentcdodds/babel-plugin-codegen
 [version-badge]: https://img.shields.io/npm/v/babel-plugin-codegen.svg?style=flat-square
 [package]: https://www.npmjs.com/package/babel-plugin-codegen
 [downloads-badge]: https://img.shields.io/npm/dm/babel-plugin-codegen.svg?style=flat-square
-[npmtrends]: http://www.npmtrends.com/babel-plugin-codegen
+[npmtrends]: https://www.npmtrends.com/babel-plugin-codegen
 [license-badge]: https://img.shields.io/npm/l/babel-plugin-codegen.svg?style=flat-square
 [license]: https://github.com/kentcdodds/babel-plugin-codegen/blob/master/LICENSE
 [prs-badge]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square
-[prs]: http://makeapullrequest.com
+[prs]: https://makeapullrequest.com
 [coc-badge]: https://img.shields.io/badge/code%20of-conduct-ff69b4.svg?style=flat-square
-[coc]: https://github.com/kentcdodds/babel-plugin-codegen/blob/master/other/CODE_OF_CONDUCT.md
-[macros-badge]: https://img.shields.io/badge/babel--macro-%F0%9F%8E%A3-f5da55.svg?style=flat-square
-[babel-plugin-macros]: https://github.com/kentcdodds/babel-plugin-macros
+[coc]: https://github.com/kentcdodds/babel-plugin-codegen/blob/master/CODE_OF_CONDUCT.md
 [emojis]: https://github.com/all-contributors/all-contributors#emoji-key
 [all-contributors]: https://github.com/all-contributors/all-contributors
-
+[bugs]: https://github.com/kentcdodds/babel-plugin-codegen/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Acreated-desc+label%3Abug
+[requests]: https://github.com/kentcdodds/babel-plugin-codegen/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc+label%3Aenhancement
+[good-first-issue]: https://github.com/kentcdodds/babel-plugin-codegen/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc+label%3Aenhancement+label%3A%22good+first+issue%22
 [glamorous]: https://github.com/paypal/glamorous
 [preval]: https://github.com/kentcdodds/babel-plugin-preval
 [codegen.macro]: https://www.npmjs.com/package/codegen.macro

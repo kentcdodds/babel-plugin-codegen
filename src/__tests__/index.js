@@ -7,9 +7,7 @@ const projectRoot = path.join(__dirname, '../../')
 
 expect.addSnapshotSerializer({
   print(val) {
-    return stripAnsi(val)
-      .split(projectRoot)
-      .join('<PROJECT_ROOT>/')
+    return stripAnsi(val).split(projectRoot).join('<PROJECT_ROOT>/')
   },
   test(val) {
     return typeof val === 'string'
@@ -18,6 +16,7 @@ expect.addSnapshotSerializer({
 
 pluginTester({
   plugin,
+  pluginName: 'codegen',
   snapshot: true,
   babelOptions: {filename: __filename},
   tests: {
@@ -111,6 +110,7 @@ pluginTester({
 // This is for any of the exta tests. We give these a name.
 pluginTester({
   plugin,
+  pluginName: 'codegen',
   snapshot: true,
   babelOptions: {filename: __filename},
   tests: {

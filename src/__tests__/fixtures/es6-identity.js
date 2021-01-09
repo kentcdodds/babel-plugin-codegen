@@ -6,6 +6,6 @@ Object.defineProperty(exports, '__esModule', {
   value: true,
 })
 
-exports.default = function(input) {
+exports.default = function (input) {
   return JSON.stringify(input)
 }

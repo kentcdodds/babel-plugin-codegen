@@ -8,16 +8,17 @@ understand what's going on and fix the issue.
 
 I'll probably ask you to submit the fix (after giving some direction). If you've
 never done that before, that's great! Check this free short video tutorial to
-learn how: http://kcd.im/pull-request
+learn how: https://kcd.im/pull-request
 -->
 
 - `babel-plugin-codegen` version:
 - `node` version:
-- `npm` (or `yarn`) version:
+- `npm` version:
 
 Relevant code or config
 
-```javascript
+```js
+
 ```
 
 What you did:
