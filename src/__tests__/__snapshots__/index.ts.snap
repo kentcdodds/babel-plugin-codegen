@@ -1,0 +1,340 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`codegen accepts babels parser options for generated code: accepts babels parser options for generated code 1`] = `
+
+// @codegen
+module.exports = "var fNum: number = do { if(true) {100} else {200} };"
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var fNum: number = do {
+  if (true) {
+    100
+  } else {
+    200
+  }
+}
+
+
+`;
+
+exports[`codegen basic value: basic value 1`] = `
+
+const x = codegen\`module.exports = "1"\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const x = 1
+
+
+`;
+
+exports[`codegen can consume transpiled esmodules (uses default): can consume transpiled esmodules (uses default) 1`] = `
+
+import x from /* codegen(3) */ "./fixtures/es6-identity"
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+3
+
+
+`;
+
+exports[`codegen codegen comment: codegen comment 1`] = `
+
+// @codegen
+const array = ['apple', 'orange', 'pear']
+module.exports = array
+  .map(fruit => \`export const \${fruit} = "\${fruit}";\`)
+  .join('')
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+export const apple = 'apple'
+export const orange = 'orange'
+export const pear = 'pear'
+
+
+`;
+
+exports[`codegen dynamic value that is wrong: dynamic value that is wrong 1`] = `
+
+const x = codegen\`module.exports = "\${dynamic}"\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+Error: <PROJECT_ROOT>/src/__tests__/index.ts: Unable to determine the value of your codegen string
+> 1 | const x = codegen\`module.exports = "\${dynamic}"\`
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+`;
+
+exports[`codegen extra test 2: extra test 2 1`] = `
+
+codegen\`module.exports = "var ALLCAPS = 'ALLCAPS'"\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var ALLCAPS = 'ALLCAPS'
+
+
+`;
+
+exports[`codegen extra test: extra test 1`] = `
+
+codegen\`module.exports = ["one", "two"].map((x, i) => \\\`var \\\${x} = "\\\${i + 1}";\\\`).join("\\\\n")\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var one = '1'
+var two = '2'
+
+
+`;
+
+exports[`codegen handles multipe nodes: handles multipe nodes 1`] = `
+
+codegen.require('./fixtures/multiple-nodes')
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = 'hello world'
+console.log(x)
+
+
+`;
+
+exports[`codegen handles some dynamic values: handles some dynamic values 1`] = `
+
+const three = 3
+const x = codegen\`module.exports = "\${three}"\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const three = 3
+const x = 3
+
+
+`;
+
+exports[`codegen import comment with extra comments after: import comment with extra comments after 1`] = `
+
+import /* codegen */ /* this is extra stuff */ "./fixtures/assign-one.js"
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = 1
+
+
+`;
+
+exports[`codegen import comment with extra comments before: import comment with extra comments before 1`] = `
+
+import /* this is extra stuff */ /* codegen */ "./fixtures/assign-one.js"
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = 1
+
+
+`;
+
+exports[`codegen import comment with number argument: import comment with number argument 1`] = `
+
+import /* codegen(3) */ "./fixtures/assign-identity"
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = 3
+
+
+`;
+
+exports[`codegen import comment with object argument: import comment with object argument 1`] = `
+
+import /* codegen(({object: "argument"})) */ "./fixtures/assign-identity"
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = {
+  object: 'argument',
+}
+
+
+`;
+
+exports[`codegen import comment with required argument: import comment with required argument 1`] = `
+
+import /* codegen(Number(require("./fixtures/return-one"))) */ "./fixtures/assign-identity"
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = 1
+
+
+`;
+
+exports[`codegen import comment with string argument: import comment with string argument 1`] = `
+
+import /* codegen("string") */ "./fixtures/assign-identity"
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = 'string'
+
+
+`;
+
+exports[`codegen import comment: import comment 1`] = `
+
+import /* codegen */ "./fixtures/assign-one.js"
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = 1
+
+
+`;
+
+exports[`codegen includes code comments: includes code comments 1`] = `
+
+codegen\`
+  module.exports = \\\`
+    // before
+    var x = 'hi'
+    /*
+     * after
+     */
+
+    // call foo
+    console.log(foo())
+
+     /**
+      * jsdoc
+      * @return {string} cool I guess
+      */
+     function foo() {
+       return 'foo'
+     }
+  \\\`
+\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+// before
+var x = 'hi'
+/*
+ * after
+ */
+// call foo
+
+console.log(foo())
+/**
+ * jsdoc
+ * @return {string} cool I guess
+ */
+
+function foo() {
+  return 'foo'
+}
+
+
+`;
+
+exports[`codegen must export a string: must export a string 1`] = `
+
+const y = codegen\`module.exports = {}\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+Error: <PROJECT_ROOT>/src/__tests__/index.ts: codegen: Must module.exports a string.
+
+`;
+
+exports[`codegen object with arrow function: object with arrow function 1`] = `
+
+const y = codegen\`
+  module.exports = '({booyah: () => "booyah"})'
+\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const y = {
+  booyah: () => 'booyah',
+}
+
+
+`;
+
+exports[`codegen removes the node if nothing is returned in require: removes the node if nothing is returned in require 1`] = `
+
+codegen.require('./fixtures/nothing-exported')
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+
+
+`;
+
+exports[`codegen removes the node if nothing is returned: removes the node if nothing is returned 1`] = `
+
+codegen\`module.exports = ''\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+
+
+`;
+
+exports[`codegen require with argument for non-function module: require with argument for non-function module 1`] = `
+
+const x = codegen.require("./fixtures/return-one", "should not be here...")
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+Error: <PROJECT_ROOT>/src/__tests__/index.ts: codegen module (src/__tests__/fixtures/return-one) cannot accept arguments because it does not export a function. You passed the arguments: should not be here...
+
+`;
+
+exports[`codegen require with argument: require with argument 1`] = `
+
+const x = codegen.require("./fixtures/identity", 3)
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const x = 3
+
+
+`;
+
+exports[`codegen require with unknown argument value: require with unknown argument value 1`] = `
+
+const x = codegen.require("./fixtures/identity", SOME_UNKNOWN_VARIABLE)
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+Error: <PROJECT_ROOT>/src/__tests__/index.ts: codegen cannot determine the value of an argument in codegen.require
+
+`;
+
+exports[`codegen simple require: simple require 1`] = `
+
+const x = codegen.require("./fixtures/return-one")
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const x = 1
+
+
+`;
+
+exports[`codegen simple variable assignment: simple variable assignment 1`] = `
+
+codegen\`module.exports = "var x = 'some directive'"\`
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+var x = 'some directive'
+
+
+`;
