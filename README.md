@@ -358,6 +358,7 @@ MIT
 [coc]: https://github.com/kentcdodds/babel-plugin-codegen/blob/master/CODE_OF_CONDUCT.md
 [emojis]: https://github.com/all-contributors/all-contributors#emoji-key
 [all-contributors]: https://github.com/all-contributors/all-contributors
+[all-contributors-badge]: https://img.shields.io/github/all-contributors/kentcdodds/babel-plugin-codegen?color=orange&style=flat-square
 [bugs]: https://github.com/kentcdodds/babel-plugin-codegen/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Acreated-desc+label%3Abug
 [requests]: https://github.com/kentcdodds/babel-plugin-codegen/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc+label%3Aenhancement
 [good-first-issue]: https://github.com/kentcdodds/babel-plugin-codegen/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+sort%3Areactions-%2B1-desc+label%3Aenhancement+label%3A%22good+first+issue%22
@@ -365,4 +366,5 @@ MIT
 [preval]: https://github.com/kentcdodds/babel-plugin-preval
 [codegen.macro]: https://www.npmjs.com/package/codegen.macro
 [babel-plugin-macros]: https://github.com/kentcdodds/babel-plugin-macros
+[macros-badge]: https://img.shields.io/badge/babel--macro-%F0%9F%8E%A3-f5da55.svg?style=flat-square
 <!-- prettier-ignore-end -->
