@@ -3,6 +3,7 @@
   "version": "0.0.0-semantically-released",
   "description": "Generate code at build-time",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "keywords": [
     "babel-plugin-macros",
     "babel-plugin",
@@ -33,6 +34,7 @@
     "setup": "npm install && npm run validate -s",
     "test": "kcd-scripts test",
     "test:update": "npm test -- --updateSnapshot --coverage",
+    "typecheck": "kcd-scripts typecheck",
     "validate": "kcd-scripts validate"
   },
   "dependencies": {
@@ -41,12 +43,16 @@
     "require-from-string": "^2.0.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@types/babel-plugin-macros": "^2.8.4",
     "@types/jest": "^26.0.15",
+    "@types/require-from-string": "^1.2.0",
     "ast-pretty-print": "^2.0.1",
     "babel-plugin-tester": "^10.0.0",
     "kcd-scripts": "^7.2.0",
     "strip-ansi": "^6.0.0",
-    "typescript": "^4.1.2"
+    "type-fest": "^0.20.2",
+    "typescript": "^4.1.3"
   },
   "eslintConfig": {
     "extends": "./node_modules/kcd-scripts/eslint.js"
@@ -54,6 +60,8 @@
   "eslintIgnore": [
     "node_modules",
     "coverage",
-    "dist"
+    "dist",
+    "/macro.d.ts",
+    "fixtures"
   ]
 }

@@ -18,6 +18,17 @@ var fNum: number = do {
 
 `;
 
+exports[`codegen basic value fn call: basic value fn call 1`] = `
+
+const x = codegen(\`module.exports = "1"\`)
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+const x = 1
+
+
+`;
+
 exports[`codegen basic value: basic value 1`] = `
 
 const x = codegen\`module.exports = "1"\`
@@ -63,7 +74,7 @@ const x = codegen\`module.exports = "\${dynamic}"\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-Error: <PROJECT_ROOT>/src/__tests__/index.js: Unable to determine the value of your codegen string
+Error: <PROJECT_ROOT>/src/__tests__/index.ts: Unable to determine the value of your codegen string
 > 1 | const x = codegen\`module.exports = "\${dynamic}"\`
     |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -247,7 +258,7 @@ const y = codegen\`module.exports = {}\`
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-Error: <PROJECT_ROOT>/src/__tests__/index.js: codegen: Must module.exports a string.
+Error: <PROJECT_ROOT>/src/__tests__/index.ts: codegen: Must module.exports a string.
 
 `;
 
@@ -292,7 +303,7 @@ const x = codegen.require("./fixtures/return-one", "should not be here...")
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-Error: <PROJECT_ROOT>/src/__tests__/index.js: codegen module (src/__tests__/fixtures/return-one) cannot accept arguments because it does not export a function. You passed the arguments: should not be here...
+Error: <PROJECT_ROOT>/src/__tests__/index.ts: codegen module (src/__tests__/fixtures/return-one) cannot accept arguments because it does not export a function (it exports a string). You passed the arguments: should not be here...
 
 `;
 
@@ -313,7 +324,7 @@ const x = codegen.require("./fixtures/identity", SOME_UNKNOWN_VARIABLE)
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-Error: <PROJECT_ROOT>/src/__tests__/index.js: codegen cannot determine the value of an argument in codegen.require
+Error: <PROJECT_ROOT>/src/__tests__/index.ts: codegen cannot determine the value of an argument in codegen.require
 
 `;
 

@@ -7,7 +7,9 @@ const projectRoot = path.join(__dirname, '../../')
 
 expect.addSnapshotSerializer({
   print(val) {
-    return stripAnsi(val).split(projectRoot).join('<PROJECT_ROOT>/')
+    return stripAnsi(val as string)
+      .split(projectRoot)
+      .join('<PROJECT_ROOT>/')
   },
   test(val) {
     return typeof val === 'string'
@@ -25,6 +27,7 @@ pluginTester({
       code: `const x = notCodegen\`module.exports = 'nothing'\``,
     },
     'basic value': 'const x = codegen`module.exports = "1"`',
+    'basic value fn call': 'const x = codegen(`module.exports = "1"`)',
     'simple variable assignment':
       'codegen`module.exports = "var x = \'some directive\'"`',
     'object with arrow function': `
