@@ -26,7 +26,8 @@
   "homepage": "https://github.com/kentcdodds/babel-plugin-codegen#readme",
   "files": [
     "dist",
-    "macro.js"
+    "macro.js",
+    "macro.d.ts"
   ],
   "scripts": {
     "build": "kcd-scripts build",
