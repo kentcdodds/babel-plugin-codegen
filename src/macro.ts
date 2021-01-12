@@ -34,7 +34,7 @@ declare function codegen(
 declare function codegen(code: string): any
 // eslint-disable-next-line @typescript-eslint/no-namespace
 declare namespace codegen {
-  function require(code: string, ...args: Array<unknown>): any
+  function require(modulePath: string, ...args: Array<unknown>): any
 }
 // Unfortunately I couldn't figure out how to add TS support for the JSX form
 // Something about the overload not being supported because codegen can't be all the things or whatever
