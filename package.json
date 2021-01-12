@@ -60,6 +60,8 @@
   "eslintIgnore": [
     "node_modules",
     "coverage",
-    "dist"
+    "dist",
+    "/macro.d.ts",
+    "fixtures"
   ]
 }

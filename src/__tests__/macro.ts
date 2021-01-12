@@ -16,23 +16,24 @@ expect.addSnapshotSerializer({
   },
 })
 
+// the fixtures is handy because we can also test the type defs at the same time
+pluginTester({
+  plugin,
+  pluginName: 'codegen/macro',
+  snapshot: true,
+  babelOptions: {filename: __filename, presets: ['@babel/preset-typescript']},
+  fixtures: path.join(__dirname, './fixtures/macro'),
+})
+
 pluginTester({
   plugin,
   pluginName: 'codegen/macro',
   snapshot: true,
   babelOptions: {filename: __filename, parserOpts: {plugins: ['jsx']}},
   tests: {
-    'as tag': `
-      import codegen from './helpers/codegen.macro'
-      const greeting = 'Hello world!'
-      codegen\`module.exports = "module.exports = '\${greeting}';"\`
-    `,
-    'as function': `
-      const myCodgen = require('./helpers/codegen.macro')
-      myCodgen(\`
-        module.exports = "var x = {booyah() { return 'booyah!'; } };"
-      \`)
-    `,
+    // couldn't figure out how to do type defs for JSX 😬
+    // (got an error about not being able to create an overload... I guess it can't be all the things?)
+    // PRs welcome
     'as jsx': `
       const Codegen = require('./helpers/codegen.macro')
       const ui = (
@@ -59,10 +60,6 @@ pluginTester({
       import codegen from './helpers/codegen.macro'
 
       codegen\`module.exports = "import a from 'a'"\`
-    `,
-    'as require call': `
-      import codegen from './helpers/codegen.macro';
-      var x = codegen.require('./fixtures/return-one');
     `,
     'invalid usage: as fn argument': {
       code: `

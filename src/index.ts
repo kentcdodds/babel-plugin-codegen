@@ -21,13 +21,10 @@ function codegenPlugin(
       Program(path, {file: {opts: fileOpts}}) {
         const firstNode = path.node.body[0] || {}
         const comments = firstNode.leadingComments ?? []
-        const isCodegen = comments.some(isCodegenComment)
+        const codegenComment = comments.find(isCodegenComment)
 
-        if (isCodegen) {
-          const comment = comments.find(isCodegenComment)
-          if (comment) {
-            comment.value = ' this file was codegened'
-          }
+        if (codegenComment) {
+          codegenComment.value = ' this file was codegened'
           asProgram(path, fileOpts)
         }
       },
@@ -44,6 +41,8 @@ function codegenPlugin(
               leadingComments(
                 comments: typeof path.node.source.leadingComments,
               ) {
+                // istanbul ignore next because the ?? false should never happen
+                // because "comments" should never be null, but the types say it could...
                 return comments?.some(isCodegenComment) ?? false
               },
             },

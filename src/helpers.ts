@@ -11,6 +11,11 @@ type CompiledESModule = {
   default: CodegenModuleExport
 }
 
+// istanbul ignore next because I don't know how to reproduce a situation
+// where the filename doesn't exist, but TypeScript gets mad when I don't handle that case.
+const getFilename = (fileOpts: babelCore.TransformOptions): string =>
+  fileOpts.filename ?? '"unknown"'
+
 function requireFromString(code: string | Buffer, filename: string) {
   // Execute the transformed code, as if it were required
   const module = requireFromCodeString(String(code), filename) as
@@ -33,7 +38,7 @@ function getReplacement(
   {code, fileOpts, args = []}: GetReplacementOptions,
   babel: typeof babelCore,
 ) {
-  const filename = fileOpts.filename ?? '"unknown"'
+  const filename = getFilename(fileOpts)
 
   let module = requireFromString(code, filename)
 
@@ -45,7 +50,7 @@ function getReplacement(
       `codegen module (${p.relative(
         process.cwd(),
         filename,
-      )}) cannot accept arguments because it does not export a function. You passed the arguments: ${args.join(
+      )}) cannot accept arguments because it does not export a function (it exports a ${typeof module}). You passed the arguments: ${args.join(
         ', ',
       )}`,
     )
@@ -63,9 +68,9 @@ function getReplacement(
   })()
 }
 
-function applyReplacementToPath(
+function applyReplacementToPath<SpecificNode extends babelCore.types.Node>(
   replacement: babelCore.Node | Array<babelCore.Node> | null | undefined,
-  path: babelCore.NodePath,
+  path: babelCore.NodePath<SpecificNode>,
 ) {
   if (replacement) {
     // If it's not an array, wrap into an array
@@ -79,16 +84,14 @@ function applyReplacementToPath(
   }
 }
 
-type ReplaceOptions = {
-  // https://github.com/babel/babel/pull/12600
-  // path: babelCore.NodePath<babelCore.types.BaseNode>
-  path: babelCore.NodePath<any>
+type ReplaceOptions<SpecificNode extends babelCore.types.Node> = {
+  path: babelCore.NodePath<SpecificNode>
   code: string | Buffer
   fileOpts: babelCore.TransformOptions
   args?: Array<any>
 }
-function replace(
-  {path, code, fileOpts, args}: ReplaceOptions,
+function replace<SpecificNode extends babelCore.types.Node>(
+  {path, code, fileOpts, args}: ReplaceOptions<SpecificNode>,
   babel: typeof babelCore,
 ) {
   const replacement = getReplacement({code, args, fileOpts}, babel)
@@ -140,6 +143,8 @@ function looksLike(a: LooksLikeTarget, b: LooksLikeMatch): boolean {
   if (isPrimitive(b)) return a === b
   if (typeof b === 'function') return b(a)
 
+  // istanbul ignore next because we don't have this use case
+  // but if anyone copy/pastes this handy utility, they might need it!
   if (isPrimitive(a) || typeof a === 'function') return false
 
   return Object.keys(b).every(bKey => {
@@ -163,6 +168,7 @@ export {
   isCodegenComment,
   isPropertyCall,
   looksLike,
+  getFilename,
 }
 
 /*

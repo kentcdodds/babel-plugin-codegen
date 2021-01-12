@@ -1,23 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`codegen/macro as function: as function 1`] = `
-
-const myCodgen = require('./helpers/codegen.macro')
-myCodgen(\`
-  module.exports = "var x = {booyah() { return 'booyah!'; } };"
-\`)
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-var x = {
-  booyah() {
-    return 'booyah!'
-  },
-}
-
-
-`;
-
 exports[`codegen/macro as jsx with tag: as jsx with tag 1`] = `
 
 const Codegen = require('./helpers/codegen.macro')
@@ -42,32 +24,6 @@ const ui = (
       ↓ ↓ ↓ ↓ ↓ ↓
 
 const ui = <div>Hi</div>
-
-
-`;
-
-exports[`codegen/macro as require call: as require call 1`] = `
-
-import codegen from './helpers/codegen.macro';
-var x = codegen.require('./fixtures/return-one');
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-var x = 1
-
-
-`;
-
-exports[`codegen/macro as tag: as tag 1`] = `
-
-import codegen from './helpers/codegen.macro'
-const greeting = 'Hello world!'
-codegen\`module.exports = "module.exports = '\${greeting}';"\`
-
-      ↓ ↓ ↓ ↓ ↓ ↓
-
-const greeting = 'Hello world!'
-module.exports = 'Hello world!'
 
 
 `;

@@ -6,6 +6,7 @@ import {
   isCodegenComment,
   isPropertyCall,
   requireFromString,
+  getFilename,
 } from './helpers'
 
 function getReplacers(babel: typeof babelCore) {
@@ -19,6 +20,8 @@ function getReplacers(babel: typeof babelCore) {
       plugins: fileOpts.plugins,
       presets: fileOpts.presets,
     })
+
+    // istanbul ignore next because this should never happen, but TypeScript needs me to handle it
     const code = result?.code ?? ''
     const replacement = getReplacement({code, fileOpts}, babel)
     path.node.body = Array.isArray(replacement) ? replacement : [replacement]
@@ -28,11 +31,13 @@ function getReplacers(babel: typeof babelCore) {
     path: babelCore.NodePath<babelCore.types.ImportDeclaration>,
     fileOpts: babelCore.TransformOptions,
   ) {
-    const filename = fileOpts.filename ?? '"unknown"'
+    const filename = getFilename(fileOpts)
     const codegenComment = path.node.source.leadingComments
       ?.find(isCodegenComment)
       ?.value.trim()
 
+    // istanbul ignore next because we don't even call `asImportDeclaration` if
+    // there's not a codegen comment, but TypeScript gets mad otherwise
     if (!codegenComment) return
 
     const {code, resolvedPath} = resolveModuleContents({
@@ -124,7 +129,7 @@ function getReplacers(babel: typeof babelCore) {
   ) {
     const [source, ...args] = path.get('arguments')
     const {code, resolvedPath} = resolveModuleContents({
-      filename: fileOpts.filename ?? '',
+      filename: getFilename(fileOpts),
       module: (source as babelCore.NodePath<babelCore.types.StringLiteral>).node
         .value,
     })
