@@ -10,10 +10,7 @@ type VisitorState = {
 
 function codegenPlugin(
   babel: typeof babelCore,
-): {
-  name: string
-  visitor: babelCore.Visitor<VisitorState>
-} {
+): babelCore.PluginObj<VisitorState> {
   const {asProgram, asIdentifier, asImportDeclaration} = getReplacers(babel)
   return {
     name: 'codegen',
