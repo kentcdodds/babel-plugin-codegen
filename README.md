@@ -191,6 +191,9 @@ an export.
 Whereas the above usages (assignment/import/require) will only codegen the scope
 of the assignment or file being imported.
 
+Here is an example of painless `index.js` which auto import same depth js files
+at compile time.
+
 **Before**:
 
 ```javascript
