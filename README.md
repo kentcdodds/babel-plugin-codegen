@@ -195,18 +195,25 @@ of the assignment or file being imported.
 
 ```javascript
 // @codegen
-const array = ['apple', 'orange', 'pear']
-module.exports = array
-  .map(fruit => `export const ${fruit} = '${fruit}';`)
-  .join('')
+const fs = require("fs");
+const path = require("path");
+const regx_JSFiles = /\.(es6|js|es|jsx|mjs|ts)$/;
+const name = require("path").basename(__filename);
+
+module.exports = fs.readdirSync(__dirname).reduce((acc, cur) => {
+  if (name !== cur && regx_JSFiles.test(cur)) {
+    acc += `export * from './${cur.replace(regx_JSFiles, "")}'\n`;
+  }
+  return acc;
+}, "");
 ```
 
 **After**:
 
 ```javascript
-export const apple = 'apple'
-export const orange = 'orange'
-export const pear = 'pear'
+export * from './apple';
+export * from './orange';
+export * from './pear';
 ```
 
 ## Configure with Babel
