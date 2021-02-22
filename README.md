@@ -335,6 +335,7 @@ Thanks goes to these people ([emoji key][emojis]):
   <tr>
     <td align="center"><a href="https://twitter.com/minh_ngvyen"><img src="https://avatars3.githubusercontent.com/u/2852660?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Minh Nguyen</b></sub></a><br /><a href="https://github.com/kentcdodds/babel-plugin-codegen/commits?author=NMinhNguyen" title="Code">💻</a> <a href="https://github.com/kentcdodds/babel-plugin-codegen/commits?author=NMinhNguyen" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/calebeby"><img src="https://avatars.githubusercontent.com/u/13206945?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Caleb Eby</b></sub></a><br /><a href="https://github.com/kentcdodds/babel-plugin-codegen/commits?author=calebeby" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/loynoir"><img src="https://avatars.githubusercontent.com/u/78727408?v=4?s=100" width="100px;" alt=""/><br /><sub><b>loynoir</b></sub></a><br /><a href="https://github.com/kentcdodds/babel-plugin-codegen/commits?author=loynoir" title="Documentation">📖</a></td>
   </tr>
 </table>
 
