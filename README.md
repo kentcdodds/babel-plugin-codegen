@@ -173,14 +173,14 @@ var x = 3
 **Before**:
 
 ```javascript
-const x = codegen.require('./es6-identity', 3)
+codegen.require('./es6-identity', 3)
 ```
 
 **After** (`es6-identity.js` is:
 `export default input => 'var x = ' + JSON.stringify(input) + ';'`):
 
 ```javascript
-const x = 3
+var x = 3
 ```
 
 ### codegen file comment (`// @codegen`)
