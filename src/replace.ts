@@ -14,8 +14,8 @@ function getReplacers(babel: typeof babelCore) {
     path: babelCore.NodePath<babelCore.types.Program>,
     fileOpts: babelCore.TransformOptions,
   ) {
-    // @ts-expect-error the types for this is wrong...
-    const result = babel.transformFromAstSync(path.node, {
+
+    const result = babel.transformFromAstSync(path.node, undefined, {
       filename: fileOpts.filename,
       plugins: fileOpts.plugins,
       presets: fileOpts.presets,
@@ -106,7 +106,7 @@ function getReplacers(babel: typeof babelCore) {
         return true
       }
       case 'MemberExpression': {
-        const callPath = targetPath.parentPath
+        const callPath = (targetPath as babelCore.NodePath<babelCore.types.MemberExpression>).parentPath
         const isRequireCall = isPropertyCall(callPath, 'require')
         if (isRequireCall) {
           return asImportCall(
