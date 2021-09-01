@@ -15,7 +15,7 @@ function getReplacers(babel: typeof babelCore) {
     fileOpts: babelCore.TransformOptions,
   ) {
 
-    const result = babel.transformFromAstSync(path.node, undefined, {
+    const result = babel.transformFromAstSync(path.node, path.getSource(), {
       filename: fileOpts.filename,
       plugins: fileOpts.plugins,
       presets: fileOpts.presets,
