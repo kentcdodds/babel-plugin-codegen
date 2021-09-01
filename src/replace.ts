@@ -69,6 +69,7 @@ function getReplacers(babel: typeof babelCore) {
     )
   }
 
+  // eslint-disable-next-line complexity
   function asIdentifier(
     path: babelCore.NodePath<babelCore.types.Identifier>,
     fileOpts: babelCore.TransformOptions,
@@ -107,6 +108,7 @@ function getReplacers(babel: typeof babelCore) {
       }
       case 'MemberExpression': {
         const callPath = targetPath.parentPath
+        if (!callPath) return false
         const isRequireCall = isPropertyCall(callPath, 'require')
         if (isRequireCall) {
           return asImportCall(
