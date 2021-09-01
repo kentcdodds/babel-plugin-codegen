@@ -108,6 +108,7 @@ function getReplacers(babel: typeof babelCore) {
       }
       case 'MemberExpression': {
         const callPath = targetPath.parentPath
+        // istanbul ignore if (don't know when this could happen)
         if (!callPath) return false
         const isRequireCall = isPropertyCall(callPath, 'require')
         if (isRequireCall) {
