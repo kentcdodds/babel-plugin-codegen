@@ -44,6 +44,7 @@ function getReplacement(
 
   // If a function is epxorted, call it with args
   if (typeof module === 'function') {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     module = module(...args)
   } else if (args.length) {
     throw new Error(
@@ -153,9 +154,7 @@ function looksLike(a: LooksLikeTarget, b: LooksLikeMatch): boolean {
   })
 }
 
-function isPrimitive(
-  val: Primitive | {[key: string]: unknown} | Function,
-): val is Primitive {
+function isPrimitive(val: unknown): val is Primitive {
   // eslint-disable-next-line
   return val == null || /^[sbn]/.test(typeof val)
 }
