@@ -106,8 +106,8 @@ function resolveModuleContents({
   filename: string
   module: string
 }) {
-  const resolvedPath = p.resolve(p.dirname(filename), module)
-  const code = fs.readFileSync(require.resolve(resolvedPath))
+  const resolvedPath = require.resolve(module, { paths: [p.dirname(filename)] })
+  const code = fs.readFileSync(resolvedPath);
   return {code, resolvedPath}
 }
 
